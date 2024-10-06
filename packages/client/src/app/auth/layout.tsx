@@ -1,13 +1,16 @@
+import { Header } from "@interfaces";
+
 const Layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="h-dvh w-full grid">
-      <div className="mx-auto my-0 w-fit bg-gray-200 p-5 self-center rounded">
+    <div className="w-full max-w-[60rem] min-h-dvh px-2 mx-auto flex flex-col">
+			<Header hideActions />
+      <section className="flex-1 h-full flex items-center">
         {children}
-      </div>
+      </section>
     </div>
   );
 };
