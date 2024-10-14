@@ -2,9 +2,9 @@ import React from "react";
 import { CardProps, CardSubtitleProps, CardTitleProps } from "./card.types";
 import { Text } from "@components";
 
-export const Card = ({ children, className, ...props }: CardProps) => {
+export const Card = ({ children, className = "", ...props }: CardProps) => {
   return (
-    <div className={`p-5 border rounded ${className}`} {...props}>
+    <div className={`p-5 border rounded-md ${className}`} {...props}>
       {children}
     </div>
   );

@@ -1,3 +1,5 @@
-import { HTMLAttributes } from "react";
+import { HTMLProps } from "react";
 
-export interface InvisibleInputProps extends HTMLAttributes<HTMLInputElement> {}
+export interface InvisibleInputProps extends Omit<HTMLProps<HTMLInputElement>, "size"> {
+	size?: Sizes;
+}

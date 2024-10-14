@@ -1,22 +1,37 @@
 import React from "react";
-import { ButtonSizes, ButtonTypes, ButtonProps } from "./button.types";
+import { mapTextSizes } from "@utils";
+import { ButtonProps } from "./button.types";
 
-export const Button = ({ children, type = "primary", size = "base", className, ...props }: ButtonProps) => {
-  const buttonTypes: Record<ButtonTypes, string> = {
-    primary: "bg-primary text-white active:bg-secondary border-2 border-primary active:border-secondary",
-    secondary: "text-primary border-2 border-primary active:border-secondary active:text-secondary",
+export const Button = ({
+  children,
+  style = "primary",
+  size = "base",
+  className = "",
+	type = "button",
+	loading,
+	disabled,
+	ref,
+  ...props
+}: ButtonProps) => {
+  const buttonTypes: Record<Types, string> = {
+    primary: "bg-primary text-white border-2 border-primary",
+    secondary:
+      "text-primary border-2 border-primary active:border-secondary active:text-secondary",
+    tertiary: "border",
   };
 
-  const buttonSizes: Record<ButtonSizes, string> = {
-		base: "text-base",
-		lg: "text-lg",
-		xl: "text-xl"
-	};
-
+	const disabledStyle = disabled ? "opacity-75 cursor-not-allowed" : ""
+	const loadingStyle = loading ? "opacity-75 cursor-wait" : ""
+	
   return (
-    <button className={`py-1 px-4 outline-0 rounded-md font-semibold min-w-24 transition-colors ${buttonTypes[type]} ${buttonSizes[size]} ${className}`} {...props}>
+    <button
+      className={`py-1 px-4 outline-0 rounded-md font-semibold min-w-24 transition-colors ${buttonTypes[style]} ${mapTextSizes[size]} ${disabledStyle} ${loadingStyle} ${className}`}
+			disabled={disabled || loading}
+			type={type}
+			ref={ref}
+      {...props}
+    >
       {children}
     </button>
   );
 };
-

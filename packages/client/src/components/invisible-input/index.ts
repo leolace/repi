@@ -1,1 +1,1 @@
-export * from "./invisible-input"
+export * from "./invisible-input.component"

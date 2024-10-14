@@ -1,9 +1,14 @@
 import { InvisibleInputProps } from "./invisible-input.types";
+import { mapTextSizes } from "@utils";
 
-export const InvisibleInput = ({ ...props }: InvisibleInputProps) => {
+export const InvisibleInput = ({
+  size = "2xl",
+	className = "",
+  ...props
+}: InvisibleInputProps) => {
   return (
     <div>
-      <input />
+      <input className={`outline-none ${mapTextSizes[size]} ${className}`} {...props} />
     </div>
   );
 };

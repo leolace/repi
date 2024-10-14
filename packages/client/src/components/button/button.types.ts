@@ -1,11 +1,10 @@
-import { HTMLAttributes } from "react";
+import { ButtonHTMLAttributes } from "react";
 
-export type ButtonTypes = "primary" | "secondary";
-export type ButtonSizes = "base" | "lg" | "xl";
-
-export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "style"> {
   children?: React.ReactNode;
-  type?: ButtonTypes;
-  size?: ButtonSizes;
+  style?: Types;
+  size?: Sizes;
 	className?: string;
+	loading?: boolean;
+	ref?: React.Ref<HTMLButtonElement>;
 }

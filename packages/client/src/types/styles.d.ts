@@ -1,28 +1,36 @@
 enum TagsEnum {
-  p,
-  span,
-  div,
-  h1,
-  h2,
-  h3,
+  P = "p",
+  SPAN = "span",
+  DIV = "div",
+  H1 = "h1",
+  H2 = "h2",
+  H3 = "h3",
 }
 
 enum SizesEnum {
-  sm,
-  md,
-  base,
-  lg,
-  xl,
-  "2xl",
+  SM = "sm",
+  MD = "md",
+  BASE = "base",
+  LG = "lg",
+  XL = "xl",
+  "2XL" = "2xl",
+	"3XL" = "3xl",
 }
 
-enum WeightEnum {
-  regular,
-	medium,
-  semibold,
-  bold,
+enum WeightsEnum {
+  REGULAR = "regular",
+	MEDIUM = "medium",
+  SEMIBOLD = "semibold",
+  BOLD = "bold",
 }
 
-type Sizes = keyof typeof SizesEnum;
-type Tags = keyof typeof TagsEnum;
-type Weights = keyof typeof WeightEnum;
+enum TypesEnum {
+	PRIMARY = "primary",
+	SECONDARY = "secondary",
+	TERTIARY = "tertiary",
+}
+
+type Sizes = `${SizesEnum}`;
+type Tags = `${TagsEnum}`;
+type Weights = `${WeightsEnum}`;
+type Types = `${TypesEnum}`;
