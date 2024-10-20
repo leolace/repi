@@ -4,7 +4,7 @@ import { Text, Card } from "@components";
 import React from "react";
 
 export const ConfirmStep = () => {
-  const { user, setCurrentStep } = React.useContext(CreateAccountContext);
+  const { user, setCurrentStep } = React.use(CreateAccountContext);
 
   return (
     <Card>

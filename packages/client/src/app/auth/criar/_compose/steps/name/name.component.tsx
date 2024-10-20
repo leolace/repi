@@ -1,9 +1,10 @@
 import { CreateAccountContext } from "@app/auth/criar/page.context";
+import { CreateAccountSteps } from "@app/auth/criar/page.types";
 import { InvisibleInput } from "@components/invisible-input";
 import React from "react";
 
 export const NameStep = () => {
-  const { setUser, user } = React.useContext(CreateAccountContext);
+  const { setUser, user, currentStep } = React.use(CreateAccountContext);
 
   return (
     <InvisibleInput
@@ -15,7 +16,7 @@ export const NameStep = () => {
       }
 			required
 			value={user.name}
-			autoFocus
+			autoFocus={currentStep === CreateAccountSteps.NAME}
 			name="name"
     />
   );

@@ -1,10 +1,11 @@
 import { CreateAccountContext } from "@app/auth/criar/page.context";
 import { Text } from "@components";
 import { InvisibleInput } from "@components/invisible-input";
+import { CreateAccountSteps } from "../../../page.types";
 import React from "react";
 
 export const EmailStep = () => {
-  const { setUser, user, error } = React.useContext(CreateAccountContext);
+  const { setUser, user, error, currentStep } = React.use(CreateAccountContext);
 
   return (
     <div>
@@ -19,7 +20,7 @@ export const EmailStep = () => {
         required
         value={user.email}
         name="name"
-				autoFocus
+				autoFocus={currentStep === CreateAccountSteps.EMAIL}
       />
 			{error && <Text>{error}</Text>}
     </div>

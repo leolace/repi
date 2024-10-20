@@ -9,7 +9,7 @@ import { CreateAccountSteps } from "../../page.types";
 
 export const NavButtons = () => {
   const { setCurrentStep, currentStep } = React.useContext(CreateAccountContext);
-
+	
   return (
     <div className="flex justify-between">
       <Button

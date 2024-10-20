@@ -4,13 +4,13 @@ import { Card, CardSubtitle, CardTitle } from "@components";
 import { CARD_CLASSES } from "./class.utils";
 
 export const ClassStep = () => {
-  const { setUser, user } = React.useContext(CreateAccountContext);
+  const { setUser, user } = React.use(CreateAccountContext);
 
   return (
     <div className="flex gap-6">
       {CARD_CLASSES.map(({ type, title, subtitle }) => (
         <Card
-          className={`cursor-pointer flex-1 min-w-[25rem] ${user.class === type ? "bg-primary hover:bg-primary text-white" : "hover:bg-gray-100"}`}
+          className={`cursor-pointer flex-1 w-full ${user.class === type ? "bg-primary hover:bg-primary text-white" : "hover:bg-gray-100"}`}
           key={type}
           onClick={() =>
             setUser((prev) => ({
@@ -20,7 +20,7 @@ export const ClassStep = () => {
           }
         >
           <CardTitle tag="h2">{title}</CardTitle>
-          <CardSubtitle className="text-nowrap">{subtitle}</CardSubtitle>
+          <CardSubtitle>{subtitle}</CardSubtitle>
         </Card>
       ))}
     </div>

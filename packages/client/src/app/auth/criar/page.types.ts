@@ -16,7 +16,7 @@ export interface CurrentStepData {
 export interface ICreateAccountUser {
 	name: string;
 	email: string;
-	class?: Class;
+	class: Class;
 };
 
 export interface ICreateAccountContext {

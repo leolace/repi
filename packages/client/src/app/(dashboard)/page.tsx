@@ -1,7 +1,10 @@
+import { getUsers } from "@actions";
 import React from "react";
 
 const Home = () => {
-  return <div>conteudo</div>;
+  const users = React.use(getUsers());
+
+  return <pre>{JSON.stringify(users, null, 2)}</pre>;
 };
 
 export default Home;

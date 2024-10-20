@@ -45,6 +45,7 @@ export const SubmitButton = () => {
 
   React.useEffect(() => {
     const handleEvent = (e: KeyboardEvent) => {
+			e.preventDefault();
       if (e.key === "Enter") buttonRef.current?.click();
     };
 

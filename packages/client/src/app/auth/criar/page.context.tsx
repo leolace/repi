@@ -2,18 +2,19 @@
 import React, { createContext } from "react";
 import {
   CreateAccountSteps,
-  ICreateAccount,
+  ICreateAccountContext,
   ICreateAccountUser,
 } from "./page.types";
+import { Class } from "@types";
 
 const defaultCreateAccountUser: ICreateAccountUser = {
   name: "",
   email: "",
-  class: undefined,
+  class: Class.NAO_DEFINIDA,
 };
 
 export const CreateAccountContext =
-  createContext<ICreateAccount>({} as ICreateAccount);
+  createContext<ICreateAccountContext>({} as ICreateAccountContext);
 
 export const CreateAccountProvider = ({
   children,
