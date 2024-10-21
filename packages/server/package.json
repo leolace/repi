@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "deno --allow-all --watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/deno": "^2.0.0",
+    "@types/express": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "@types/pg": "^8.11.10"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "pg": "^8.13.0"
+  }
+}
