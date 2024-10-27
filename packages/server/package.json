@@ -15,11 +15,12 @@
   "devDependencies": {
     "@types/deno": "^2.0.0",
     "@types/express": "^5.0.0",
-    "dotenv": "^16.4.5",
-    "@types/pg": "^8.11.10"
+    "@types/pg": "^8.11.10",
+    "dotenv": "^16.4.5"
   },
   "dependencies": {
     "express": "^4.21.1",
-    "pg": "^8.13.0"
+    "pg": "^8.13.0",
+    "zod": "^3.23.8"
   }
 }

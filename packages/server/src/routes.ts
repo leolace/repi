@@ -10,9 +10,9 @@ router.get("/users/get", async (req, res) => {
 });
 
 router.get("/users/post", async (req, res) => {
-  const data = await dbClient.query(
-    "INSERT INTO users (name, email, password, class) VALUES ('carlos', 'carlos@gmail.com', 'carlinhos1233', 'BIXO');",
-  );
+	const query = "INSERT INTO users (name, email, password, class) VALUES ('carlos', 'carlos@gmail.com', 'carlinhos1233', 'BIXO');";
+
+	const data = await dbClient.query(query);
   console.log(data.rows);
   res.json(data.rows);
 });

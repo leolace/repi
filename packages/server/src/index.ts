@@ -2,14 +2,20 @@ import "dotenv/config";
 import express from "express";
 import routes from "./routes.ts";
 import { dbClient } from "./db-client.ts";
-
-const app = express();
+import { authRoutes } from "./routes/auth-routes.ts";
 
 const PORT = Deno.env.get("SERVER_PORT");
 
-await dbClient.connect();
+try {
+	await dbClient.connect();
+} catch(e) {
+	console.error("Connection to DB failed.", e);
+}
 
-app.use(routes);
+const app = express();
+app.use(express.json());
+
+app.use([routes, authRoutes]);
 
 app.listen(PORT, () => {
   console.log(`Server is listening on http://localhost:${PORT}`);

@@ -12,13 +12,8 @@
     "jsx": "preserve",
     "incremental": true,
     "outDir": "dist",
-    "paths": {
-      "@*": ["./src/*"]
-    },
+		"baseUrl": ".",
     "target": "ES2017",
-		"allowImportingTsExtensions": true
-  },
-  "ts-node": {
-    "esm": true
+    "allowImportingTsExtensions": true
   }
 }
