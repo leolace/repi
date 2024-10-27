@@ -4,6 +4,7 @@ export enum CreateAccountSteps {
 	CLASS = "CLASS",
 	NAME = "NAME",
 	EMAIL = "EMAIL",
+	PASSWORD = "PASSWORD",
 	CONFIRM = "CONFIRM"
 }
 
@@ -16,6 +17,7 @@ export interface CurrentStepData {
 export interface ICreateAccountUser {
 	name: string;
 	email: string;
+	password: string;
 	class: Class;
 };
 

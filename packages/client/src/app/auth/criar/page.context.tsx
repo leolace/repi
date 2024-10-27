@@ -10,6 +10,7 @@ import { Class } from "@types";
 const defaultCreateAccountUser: ICreateAccountUser = {
   name: "",
   email: "",
+	password: "",	
   class: Class.NAO_DEFINIDA,
 };
 
