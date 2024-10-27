@@ -1,24 +1,27 @@
 "use server";
 
-// import { ICreateAccountUser } from "@app/auth/criar/page.types";
-
-const users: { name: string; email: string; class: string }[] = [];
+import { client } from "@services/client";
 
 export const createAccountAction = async (formData: FormData) => {
-  console.log(formData);
-
   const name = formData.get("name")?.toString();
   const email = formData.get("email")?.toString();
   const classType = formData.get("class")?.toString();
+  const password = formData.get("password")?.toString();
 
-  if (!name || !email || !classType) return;
+  try {
+    if (!name || !email || !classType || !password) {
+			throw new Error("Fields are missing");
+		};
 
-  await new Promise((res) => setTimeout(res, 1000));
-	console.log(name, email, classType);
+    const res = await client.post("/users", { name, email, class: classType, password });
 
-  users.push({ name, email, class: classType });
+		return res.data;
+  } catch (e) {
+		console.error(e);
+	}
 };
 
 export const getUsers = async () => {
-  return users;
+  const users = await client.get("/users");
+  return users.data;
 };

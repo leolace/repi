@@ -29,6 +29,9 @@ importers:
       axios:
         specifier: ^1.7.7
         version: 1.7.7
+      common:
+        specifier: workspace:*
+        version: link:../common
       framer-motion:
         specifier: 12.0.0-alpha.0
         version: 12.0.0-alpha.0(@emotion/is-prop-valid@0.8.8)(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)

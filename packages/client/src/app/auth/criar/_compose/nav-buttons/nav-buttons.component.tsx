@@ -8,7 +8,7 @@ import { SubmitButton } from "./_compose";
 import { CreateAccountSteps } from "../../page.types";
 
 export const NavButtons = () => {
-  const { setCurrentStep, currentStep } = React.useContext(CreateAccountContext);
+  const { setCurrentStep, currentStep } = React.use(CreateAccountContext);
 	
   return (
     <div className="flex justify-between">
