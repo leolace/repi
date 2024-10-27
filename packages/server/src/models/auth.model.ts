@@ -12,11 +12,13 @@ class AuthModel {
   }
 
   async findBy(values: Partial<IUser>) {
-    const searchedValues: string[] = Object.keys(values).map((key, index) => {
-      return `${key}=$${index + 1}`;
-    });
+    const searchedValues = Object.keys(values)
+      .map((key, index) => {
+        return `${key}=$${index + 1}`;
+      })
+      .join(" AND ");
 
-    const query = `SELECT name, email, class FROM users WHERE ${searchedValues.join(" AND ")}`;
+    const query = `SELECT name, email, class FROM users WHERE ${searchedValues}`;
     const res = await dbClient.query<IUser>(query, Object.values(values));
 
     return res.rows;
