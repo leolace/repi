@@ -3,12 +3,13 @@ import { mapTextSizes } from "@utils";
 
 export const InvisibleInput = ({
   size = "2xl",
-	className = "",
+  className = "",
   ...props
 }: InvisibleInputProps) => {
   return (
-    <div>
-      <input className={`outline-none ${mapTextSizes[size]} ${className}`} {...props} />
-    </div>
+    <input
+      className={`outline-none ${mapTextSizes[size]} ${className}`}
+      {...props}
+    />
   );
 };

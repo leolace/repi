@@ -42,7 +42,7 @@ export const mapNextStep: Record<CreateAccountSteps, CreateAccountSteps> = {
 export const mapPrevStep: Record<CreateAccountSteps, CreateAccountSteps> = {
 	[CreateAccountSteps.CLASS]: CreateAccountSteps.CLASS,
 	[CreateAccountSteps.NAME]: CreateAccountSteps.CLASS,
-	[CreateAccountSteps.EMAIL]: CreateAccountSteps.PASSWORD,
-	[CreateAccountSteps.PASSWORD]: CreateAccountSteps.CONFIRM,
-	[CreateAccountSteps.CONFIRM]: CreateAccountSteps.EMAIL,
+	[CreateAccountSteps.EMAIL]: CreateAccountSteps.NAME,
+	[CreateAccountSteps.PASSWORD]: CreateAccountSteps.EMAIL,
+	[CreateAccountSteps.CONFIRM]: CreateAccountSteps.PASSWORD,
 }

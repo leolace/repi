@@ -4,16 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --filter=client run dev"
+    "dev": "pnpm --filter=client --filter=server run dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "^5.6.2",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.0.0",
-    "prettier": "^3.1.1"
+    "prettier": "^3.1.1",
+    "typescript": "^5.6.2"
   }
 }

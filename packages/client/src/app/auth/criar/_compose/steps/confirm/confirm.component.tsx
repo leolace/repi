@@ -19,6 +19,7 @@ export const ConfirmStep = () => {
       </Text>
       <input type="hidden" value={user.name} name="name" />
       <input type="hidden" value={user.email} name="email" />
+			<input type="hidden" value={user.password} name="password" />
       <input type="hidden" value={user.class} name="class" />
     </Card>
   );

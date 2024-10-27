@@ -1,28 +1,31 @@
 import { CreateAccountContext } from "@app/auth/criar/page.context";
-import { Text } from "@components";
 import { InvisibleInput } from "@components/invisible-input";
 import { CreateAccountSteps } from "../../../page.types";
+import { EyeOff, Eye } from "lucide-react";
 import React from "react";
 
 export const PasswordStep = () => {
-  const { setUser, user, error, currentStep } = React.use(CreateAccountContext);
+  const { setUser, user, currentStep } = React.use(CreateAccountContext);
+  const [show, setShow] = React.useState(false);
 
   return (
-    <div>
+    <div className="flex items-center">
       <InvisibleInput
         size="3xl"
-        placeholder="Digite seu email aqui"
-        type="email"
-        className="min-w-full"
+        placeholder="Digite a senha"
+        type={show ? "text" : "password"}
+        className="min-w-full flex-1"
         onChange={({ currentTarget }) =>
           setUser((prev) => ({ ...prev, password: currentTarget.value }))
         }
         required
         value={user.password}
         name="password"
-				autoFocus={currentStep === CreateAccountSteps.EMAIL}
+        autoFocus={currentStep === CreateAccountSteps.PASSWORD}
       />
-			{error && <Text>{error}</Text>}
+      <div onClick={() => setShow((prev) => !prev)} className="cursor-pointer p-3 hover:bg-gray-light rounded">
+        {show ? <Eye /> : <EyeOff />}
+      </div>
     </div>
   );
 };
