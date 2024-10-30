@@ -5,6 +5,7 @@ export enum UserClassesEnum {
 }
 
 export interface IUser {
+	id: string;
 	name: string;
 	email: string;
 	class: UserClassesEnum;
