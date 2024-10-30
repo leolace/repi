@@ -554,6 +554,7 @@
         "npm:@types/express@5",
         "npm:@types/pg@^8.11.10",
         "npm:dotenv@^16.4.5",
+        "npm:express-async-errors@^3.1.1",
         "npm:express@^4.21.1",
         "npm:pg@^8.13.0",
         "npm:uuid@^11.0.2",

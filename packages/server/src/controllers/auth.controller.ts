@@ -18,7 +18,7 @@ export class AuthController {
   async createUser(req: Request, res: Response) {
     const response = await authService.createUser(req.body);
 
-    res.json(response);
+    res.json(response).status(201);
   }
 }
 
