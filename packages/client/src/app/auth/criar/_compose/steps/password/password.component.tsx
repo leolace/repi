@@ -14,7 +14,7 @@ export const PasswordStep = () => {
         size="3xl"
         placeholder="Digite a senha"
         type={show ? "text" : "password"}
-        className="min-w-full flex-1"
+        className="flex-1"
         onChange={({ currentTarget }) =>
           setUser((prev) => ({ ...prev, password: currentTarget.value }))
         }
@@ -23,7 +23,7 @@ export const PasswordStep = () => {
         name="password"
         autoFocus={currentStep === CreateAccountSteps.PASSWORD}
       />
-      <div onClick={() => setShow((prev) => !prev)} className="cursor-pointer p-3 hover:bg-gray-light rounded">
+      <div onClick={() => setShow((prev) => !prev)} className="cursor-pointer p-3 hover:bg-gray-light rounded text-primary">
         {show ? <Eye /> : <EyeOff />}
       </div>
     </div>

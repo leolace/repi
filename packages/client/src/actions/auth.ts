@@ -1,5 +1,4 @@
-"use server";
-
+"use server"
 import { client } from "@services/client";
 
 export const createAccountAction = async (formData: FormData) => {
@@ -19,9 +18,4 @@ export const createAccountAction = async (formData: FormData) => {
   } catch (e) {
 		console.error(e);
 	}
-};
-
-export const getUsers = async () => {
-  const users = await client.get("/users");
-  return users.data;
 };

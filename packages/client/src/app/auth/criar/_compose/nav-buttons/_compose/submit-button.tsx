@@ -4,51 +4,12 @@ import { mapNextStep } from "@app/auth/criar/page.utils";
 import { Button } from "@components";
 import { CreateAccountContext } from "@app/auth/criar/page.context";
 import { useFormStatus } from "react-dom";
-import { isValidEmail } from "@utils/regex";
-import { client } from "@services/client";
-import { IUser } from "common";
 
 export const SubmitButton = () => {
-  const { currentStep, setCurrentStep, user, setError, error } =
-    React.useContext(CreateAccountContext);
+  const { currentStep, setCurrentStep, setError, error, isLoadingEmailVerify } =
+    React.use(CreateAccountContext);
   const { pending } = useFormStatus();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
-	const [isLoadingEmailVerify, setIsLoadingEmailVerify] = React.useState(false);
-
-  React.useEffect(() => {
-    let timer: NodeJS.Timeout | null = null;
-    const getError = () => {
-      setError(null);
-      switch (currentStep) {
-        case CreateAccountSteps.CLASS:
-          if (!user.class) setError("Escolha uma classe para continuar");
-          break;
-        case CreateAccountSteps.NAME:
-          if (!user.name.trim()) setError("Digite seu nome para continuar");
-          break;
-        case CreateAccountSteps.EMAIL:
-          if (!user.email.trim()) return;
-          if (!isValidEmail(user.email)) return setError("E-mail inválido");
-					setIsLoadingEmailVerify(true);
-          timer = setTimeout(async () => {
-            const data = await client
-              .get<IUser[]>(`users?email=${user.email}`)
-              .then((res) => res.data);
-            if (data?.length) setError("Email já existe");
-						setIsLoadingEmailVerify(false);
-          }, 1000);
-          break;
-        default:
-          break;
-      }
-    };
-
-    getError();
-
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
-  }, [currentStep, user]);
 
   const handleClick = (e: MouseEvent) => {
     e.preventDefault();

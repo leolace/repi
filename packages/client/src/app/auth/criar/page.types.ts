@@ -32,5 +32,6 @@ export interface ICreateAccountContext {
 	setUser: React.Dispatch<React.SetStateAction<ICreateAccountUser>>;
 	error: null | string;
 	setError: React.Dispatch<React.SetStateAction<null | string>>;
+	isLoadingEmailVerify: boolean;
 }
 
