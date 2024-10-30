@@ -556,6 +556,7 @@
         "npm:dotenv@^16.4.5",
         "npm:express@^4.21.1",
         "npm:pg@^8.13.0",
+        "npm:uuid@^11.0.2",
         "npm:zod@^3.23.8"
       ]
     }

@@ -16,7 +16,8 @@
     "@types/deno": "^2.0.0",
     "@types/express": "^5.0.0",
     "@types/pg": "^8.11.10",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "express-async-errors": "^3.1.1"
   },
   "dependencies": {
     "express": "^4.21.1",

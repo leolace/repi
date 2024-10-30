@@ -5,7 +5,7 @@ import {
   searchParamsUserSchema,
 } from "../dtos/auth.dto.ts";
 import { authModel } from "../models/auth.model.ts";
-import { z } from "zod";
+import { ErrorE } from "../utils/error.ts";
 
 class AuthService {
   async getAllUsers() {
@@ -19,27 +19,35 @@ class AuthService {
     if (!data) return [];
 
     const searchedValues: Partial<IUser> = data;
-		
-		return authModel.findBy(searchedValues);
+		const users = await authModel.findBy(searchedValues);
+
+    return users[0];
   }
 
+	async findUsersBy(values: Record<string, any>) {
+		const { data } = searchParamsUserSchema.safeParse(values);
+		if (!data) return [];
+
+		const searchedValues: Partial<IUser> = data;
+
+		return authModel.findBy(searchedValues);
+	}
+
   async createUser(user: CreateUserDto) {
-    try {
-      const validatedUser = createUserSchema.parse(user);
+    const validatedUser = createUserSchema.parse(user);
 
-      const createdUser = await authModel.store(validatedUser);
+    const userAlreadyExists = await this.findUserBy({ email: user.email });
+		console.log(userAlreadyExists);
 
-      if ("password" in createdUser) {
-        delete createdUser.password;
-      }
+    if (userAlreadyExists)
+      throw new ErrorE(`E-mail ${user.email} is already in use.`, 400);
+    const createdUser = await authModel.store(validatedUser);
 
-      return createdUser;
-    } catch (e) {
-      if (e instanceof z.ZodError) {
-        return { error: e.errors };
-      }
-      return { error: e };
+    if ("password" in createdUser) {
+      delete createdUser.password;
     }
+
+    return createdUser;
   }
 }
 

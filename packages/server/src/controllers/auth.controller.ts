@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 export class AuthController {
   async getAllUsers(req: Request, res: Response) {
     if (Object.keys(req.query).length) {
-      const response = await authService.findUserBy(req.query);
+      const response = await authService.findUsersBy(req.query);
 			
 			res.json(response);
 			return;
