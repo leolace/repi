@@ -23,7 +23,7 @@ app.use([routes, authRoutes]);
 
 app.use((err: ErrorE, _: Request, res: Response, __: NextFunction) => {
   console.error(err.stack);
-  res.status(err.statusCode).json({ status: err.statusCode, error: err.message });
+  res.status(err.statusCode || 500).json({ status: err.statusCode, error: err.message });
 });
 
 app.listen(PORT, () => {

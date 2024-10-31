@@ -37,7 +37,6 @@ class AuthService {
     const validatedUser = createUserSchema.parse(user);
 
     const userAlreadyExists = await this.findUserBy({ email: user.email });
-		console.log(userAlreadyExists);
 
     if (userAlreadyExists)
       throw new ErrorE(`E-mail ${user.email} is already in use.`, 400);

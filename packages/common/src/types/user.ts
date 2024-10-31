@@ -10,3 +10,8 @@ export interface IUser {
 	email: string;
 	class: UserClassesEnum;
 };
+
+export interface ITag {
+	id: string;
+	name: string;
+}
