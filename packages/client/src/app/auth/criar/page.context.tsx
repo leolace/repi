@@ -52,8 +52,8 @@ export const CreateAccountProvider = ({
 					setIsLoadingEmailVerify(false);
           if (!user.email.trim()) return setError(" ");
           if (!isValidEmail(user.email)) return setError("E-mail inválido");
-					setIsLoadingEmailVerify(true);
           timer = setTimeout(async () => {
+						setIsLoadingEmailVerify(true);
             const data = await getUserByEmail(user.email);
             if (data?.length) setError("Email já existe");
             setIsLoadingEmailVerify(false);
