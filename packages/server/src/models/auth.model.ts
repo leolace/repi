@@ -33,10 +33,6 @@ class AuthModel {
 
     return rows[0];
   }
-
-  async getUserTags(userId: string) {
-    const { rows } = await dbClient.query<IUser & { tags: ITag[] }>("");
-  }
 }
 
 export const authModel = new AuthModel();
