@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --filter=client --filter=server run dev"
+    "dev": "pnpm --stream --filter=client --filter=server run dev"
   },
   "keywords": [],
   "author": "",

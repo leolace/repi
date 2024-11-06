@@ -6,14 +6,20 @@ import { CreateAccountContext } from "@app/auth/criar/page.context";
 import { useFormStatus } from "react-dom";
 
 export const SubmitButton = () => {
-  const { currentStep, setCurrentStep, setError, error, isLoadingEmailVerify } =
-    React.use(CreateAccountContext);
+  const {
+    currentStep,
+    setCurrentStep,
+    setError,
+    error,
+    isLoadingEmailVerify,
+    user,
+  } = React.use(CreateAccountContext);
   const { pending } = useFormStatus();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleClick = (e: MouseEvent) => {
     e.preventDefault();
-    setCurrentStep((prev) => mapNextStep[prev]);
+    setCurrentStep(mapNextStep(currentStep, user.class));
     setError(null);
   };
 

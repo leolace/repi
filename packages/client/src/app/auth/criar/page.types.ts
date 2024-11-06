@@ -1,11 +1,14 @@
 import { Class } from "@types";
+import { TagEnum } from "common";
 
 export enum CreateAccountSteps {
 	CLASS = "CLASS",
 	NAME = "NAME",
 	EMAIL = "EMAIL",
+	TAG = "TAG",
 	PASSWORD = "PASSWORD",
-	CONFIRM = "CONFIRM"
+	CONFIRM = "CONFIRM",
+	NOT_DEFINED = "NOT_DEFINED"
 }
 
 export interface CurrentStepData {
@@ -19,6 +22,7 @@ export interface ICreateAccountUser {
 	email: string;
 	password: string;
 	class: Class;
+	tags: TagEnum[] | null;
 };
 
 export interface ICreateAccountContext {
@@ -33,5 +37,6 @@ export interface ICreateAccountContext {
 	error: null | string;
 	setError: React.Dispatch<React.SetStateAction<null | string>>;
 	isLoadingEmailVerify: boolean;
+	clearUser: () => void;
 }
 

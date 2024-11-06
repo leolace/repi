@@ -7,13 +7,14 @@ import {
   ICreateAccountUser,
 } from "./page.types";
 import { Class } from "@types";
-import { isValidEmail } from "@utils/regex";
-import { getUserByEmail } from "@actions";
+import { isStrongPassword, isValidEmail } from "@utils/regex";
+import { getUserByEmail } from "@actions/user";
 
 const defaultCreateAccountUser: ICreateAccountUser = {
   name: "",
   email: "",
   password: "",
+  tags: null,
   class: Class.NAO_DEFINIDA,
 };
 
@@ -48,12 +49,15 @@ export const CreateAccountProvider = ({
         case CreateAccountSteps.NAME:
           if (!user.name.trim()) setError("Digite seu nome para continuar");
           break;
+			  case CreateAccountSteps.PASSWORD:
+          if (!user.password.trim()) setError("Digite uma senha valida");
+					if (!isStrongPassword(user.password)) setError("Digite uma senha mais segura");
+          break;
         case CreateAccountSteps.EMAIL:
-					setIsLoadingEmailVerify(false);
           if (!user.email.trim()) return setError(" ");
           if (!isValidEmail(user.email)) return setError("E-mail inválido");
+          setIsLoadingEmailVerify(true);
           timer = setTimeout(async () => {
-						setIsLoadingEmailVerify(true);
             const data = await getUserByEmail(user.email);
             if (data?.length) setError("Email já existe");
             setIsLoadingEmailVerify(false);
@@ -69,7 +73,11 @@ export const CreateAccountProvider = ({
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [currentStep, user]);
+  }, [user, currentStep]);
+
+  const clearUser = () => {
+    setUser(defaultCreateAccountUser);
+  };
 
   return (
     <CreateAccountContext.Provider
@@ -84,7 +92,8 @@ export const CreateAccountProvider = ({
         setUser,
         error,
         setError,
-				isLoadingEmailVerify
+        isLoadingEmailVerify,
+        clearUser,
       }}
     >
       {children}

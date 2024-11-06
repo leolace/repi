@@ -2,6 +2,7 @@ import { CreateUserDto, createUserSchema } from "./auth.dto.ts";
 import { authModel } from "./auth.model.ts";
 import { ErrorE } from "../../utils/error.ts";
 import { userService } from "../user/user.service.ts";
+import { tagService } from "../tag/tag.service.ts";
 
 class AuthService {
   async createUser(user: CreateUserDto) {
@@ -14,6 +15,8 @@ class AuthService {
     if (userAlreadyExists)
       throw new ErrorE(`E-mail ${user.email} is already in use.`, 400);
     const createdUser = await authModel.store(validatedUser);
+
+    if (user.tags) await tagService.assignTagToUser(user.tags, createdUser.id);
 
     if ("password" in createdUser) {
       delete createdUser.password;

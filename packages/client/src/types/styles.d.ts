@@ -1,4 +1,4 @@
-enum TagsEnum {
+enum HtmlTagsEnum {
   P = "p",
   SPAN = "span",
   DIV = "div",
@@ -31,6 +31,6 @@ enum TypesEnum {
 }
 
 type Sizes = `${SizesEnum}`;
-type Tags = `${TagsEnum}`;
+type Tags = `${HtmlTagsEnum}`;
 type Weights = `${WeightsEnum}`;
 type Types = `${TypesEnum}`;

@@ -1,6 +1,7 @@
 import { CreateAccountContext } from "@app/auth/criar/page.context";
 import { CreateAccountSteps } from "../../../page.types";
 import { Text, Card } from "@components";
+import { Class } from "@types";
 import React from "react";
 
 export const ConfirmStep = () => {
@@ -21,6 +22,7 @@ export const ConfirmStep = () => {
       <input type="hidden" value={user.email} name="email" />
 			<input type="hidden" value={user.password} name="password" />
       <input type="hidden" value={user.class} name="class" />
+			{user.class === Class.BIXO && <input type="hidden" value={user.tags || []} name="tags" />}
     </Card>
   );
 };

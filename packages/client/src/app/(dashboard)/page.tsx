@@ -1,4 +1,4 @@
-import { getUsers } from "@actions";
+import { getUsers } from "@actions/user";
 import React from "react";
 
 const Home = () => {

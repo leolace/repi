@@ -1,21 +1,26 @@
-"use server"
+"use server";
 import { client } from "@services/client";
+import { redirect } from "next/navigation";
 
 export const createAccountAction = async (formData: FormData) => {
   const name = formData.get("name")?.toString();
   const email = formData.get("email")?.toString();
   const classType = formData.get("class")?.toString();
   const password = formData.get("password")?.toString();
+  const tags = formData.get("tags")?.toString().split(",").filter(Boolean);
 
-  try {
-    if (!name || !email || !classType || !password) {
-			throw new Error("Fields are missing");
-		};
+  if (!name || !email || !classType || !password)
+    return { errors: "Something is missing" };
 
-    const res = await client.post("/users", { name, email, class: classType, password });
+  const res = await client.post("/auth", {
+    name,
+    email,
+    class: classType,
+    password,
+    tags,
+  });
 
-		return res.data;
-  } catch (e) {
-		console.error(e);
-	}
+  if (res.statusText !== "OK") return { errors: res.data, request: res };
+
+  redirect("/");
 };

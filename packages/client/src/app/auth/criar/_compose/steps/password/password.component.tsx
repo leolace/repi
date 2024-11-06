@@ -1,8 +1,8 @@
 import { CreateAccountContext } from "@app/auth/criar/page.context";
 import { InvisibleInput } from "@components/invisible-input";
 import { CreateAccountSteps } from "../../../page.types";
-import { EyeOff, Eye } from "lucide-react";
 import React from "react";
+import { ShowOrHidePassword } from "./_compose";
 
 export const PasswordStep = () => {
   const { setUser, user, currentStep } = React.use(CreateAccountContext);
@@ -23,9 +23,7 @@ export const PasswordStep = () => {
         name="password"
         autoFocus={currentStep === CreateAccountSteps.PASSWORD}
       />
-      <div onClick={() => setShow((prev) => !prev)} className="cursor-pointer p-3 hover:bg-gray-light rounded text-primary">
-        {show ? <Eye /> : <EyeOff />}
-      </div>
+      <ShowOrHidePassword show={show} setShow={setShow} />
     </div>
   );
 };

@@ -14,10 +14,10 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const buttonTypes: Record<Types, string> = {
-    primary: "bg-primary text-white border-2 border-primary",
+    primary: "bg-primary text-white ring-2 ring-primary",
     secondary:
-      "text-primary border-2 border-primary active:border-secondary active:text-secondary",
-    tertiary: "border",
+      "text-primary ring-2 ring-primary active:border-secondary active:text-secondary",
+    tertiary: "ring-2 ring-gray-light",
   };
 
 	const disabledStyle = disabled ? "opacity-75 cursor-not-allowed" : ""
@@ -25,7 +25,7 @@ export const Button = ({
 	
   return (
     <button
-      className={`py-1 px-4 outline-0 rounded-md font-semibold min-w-24 transition-colors ${buttonTypes[style]} ${mapTextSizes[size]} ${disabledStyle} ${loadingStyle} ${className}`}
+      className={`py-1 px-4 outline-0 rounded font-semibold min-w-24 transition-colors ${buttonTypes[style]} ${mapTextSizes[size]} ${disabledStyle} ${loadingStyle} ${className}`}
 			disabled={disabled || loading}
 			type={type}
 			ref={ref}

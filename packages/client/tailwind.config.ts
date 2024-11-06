@@ -29,6 +29,13 @@ const config: Config = {
         gray: "#CCC",
 				"gray-light": "#EEE",
       },
+			ringColor: {
+        primary: "#1C448E",
+        secondary: "#FF4E33",
+        carbon: "#212121",
+        gray: "#CCC",
+				"gray-light": "#EEE",
+      },
     },
   },
   plugins: [],
