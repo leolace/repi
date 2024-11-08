@@ -10,20 +10,25 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
+    "common": "workspace:*",
     "framer-motion": "12.0.0-alpha.0",
     "lucide-react": "^0.453.0",
     "next": "14.3.0-canary.59",
-    "react": "^19.0.0-beta-26f2496093-20240514",
-    "react-dom": "^19.0.0-beta-26f2496093-20240514",
-    "swr": "^2.2.5",
-		"common": "workspace:*"
+    "react": "19.0.0-rc-66855b96-20241106",
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "npm:types-react@19.0.0-alpha.5",
-    "@types/react-dom": "npm:types-react-dom@alpha",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc",
+    "eslint": "^9.0.0",
     "eslint-config-next": "14.2.13",
     "postcss": "^8",
     "tailwindcss": "^3.4.1"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc"
   }
 }

@@ -19,7 +19,7 @@ const defaultCreateAccountUser: ICreateAccountUser = {
 };
 
 export const CreateAccountContext = createContext<ICreateAccountContext>(
-  {} as ICreateAccountContext,
+  {} as ICreateAccountContext
 );
 
 export const CreateAccountProvider = ({
@@ -30,10 +30,10 @@ export const CreateAccountProvider = ({
   const [currentTitle, setCurrentTitle] = React.useState<string>("");
   const [currentSubtitle, setCurrentSubtitle] = React.useState<string>("");
   const [currentStep, setCurrentStep] = React.useState<CreateAccountSteps>(
-    CreateAccountSteps.CLASS,
+    CreateAccountSteps.CLASS
   );
   const [user, setUser] = React.useState<ICreateAccountUser>(
-    defaultCreateAccountUser,
+    defaultCreateAccountUser
   );
   const [error, setError] = React.useState<null | string>(null);
   const [isLoadingEmailVerify, setIsLoadingEmailVerify] = React.useState(false);
@@ -49,9 +49,10 @@ export const CreateAccountProvider = ({
         case CreateAccountSteps.NAME:
           if (!user.name.trim()) setError("Digite seu nome para continuar");
           break;
-			  case CreateAccountSteps.PASSWORD:
+        case CreateAccountSteps.PASSWORD:
           if (!user.password.trim()) setError("Digite uma senha valida");
-					if (!isStrongPassword(user.password)) setError("Digite uma senha mais segura");
+          if (!isStrongPassword(user.password))
+            setError("Digite uma senha mais segura");
           break;
         case CreateAccountSteps.EMAIL:
           if (!user.email.trim()) return setError(" ");
