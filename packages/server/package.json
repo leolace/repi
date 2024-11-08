@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "deno --allow-all --watch src/index.ts",
-    "serve": "deno serve src/index.ts",
+    "serve": "deno serve --allow-all src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },

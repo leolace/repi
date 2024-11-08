@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --stream --filter=client --filter=server run dev"
+    "dev": "pnpm --stream --filter=client --filter=server run dev",
+    "build": "pnpm --stream --filter=server run serve & pnpm --stream --filter=client run build"
   },
   "keywords": [],
   "author": "",
