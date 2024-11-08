@@ -25,7 +25,7 @@ jobs:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           APP_DIR: ${{ secrets.EC2_APP_DIR }}
         run: |
-          ssh -i ${{ secrets.key }} $EC2_USER@$EC2_HOST
+          ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST
           cd $APP_DIR
           git pull origin main
           npm install
