@@ -18,7 +18,8 @@
     "@types/express": "^5.0.0",
     "@types/pg": "^8.11.10",
     "dotenv": "^16.4.5",
-    "express-async-errors": "^3.1.1"
+    "express-async-errors": "^3.1.1",
+    "common": "workspace:*"
   },
   "dependencies": {
     "express": "^4.21.1",
