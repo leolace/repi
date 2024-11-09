@@ -28,10 +28,7 @@ jobs:
           APP_DIR: ${{ secrets.EC2_APP_DIR }}
         run: |
           ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
-          ls
-          cd repi
           git pull origin main
-          node -v
-          deno -v
           pnpm install
+          pnpm build
           EOF

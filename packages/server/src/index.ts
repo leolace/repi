@@ -5,8 +5,7 @@ import { dbClient } from "./db-client.ts";
 import { authRoutes, tagRoutes, userRoutes } from "./routes/index.ts";
 import { corsMiddleware } from "./middlewares/cors.middleware.ts";
 import { ErrorE } from "./utils/error.ts";
-
-const PORT = Deno.env.get("SERVER_PORT");
+import { env } from "./env.ts";
 
 try {
   await dbClient.connect();
@@ -22,9 +21,11 @@ app.use([authRoutes, tagRoutes, userRoutes]);
 
 app.use((err: ErrorE, _: Request, res: Response, __: NextFunction) => {
   console.error(err.stack);
-  res.status(err.statusCode || 500).json({ status: err.statusCode, error: err.message });
+  res
+    .status(err.statusCode || 500)
+    .json({ status: err.statusCode, error: err.message });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on http://localhost:${PORT}`);
+app.listen(env.PORT, () => {
+  console.log(`Server is listening on http://localhost:${env.PORT}`);
 });

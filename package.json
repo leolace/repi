@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --stream --filter=client --filter=server run dev",
+    "start:server": "pnpm --stream --filter=server run serve",
     "build": "pnpm --stream --filter=server run serve & pnpm --stream --filter=client run build"
   },
   "keywords": [],
