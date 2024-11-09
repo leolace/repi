@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "serve": "pnpm build && pnpm start"
   },
   "dependencies": {
     "axios": "^1.7.7",
@@ -19,15 +20,22 @@
     "swr": "^2.2.5"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.25.9",
     "@next/env": "^15.0.3",
+    "@next/eslint-plugin-next": "^15.0.3",
     "@types/node": "^20",
     "@types/react": "npm:types-react@rc",
     "@types/react-dom": "npm:types-react-dom@rc",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
     "babel-plugin-react-compiler": "19.0.0-beta-63b359f-20241101",
     "eslint": "^9.0.0",
-    "eslint-config-next": "14.2.13",
+    "eslint-config-next": "15.0.3",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "typescript-eslint": "^8.13.0"
   },
   "overrides": {
     "@types/react": "npm:types-react@rc",
