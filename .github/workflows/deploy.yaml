@@ -46,8 +46,8 @@ jobs:
 
       - name: Debug EC2_HOST
         run: | 
-          echo "EC2 Host is $EC2_HOST"
-          echo "EC2 User is $EC2_USER"
+          echo "EC2 Host is ${{ EC2_HOST }}"
+          echo "EC2 User is ${{ EC2_USER }}"
   
       - name: Rsync files to EC2
         run: |
