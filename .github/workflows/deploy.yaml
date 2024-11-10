@@ -43,17 +43,17 @@ jobs:
 
       - name: Run build
         run: pnpm build
-
-      - run: ssh-agent bash
-
-      - name: Debug EC2_HOST
-        run: | 
-          echo "EC2 Host is ${{ secrets.EC2_HOST }}"
-          echo "EC2 User is ${{ secrets.EC2_USER }}"
+      
+      - name: Setup environment variables
+        run: |
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
   
       - name: Rsync files to EC2
         run: |
-          rsync -avz --exclude '.git' --exclude 'node_modules' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:./repi
+          rsync -avz --exclude '.git' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:./repi
 
       # - name: Rsync
       #   uses: burnett01/rsync-deployments@7.0.1
