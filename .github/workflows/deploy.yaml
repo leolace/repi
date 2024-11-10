@@ -44,16 +44,20 @@ jobs:
 
       - run: ssh-agent bash
 
-      - name: Rsync
-        uses: burnett01/rsync-deployments@7.0.1
-        with:
-          switches: -avzr --delete --exclude 'node_modules' --exclude '.git'
-          path: .
-          remote_path: ./repi
-          remote_host: ${{ secrets.EC2_HOST }}
-          remote_port: 22
-          remote_user: ${{ secrets.EC2_USER }}
-          remote_key: ${{ secrets.SSH_KEY }}
+      - name: Rsync files to EC2
+        run: |
+          rsync -avz --exclude '.git' --exclude 'node_modules' ./ $EC2_USER@$EC2_HOST:./repi
+
+      # - name: Rsync
+      #   uses: burnett01/rsync-deployments@7.0.1
+      #   with:
+      #     switches: -avzr --delete --exclude 'node_modules' --exclude '.git'
+      #     path: .
+      #     remote_path: ./repi
+      #     remote_host: ${{ secrets.EC2_HOST }}
+      #     remote_port: 22
+      #     remote_user: ${{ secrets.EC2_USER }}
+      #     remote_key: ${{ secrets.SSH_KEY }}
 
       # - name: Deploy to EC2
       #   env:
