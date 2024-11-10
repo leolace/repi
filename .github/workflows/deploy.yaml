@@ -27,6 +27,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
           cd ./repi
           git pull origin main
-          pnpm install
-          sudo systemctl status repi.service
+          /home/ubuntu/.nvm/versions/node/v20.18.0/bin/pnpm install
+          sudo systemctl restart repi.service
           EOF
