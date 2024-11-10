@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/index.ts",
-    "start": "node dist/server/src/index.js",
+    "start": "pnpm dev",
     "build": "tsc"
   },
   "keywords": [],
