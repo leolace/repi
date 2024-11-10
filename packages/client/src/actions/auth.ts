@@ -12,12 +12,15 @@ export const createAccountAction = async (formData: FormData) => {
   if (!name || !email || !classType || !password)
     return { errors: "Something is missing" };
 
-  const res = await client.post("/auth", {
-    name,
-    email,
-    class: classType,
-    password,
-    tags,
+  const res = await client("/auth", {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      email,
+      class: classType,
+      password,
+      tags,
+    }),
   });
 
   if (res.statusText !== "OK") return { errors: res.data, request: res };

@@ -1,7 +1,5 @@
 "use client";
-import { getUser } from "@actions/session";
 import React from "react";
-import useSWR from "swr";
 
 interface ISessionContext {
   isAuth: boolean;

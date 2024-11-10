@@ -10,14 +10,12 @@
     "serve": "pnpm build && pnpm start"
   },
   "dependencies": {
-    "axios": "^1.7.7",
     "common": "workspace:*",
     "framer-motion": "12.0.0-alpha.0",
     "lucide-react": "^0.453.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-5c56b873-20241107",
-    "react-dom": "19.0.0-rc-5c56b873-20241107",
-    "swr": "^2.2.5"
+    "react-dom": "19.0.0-rc-5c56b873-20241107"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.9",
