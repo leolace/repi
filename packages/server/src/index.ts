@@ -20,7 +20,7 @@ app.use(corsMiddleware);
 app.use([authRoutes, tagRoutes, userRoutes]);
 
 app.use((err: ErrorE, _: Request, res: Response, __: NextFunction) => {
-  console.error(err.stack);
+  console.log(err.stack);
   res
     .status(err.statusCode || 500)
     .json({ status: err.statusCode, error: err.message });

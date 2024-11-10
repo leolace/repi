@@ -1,21 +1,21 @@
 import { tagModel } from "./tag.model.ts";
 import { ErrorE } from "../../utils/error.ts";
 import { userService } from "../user/user.service.ts";
-import { TagEnum } from "common";
+import { ITag, TagEnum } from "common";
 
 class TagService {
-  async findAllTags() {
+  async findAllTags(): Promise<ITag[]> {
     const tags = await tagModel.index();
 
     return tags;
   }
 
-  async assignTagToUser(tagName: TagEnum | TagEnum[], userId: string) {
+  async assignTagToUser(tagName: TagEnum | TagEnum[], userId: string): Promise<void> {
     const user = await userService.findUserBy({ id: userId });
     if (!user) throw new ErrorE("User not found", 400);
     const userTags = await this.getUserTags(userId);
 
-    const assignTag = async (tag: TagEnum) => {
+    const handleAssignTag = async (tag: TagEnum) => {
       const tagFounded = await tagModel.show({ name: tag });
       if (!tagFounded) throw new ErrorE("Tag not found", 400);
 
@@ -27,11 +27,11 @@ class TagService {
       await tagModel.assignTagToUser(tagFounded, userId);
     };
 
-    if (Array.isArray(tagName)) tagName.map(assignTag);
-    else assignTag(tagName);
+    if (Array.isArray(tagName)) await Promise.all(tagName.map(handleAssignTag));
+    else await handleAssignTag(tagName);
   }
 
-  async getUserTags(userId: string) {
+  async getUserTags(userId: string): Promise<ITag[]> {
     const userExists = await userService.findUserBy({ id: userId });
 
     if (!userExists) throw new ErrorE("User not found", 400);
@@ -41,17 +41,25 @@ class TagService {
     return userTags;
   }
 
-  async createTag(name: string) {
-    const tagAlreadyExists = await tagModel.show({ name: name.toUpperCase() });
+  async createTag(value: string | string[]): Promise<ITag[] | ITag> {
+    const handleCreateTags = async (value: string) => {
+      const tagAlreadyExists = await tagModel.show({
+        name: value.toUpperCase(),
+      });
+      if (tagAlreadyExists)
+        throw new ErrorE(`Tag ${value} already exists`, 400);
 
-    if (tagAlreadyExists) throw new ErrorE(`Tag ${name} already exists`, 400);
+      const tag = await tagModel.store(value.toUpperCase());
+      return tag;
+    };
 
-    const tag = await tagModel.store(name.toUpperCase());
+    if (Array.isArray(value))
+      return await Promise.all(value.map(handleCreateTags));
 
-    return tag;
+    return await handleCreateTags(value);
   }
 
-  async deleteTag(id: string) {
+  async deleteTag(id: string): Promise<void> {
     const tag = await tagModel.show({ id });
 
     if (!tag) throw new ErrorE("Tag not found");
