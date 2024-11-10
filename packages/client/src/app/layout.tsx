@@ -18,10 +18,10 @@ export default function RootLayout({
       <head>
         <title>REPI</title>
       </head>
-      <body className={`${rubik.className} w-full max-w-[60rem] min-h-dvh px-2 mx-auto flex flex-col`}>
+      <body className={`${rubik.className} w-full max-w-[60rem] px-2 mx-auto flex flex-col min-h-dvh`}>
         <SessionContextContext>
           <Header />
-          <main>{children}</main>
+          <main className="flex-1 flex">{children}</main>
         </SessionContextContext>
       </body>
     </html>

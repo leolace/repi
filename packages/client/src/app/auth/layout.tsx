@@ -4,7 +4,7 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <section className="flex-1 h-full flex items-center min-h-dvh">
+    <section className="flex items-center self-center w-full">
       {children}
     </section>
   );

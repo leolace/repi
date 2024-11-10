@@ -3,7 +3,7 @@ import { NextConfig } from "next";
 const nextConfig: NextConfig = {
   experimental: {
     typedRoutes: true,
-    reactCompiler: false
+    reactCompiler: true
   },
   eslint: {
     ignoreDuringBuilds: true
