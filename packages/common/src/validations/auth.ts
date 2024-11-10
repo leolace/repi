@@ -1,4 +1,4 @@
-import { UserClassesEnum } from "../types/index.ts";
+import { UserClassesEnum } from "../types/index";
 
 export const isUserClass = (value?: string): value is UserClassesEnum => {
   return Object.values(UserClassesEnum).includes(value as UserClassesEnum);

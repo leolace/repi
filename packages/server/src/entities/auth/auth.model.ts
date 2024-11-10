@@ -1,5 +1,5 @@
-import { CreateUserDto } from "./auth.dto.ts";
-import { dbClient } from "../../db-client.ts";
+import { CreateUserDto } from "./auth.dto";
+import { dbClient } from "../../db-client";
 import { IUser } from "common";
 import { v4 as uuid } from "uuid";
 

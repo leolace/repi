@@ -1,5 +1,5 @@
 import { ITag, TagEnum } from "common";
-import { dbClient } from "../../db-client.ts";
+import { dbClient } from "../../db-client";
 import { v4 as uuid } from "uuid";
 
 class TagModel {

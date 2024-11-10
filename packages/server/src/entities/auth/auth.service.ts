@@ -1,8 +1,8 @@
-import { CreateUserDto, createUserSchema } from "./auth.dto.ts";
-import { authModel } from "./auth.model.ts";
-import { ErrorE } from "../../utils/error.ts";
-import { userService } from "../user/user.service.ts";
-import { tagService } from "../tag/tag.service.ts";
+import { CreateUserDto, createUserSchema } from "./auth.dto";
+import { authModel } from "./auth.model";
+import { ErrorE } from "../../utils/error";
+import { userService } from "../user/user.service";
+import { tagService } from "../tag/tag.service";
 import { TagEnum } from "common";
 
 class AuthService {

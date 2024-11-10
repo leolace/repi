@@ -1,3 +1,3 @@
-export * from "./user.ts";
-export * from "./tag.ts";
+export * from "./user";
+export * from "./tag";
 

@@ -1,4 +1,4 @@
-import { authService } from "./auth.service.ts";
+import { authService } from "./auth.service";
 import { Request, Response } from "express";
 
 export class AuthController {

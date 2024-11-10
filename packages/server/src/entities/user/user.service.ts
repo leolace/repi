@@ -1,5 +1,5 @@
-import { userModel } from "./user.model.ts";
-import { searchParamsUserSchema } from "../auth/auth.dto.ts";
+import { userModel } from "./user.model";
+import { searchParamsUserSchema } from "../auth/auth.dto";
 import { IUser } from "common";
 
 class UserService {

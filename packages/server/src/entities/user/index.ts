@@ -1,3 +1,3 @@
-export * from "./user.controller.ts";
-export * from "./user.model.ts";
-export * from "./user.service.ts";
+export * from "./user.controller";
+export * from "./user.model";
+export * from "./user.service";

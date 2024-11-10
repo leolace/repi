@@ -1,3 +1,3 @@
-export * from "./auth.route.ts";
-export * from "./user.route.ts";
-export * from "./tag.route.ts";
+export * from "./auth.route";
+export * from "./user.route";
+export * from "./tag.route";

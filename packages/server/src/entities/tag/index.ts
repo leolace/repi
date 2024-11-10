@@ -1,3 +1,3 @@
-export * from "./tag.controller.ts";
-export * from "./tag.model.ts";
-export * from "./tag.service.ts";
+export * from "./tag.controller";
+export * from "./tag.model";
+export * from "./tag.service";

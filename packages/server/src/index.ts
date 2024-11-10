@@ -1,16 +1,17 @@
 import "dotenv/config";
 import "express-async-errors";
 import express, { NextFunction, Request, Response } from "express";
-import { dbClient } from "./db-client.ts";
-import { authRoutes, tagRoutes, userRoutes } from "./routes/index.ts";
-import { corsMiddleware } from "./middlewares/cors.middleware.ts";
-import { ErrorE } from "./utils/error.ts";
-import { env } from "./env.ts";
+import { dbClient } from "./db-client";
+import { authRoutes, tagRoutes, userRoutes } from "./routes/index";
+import { corsMiddleware } from "./middlewares/cors.middleware";
+import { ErrorE } from "./utils/error";
+import { env } from "./env";
 
 try {
   await dbClient.connect();
 } catch (e) {
-  console.error("Connection to DB failed.", e);
+  console.error(e);
+  throw new Error("Connection to DB failed.");
 }
 
 const app = express();

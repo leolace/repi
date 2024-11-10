@@ -1,6 +1,6 @@
-import { tagModel } from "./tag.model.ts";
-import { ErrorE } from "../../utils/error.ts";
-import { userService } from "../user/user.service.ts";
+import { tagModel } from "./tag.model";
+import { ErrorE } from "../../utils/error";
+import { userService } from "../user/user.service";
 import { ITag, TagEnum } from "common";
 
 class TagService {

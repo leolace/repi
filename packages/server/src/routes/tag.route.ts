@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { tagController } from "../entities/tag/index.ts";
+import { tagController } from "../entities/tag/index";
 
 const tagRoutes = Router();
 

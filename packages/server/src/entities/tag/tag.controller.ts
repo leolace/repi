@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { tagService } from "./tag.service.ts";
-import { ErrorE } from "../../utils/error.ts";
+import { tagService } from "./tag.service";
+import { ErrorE } from "../../utils/error";
 
 class TagController {
   async findAllTags(_: Request, res: Response) {

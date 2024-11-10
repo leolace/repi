@@ -1,5 +1,5 @@
 import { IUser } from "common";
-import { dbClient } from "../../db-client.ts";
+import { dbClient } from "../../db-client";
 
 class UserModel {
 	async findAll() {

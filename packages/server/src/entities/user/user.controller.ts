@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { userService } from "./user.service.ts";
-import { userModel } from "./user.model.ts";
+import { userService } from "./user.service";
+import { userModel } from "./user.model";
 
 class UserController {
   async getAllUsers(req: Request, res: Response) {

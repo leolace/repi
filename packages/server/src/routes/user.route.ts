@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { userController } from "../entities/user/user.controller.ts";
+import { userController } from "../entities/user/user.controller";
 
 const userRoutes = Router();
 
