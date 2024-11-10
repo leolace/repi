@@ -21,9 +21,12 @@ export const createAccountAction = async (formData: FormData) => {
       password,
       tags,
     }),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
-  if (res.statusText !== "OK") return { errors: res.data, request: res };
+  if (res.statusText !== "OK") return { errors: res.data, request: JSON.stringify(res) };
 
   redirect("/");
 };
