@@ -11,22 +11,53 @@ jobs:
       contents: read
     name: Deploy
     runs-on: ubuntu-latest
-
+    
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Deploy to EC2
-        env:
-          EC2_USER: ${{ secrets.EC2_USER }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          APP_DIR: ${{ secrets.EC2_APP_DIR }}
-        run: |
-          ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
-          cd ./repi
-          git pull origin main
-          /home/ubuntu/.nvm/versions/node/v20.18.0/bin/pnpm install
-          sudo systemctl restart repi.service
-          EOF
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Use Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run build
+        run: pnpm build
+      
+      - name: Rsync
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: -avzr --delete
+          path: .
+          remote_path: /home/ubuntu/repi
+          remote_host: ${{ secrets.EC2_HOST }}
+          remote_user: ${{ secrets.EC2_USER }}
+          remote_key: ${{ secrets.SSH_KEY }}
+
+      # - name: Deploy to EC2
+      #   env:
+      #     EC2_USER: ${{ secrets.EC2_USER }}
+      #     EC2_HOST: ${{ secrets.EC2_HOST }}
+      #     APP_DIR: ${{ secrets.EC2_APP_DIR }}
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
+      #     sudo systemctl restart repi.service
+      #     EOF

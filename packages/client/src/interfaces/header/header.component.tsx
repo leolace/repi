@@ -14,6 +14,7 @@ export const Header = ({ hideActions = false }: HeaderProps) => {
     <header className="py-2 flex justify-between items-center">
       <Link href="/">
         <Logo />
+        aaaaaaaa
       </Link>
 
       {renderHeaderActions()}
