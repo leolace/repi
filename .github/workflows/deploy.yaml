@@ -45,10 +45,11 @@ jobs:
       - name: Rsync
         uses: burnett01/rsync-deployments@7.0.1
         with:
-          switches: -avzr --delete
+          switches: -avzr --delete --exclude 'node_modules' --exclude '.git'
           path: .
-          remote_path: /home/ubuntu/repi
+          remote_path: ./repi
           remote_host: ${{ secrets.EC2_HOST }}
+          remote_port: 22
           remote_user: ${{ secrets.EC2_USER }}
           remote_key: ${{ secrets.SSH_KEY }}
 
