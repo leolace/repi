@@ -25,6 +25,7 @@ jobs:
           APP_DIR: ${{ secrets.EC2_APP_DIR }}
         run: |
           ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
+          cd ./repi
           git pull origin main
           pnpm install
           sudo systemctl status repi.service
