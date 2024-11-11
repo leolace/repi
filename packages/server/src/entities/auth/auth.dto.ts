@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TagEnum, UserClassesEnum } from "common";
+import { UserClassesEnum } from "common";
 
 export const createUserSchema = z.object({
   name: z.string().min(1, "O nome é obrigatório"),

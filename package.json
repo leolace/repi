@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --stream --filter=client --filter=server run dev",
-    "serve": "pnpm --parallel --stream --filter client --filter server run start",
-    "build": "pnpm --stream --filter=server run start & pnpm --stream --filter=client run build"
+    "build": "pnpm --filter server run dev & pnpm --filter client run build && pnpm --filter common run build && pnpm --filter server run build",
+    "serve": "pnpm --parallel --stream --filter client --filter server run start"
   },
   "keywords": [],
   "author": "",

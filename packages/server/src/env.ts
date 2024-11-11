@@ -5,4 +5,5 @@ export const env = {
   DB_HOST: process.env.DB_HOST,
   DB_URL: process.env.DB_URL,
   PORT: process.env.SERVER_PORT,
+  ENV: process.env.ENV,
 };

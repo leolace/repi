@@ -41,37 +41,27 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run build
-        run: pnpm build
-      
       - name: Setup environment variables
         run: |
+          echo $'\n' >> .env
           echo "DB_USER=${{ secrets.DB_USER }}" >> .env
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-  
+          echo "DB_PASSWORD='${{ secrets.DB_PASSWORD }}'" >> .env
+
+      - name: Run build
+        run: pnpm build
+
       - name: Rsync files to EC2
         run: |
           rsync -avz --exclude '.git' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:./repi
 
-      # - name: Rsync
-      #   uses: burnett01/rsync-deployments@7.0.1
-      #   with:
-      #     switches: -avzr --delete --exclude 'node_modules' --exclude '.git'
-      #     path: .
-      #     remote_path: ./repi
-      #     remote_host: ${{ secrets.EC2_HOST }}
-      #     remote_port: 22
-      #     remote_user: ${{ secrets.EC2_USER }}
-      #     remote_key: ${{ secrets.SSH_KEY }}
-
-      # - name: Deploy to EC2
-      #   env:
-      #     EC2_USER: ${{ secrets.EC2_USER }}
-      #     EC2_HOST: ${{ secrets.EC2_HOST }}
-      #     APP_DIR: ${{ secrets.EC2_APP_DIR }}
-      #   run: |
-      #     ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
-      #     sudo systemctl restart repi.service
-      #     EOF
+      - name: Update changes
+        env:
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          APP_DIR: ${{ secrets.EC2_APP_DIR }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
+          sudo systemctl restart repi.service
+          EOF

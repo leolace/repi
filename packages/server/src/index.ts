@@ -8,7 +8,7 @@ import { ErrorE } from "./utils/error";
 import { env } from "./env";
 
 try {
-  await dbClient.connect();
+  dbClient.connect();
 } catch (e) {
   console.error(e);
   throw new Error("Connection to DB failed.");
