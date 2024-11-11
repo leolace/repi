@@ -55,7 +55,7 @@ jobs:
 
       - name: Rsync files to EC2
         run: |
-          rsync -avz --exclude '.git' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:./repi
+          rsync -avz --exclude '.git' --exclude '**/node_modules' --exclude 'packages/*/src' ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:./repi
 
       - name: Update changes
         env:
