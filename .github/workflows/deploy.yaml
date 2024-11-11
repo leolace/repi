@@ -48,6 +48,7 @@ jobs:
           echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
           echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
           echo "DB_PASSWORD='${{ secrets.DB_PASSWORD }}'" >> .env
+          echo "DB_PASSWORD='${{ secrets.DB_PASSWORD }}'" >> teste
           echo "ENV=prod" >> .env
 
       - name: Run build
