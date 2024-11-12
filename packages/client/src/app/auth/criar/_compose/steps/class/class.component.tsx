@@ -18,7 +18,7 @@ export const ClassStep = () => {
   };
 
   return (
-    <div className="flex gap-6">
+    <div className="flex gap-2 flex-col sm:flex-row">
       {CARD_CLASSES.map(({ type, title, subtitle }) => (
         <Card
           className={`cursor-pointer flex-1 w-full ${user.class === type ? "bg-primary hover:bg-primary text-white" : "hover:bg-gray-100"}`}

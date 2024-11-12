@@ -8,7 +8,7 @@ export const InvisibleInput = ({
 }: InvisibleInputProps) => {
   return (
     <input
-      className={`outline-none ${mapTextSizes[size]} ${className}`}
+      className={`outline-none max-w-full w-full ${mapTextSizes[size]} ${className}`}
       {...props}
     />
   );
