@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --stream --filter=client --filter=server run dev",
-    "build:server": "pnpm --filter server run build",
-    "build:client": "pnpm --filter client run build",
+    "build:common": "pnpm --filter common run build",
+    "build:server": "pnpm build:common && pnpm --filter server run build",
+    "build:client": "pnpm build:common && pnpm --filter client run build",
     "start:server": "pnpm --filter server run start",
     "start:client": "pnpm --filter client run start"
   },
