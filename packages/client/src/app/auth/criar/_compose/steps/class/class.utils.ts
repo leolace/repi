@@ -1,13 +1,13 @@
-import { Class } from "@types";
+import { UserClassesEnum } from "common";
 
 export const CARD_CLASSES = [
   {
-    type: Class.BIXO,
+    type: UserClassesEnum.BIXO,
     title: "Bixo",
     subtitle: "Quero encontrar uma república",
   },
   {
-    type: Class.REPUBLICA,
+    type: UserClassesEnum.REPUBLICA,
     title: "República",
     subtitle: "Quero divulgar minha república",
   },

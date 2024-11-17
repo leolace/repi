@@ -8,7 +8,7 @@ import {
   TagStep,
 } from "./_compose";
 import { CreateAccountSteps, CurrentStepData } from "./page.types";
-import { Class } from "@types";
+import { UserClassesEnum } from "common";
 
 export const mapCurrentStepData: Record<CreateAccountSteps, CurrentStepData> = {
   [CreateAccountSteps.CLASS]: {
@@ -50,7 +50,7 @@ export const mapCurrentStepData: Record<CreateAccountSteps, CurrentStepData> = {
 
 export const mapNextStep = (
   currentStep: CreateAccountSteps,
-  userClass: Class = Class.NAO_DEFINIDA,
+  userClass: UserClassesEnum = UserClassesEnum.NAO_DEFINIDA,
 ) => {
   const steps: Record<
     Partial<CreateAccountSteps>,
@@ -65,7 +65,7 @@ export const mapNextStep = (
     [CreateAccountSteps.TAG]: CreateAccountSteps.NOT_DEFINED,
   };
 
-  if (userClass === Class.BIXO) {
+  if (userClass === UserClassesEnum.BIXO) {
     steps[CreateAccountSteps.NAME] = CreateAccountSteps.TAG;
     steps[CreateAccountSteps.TAG] = CreateAccountSteps.EMAIL;
   }
@@ -75,7 +75,7 @@ export const mapNextStep = (
 
 export const mapPrevStep = (
   currentStep: CreateAccountSteps,
-  userClass: Class = Class.NAO_DEFINIDA,
+  userClass: UserClassesEnum = UserClassesEnum.NAO_DEFINIDA,
 ) => {
   const steps: Record<CreateAccountSteps, CreateAccountSteps> = {
     [CreateAccountSteps.CLASS]: CreateAccountSteps.CLASS,
@@ -87,7 +87,7 @@ export const mapPrevStep = (
     [CreateAccountSteps.NOT_DEFINED]: CreateAccountSteps.CLASS,
   };
 
-  if (userClass === Class.BIXO) {
+  if (userClass === UserClassesEnum.BIXO) {
     steps[CreateAccountSteps.EMAIL] = CreateAccountSteps.TAG;
     steps[CreateAccountSteps.TAG] = CreateAccountSteps.NAME;
   }

@@ -1,8 +1,8 @@
 import { CreateAccountContext } from "@app/auth/criar/page.context";
 import { CreateAccountSteps } from "../../../page.types";
 import { Text, Card } from "@components";
-import { Class } from "@types";
 import React from "react";
+import { UserClassesEnum } from "common";
 
 export const ConfirmStep = () => {
   const { user, setCurrentStep } = React.use(CreateAccountContext);
@@ -20,9 +20,11 @@ export const ConfirmStep = () => {
       </Text>
       <input type="hidden" value={user.name} name="name" />
       <input type="hidden" value={user.email} name="email" />
-			<input type="hidden" value={user.password} name="password" />
+      <input type="hidden" value={user.password} name="password" />
       <input type="hidden" value={user.class} name="class" />
-			{user.class === Class.BIXO && <input type="hidden" value={user.tags || []} name="tags" />}
+      {user.class === UserClassesEnum.BIXO && (
+        <input type="hidden" value={user.tags || []} name="tags" />
+      )}
     </Card>
   );
 };

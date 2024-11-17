@@ -20,7 +20,6 @@ export const SubmitButton = () => {
   const handleClick = (e: MouseEvent) => {
     e.preventDefault();
     setCurrentStep(mapNextStep(currentStep, user.class));
-    setError(null);
   };
 
   React.useEffect(() => {
@@ -42,9 +41,9 @@ export const SubmitButton = () => {
       <Button
         onClick={handleClick}
         type="button"
-        disabled={Boolean(error)}
+        disabled={error?.[currentStep] !== false}
         ref={buttonRef}
-        loading={isLoadingEmailVerify}
+        loading={currentStep === CreateAccountSteps.EMAIL && isLoadingEmailVerify} // TODO: map form loadings
       >
         Avançar
       </Button>
