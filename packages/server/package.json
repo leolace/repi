@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/pg": "^8.11.10",
     "dotenv": "^16.4.5",
@@ -19,6 +20,7 @@
     "tsx": "^4.19.2"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "common": "workspace:*",
     "express": "^4.21.1",
     "pg": "^8.13.0",
