@@ -3,19 +3,21 @@
 import React, { createContext } from "react";
 import {
   CreateAccountSteps,
+  FormError,
   ICreateAccountContext,
   ICreateAccountUser,
 } from "./page.types";
-import { Class } from "@types";
 import { isStrongPassword, isValidEmail } from "@utils/regex";
 import { getUserByEmail } from "@actions/user";
+import { useDebouncedFetch } from "@hooks/use-debounced-fetch";
+import { IUser, TagEnum, UserClassesEnum } from "common";
 
 const defaultCreateAccountUser: ICreateAccountUser = {
   name: "",
   email: "",
   password: "",
   tags: null,
-  class: Class.NAO_DEFINIDA,
+  class: UserClassesEnum.NAO_DEFINIDA,
 };
 
 export const CreateAccountContext = createContext<ICreateAccountContext>(
@@ -35,50 +37,73 @@ export const CreateAccountProvider = ({
   const [user, setUser] = React.useState<ICreateAccountUser>(
     defaultCreateAccountUser
   );
-  const [error, setError] = React.useState<null | string>(null);
-  const [isLoadingEmailVerify, setIsLoadingEmailVerify] = React.useState(false);
+  const [error, setError] = React.useState<FormError | null>(null);
+  const { deboundedFetch, isLoading } = useDebouncedFetch<IUser[]>(1000);
 
-  React.useEffect(() => {
-    let timer: NodeJS.Timeout | null = null;
-    const getError = () => {
-      setError(null);
+  const handleForm = React.useCallback(
+    async (value: string) => {
       switch (currentStep) {
         case CreateAccountSteps.CLASS:
-          if (!user.class) setError("Escolha uma classe para continuar");
+          if (value !== user.class) clearUser();
+          setCurrentStepUserData({ class: value as UserClassesEnum });
+          if (!value) return setCurrentStepError(true);
           break;
         case CreateAccountSteps.NAME:
-          if (!user.name.trim()) setError("Digite seu nome para continuar");
+          setCurrentStepUserData({ name: value });
+          if (!value.trim())
+            return setCurrentStepError("Digite seu nome para continuar");
           break;
         case CreateAccountSteps.PASSWORD:
-          if (!user.password.trim()) setError("Digite uma senha valida");
-          if (!isStrongPassword(user.password))
-            setError("Digite uma senha mais segura");
+          setCurrentStepUserData({ password: value });
+          if (!value.trim())
+            return setCurrentStepError("Digite uma senha valida");
+          if (!isStrongPassword(value))
+            return setCurrentStepError("Digite uma senha mais segura");
           break;
         case CreateAccountSteps.EMAIL:
-          if (!user.email.trim()) return setError(" ");
-          if (!isValidEmail(user.email)) return setError("E-mail inválido");
-          setIsLoadingEmailVerify(true);
-          timer = setTimeout(async () => {
-            const data = await getUserByEmail(user.email);
-            if (data?.length) setError("Email já existe");
-            setIsLoadingEmailVerify(false);
-          }, 1000);
+          setCurrentStepUserData({ email: value });
+          const result = await deboundedFetch(() => getUserByEmail(value));
+          if (result?.length)
+            return setCurrentStepError("Este e-mail já está em uso");
+
+          if (!value.trim()) return setCurrentStepError(true);
+
+          if (!isValidEmail(value))
+            return setCurrentStepError("E-mail inválido");
+          break;
+        case CreateAccountSteps.TAG:
+          const userTags: TagEnum[] = user.tags?.includes(value as TagEnum)
+            ? user.tags.filter((tag) => tag !== value)
+            : user.tags?.concat(value as TagEnum) || [value as TagEnum];
+
+          setCurrentStepUserData({ tags: userTags });
           break;
         default:
           break;
       }
-    };
-
-    getError();
-
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
-  }, [user, currentStep]);
+      enableNextStep();
+    },
+    [user, currentStep]
+  );
 
   const clearUser = () => {
     setUser(defaultCreateAccountUser);
   };
+
+  const enableNextStep = () => {
+    setError((prev) => ({ ...prev, [currentStep]: false }));
+  };
+
+  const setCurrentStepError = (error: string | null | boolean) => {
+    setError((prev) => ({
+      ...prev,
+      [currentStep]: error,
+    }));
+  };
+
+  function setCurrentStepUserData(value: Partial<ICreateAccountUser>) {
+    setUser((prev) => ({ ...prev, ...value }));
+  }
 
   return (
     <CreateAccountContext.Provider
@@ -93,8 +118,10 @@ export const CreateAccountProvider = ({
         setUser,
         error,
         setError,
-        isLoadingEmailVerify,
+        isLoadingEmailVerify: isLoading,
+        handleForm,
         clearUser,
+        enableNextStep,
       }}
     >
       {children}

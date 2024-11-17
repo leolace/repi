@@ -26,7 +26,8 @@ export const createAccountAction = async (formData: FormData) => {
     },
   });
 
-  if (res.statusText !== "OK") return { errors: res.data, request: JSON.stringify(res) };
+  if (res.statusText !== "OK")
+    return { errors: res.data, request: JSON.stringify(res) };
 
   redirect("/");
 };

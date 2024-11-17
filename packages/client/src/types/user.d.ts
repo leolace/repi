@@ -1,8 +1,8 @@
-import { Class } from "./enums";
+import { UserClassesEnum } from "common";
 
 interface IUser {
 	id: string;
 	name: string;
 	email: string;
-	class: Class;
+	class: UserClassesEnum;
 }

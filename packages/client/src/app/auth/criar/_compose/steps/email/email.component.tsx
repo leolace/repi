@@ -6,7 +6,8 @@ import React from "react";
 import { Spinner } from "@components/spinner";
 
 export const EmailStep = () => {
-  const { setUser, user, error, currentStep, isLoadingEmailVerify } = React.use(CreateAccountContext);
+  const { user, error, currentStep, isLoadingEmailVerify, handleForm } =
+    React.use(CreateAccountContext);
 
   return (
     <div>
@@ -16,17 +17,17 @@ export const EmailStep = () => {
           placeholder="Digite seu email aqui"
           type="email"
           className="flex-1"
-          onChange={({ currentTarget }) =>
-            setUser((prev) => ({ ...prev, email: currentTarget.value }))
+          onChange={async ({ currentTarget }) =>
+            await handleForm(currentTarget.value)
           }
           required
-          value={user.email}
+          defaultValue={user.email || ""}
           name="name"
           autoFocus={currentStep === CreateAccountSteps.EMAIL}
         />
-				{isLoadingEmailVerify && <Spinner />}
+        {isLoadingEmailVerify && <Spinner />}
       </div>
-      {error && <Text>{error}</Text>}
+      {error?.EMAIL && <Text>{error.EMAIL}</Text>}
     </div>
   );
 };
