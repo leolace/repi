@@ -17,8 +17,28 @@ export default function RootLayout({
     <html lang="pt-BR">
       <head>
         <title>REPI</title>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/_public/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/_public/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/_public/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/_public/site.webmanifest" />
       </head>
-      <body className={`${rubik.className} w-full max-w-[60rem] px-2 mx-auto flex flex-col min-h-dvh`}>
+      <body
+        className={`${rubik.className} w-full max-w-[60rem] px-2 mx-auto flex flex-col min-h-dvh`}
+      >
         <SessionContextContext>
           <Header />
           <main className="flex-1 flex">{children}</main>
