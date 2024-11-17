@@ -3,6 +3,7 @@ import { authModel } from "./auth.model";
 import { ErrorE } from "../../utils/error";
 import { userService } from "../user/user.service";
 import { tagService } from "../tag/tag.service";
+import bcrypt from "bcrypt";
 
 class AuthService {
   async createUser(user: CreateUserDto) {
@@ -11,9 +12,10 @@ class AuthService {
     const userAlreadyExists = await userService.findUserBy({
       email: user.email,
     });
-
     if (userAlreadyExists)
       throw new ErrorE(`E-mail ${user.email} is already in use.`, 400);
+
+    validatedUser.password = await bcrypt.hash(validatedUser.password, 10);
     const createdUser = await authModel.store(validatedUser);
 
     if (user.tags) await tagService.assignTagToUser(user.tags, createdUser.id);
