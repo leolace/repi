@@ -9,4 +9,5 @@ if [[ "$VERCEL_ENV" == "production" || "$VERCEL_ENV" == "preview" ]] ; then
 else
   # Don't build
   echo "🛑 - Build skipped"
+  exit 1
 fi
