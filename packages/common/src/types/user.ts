@@ -19,3 +19,7 @@ export interface ITag {
 export interface IUserWithTags extends IUser {
   tags: ITag[] | null;
 }
+
+export interface ILogin {
+  token: string;
+}

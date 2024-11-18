@@ -7,6 +7,12 @@ export class AuthController {
 
     res.json(response).status(201);
   }
+
+  async login(req: Request, res: Response) {
+    const token = await authService.login(req.body);
+
+    res.set("Content-Type", "text/plain").send(token).status(200);
+  }
 }
 
 export const authController = new AuthController();

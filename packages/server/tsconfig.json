@@ -15,7 +15,8 @@
     "target": "ES2017",
     "resolveJsonModule": true,
     "paths": {
-      "common": ["../common/src"]
+      "common": ["../common/src"],
+      "@*": ["./src/*"]
     }
   }, 
   "include": ["./src"]

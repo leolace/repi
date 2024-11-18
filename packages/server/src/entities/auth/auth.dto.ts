@@ -6,8 +6,18 @@ export const createUserSchema = z.object({
   email: z.string().email("E-mail inválido"),
   class: z.nativeEnum(UserClassesEnum),
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
-  tags: z.enum<TagEnum, [TagEnum]>(Object.keys(TagEnum) as [TagEnum]).array().optional(),
+  tags: z
+    .enum<TagEnum, [TagEnum]>(Object.keys(TagEnum) as [TagEnum])
+    .array()
+    .optional(),
 });
+
+export const loginUserSchema = z.object({
+  email: z.string(),
+  password: z.string(),
+});
+
+export type LoginUserDto = z.infer<typeof loginUserSchema>;
 
 export const searchParamsUserSchema = z.object({
   id: z.string().optional(),

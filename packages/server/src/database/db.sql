@@ -52,3 +52,9 @@ ON CONFLICT (name) DO NOTHING;
 INSERT INTO tag (id, name)
 VALUES (uuid_generate_v4(), 'PETS')
 ON CONFLICT (name) DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS sessions (
+	id TEXT NOT NULL PRIMARY KEY,
+	user_id CHAR(36) NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+	token TEXT NOT NULL
+);

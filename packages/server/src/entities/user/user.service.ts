@@ -9,7 +9,7 @@ class UserService {
     return res;
   }
 
-  async findUserBy(values: Record<string, any>) {
+  async findUserBy(values: Partial<IUser>) {
     const { data } = searchParamsUserSchema.safeParse(values);
     if (!data) return;
 

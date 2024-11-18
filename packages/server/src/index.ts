@@ -11,7 +11,7 @@ try {
   dbClient.connect();
 } catch (e) {
   console.error(e);
-  throw new Error("Connection to DB failed.");
+  throw new ErrorE("Connection to DB failed.");
 }
 
 const app = express();
