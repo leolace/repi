@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css";
 import { Rubik } from "next/font/google";
 import { SessionContextContext } from "@contexts/session";
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1 flex">{children}</main>
         </SessionContextContext>
+        <SpeedInsights />
       </body>
     </html>
   );
