@@ -11,7 +11,7 @@ export class AuthController {
   async login(req: Request, res: Response) {
     const token = await authService.login(req.body);
 
-    res.set("Content-Type", "text/plain").send(token).status(200);
+    res.json({ token }).status(200);
   }
 }
 

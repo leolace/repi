@@ -11,14 +11,18 @@ type ClientType<T> = Response & { data: T };
 
 export const client = async <T>(
   path: string,
-  options?: RequestInit
-): Promise<ClientType<T>> => {
+  { headers, ...options }: RequestInit = {}
+): Promise<ClientType<T | ErrorResponse>> => {
   const request = await fetch(process.env.NEXT_PUBLIC_SERVER_URL! + path, {
     method: "GET",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
     ...options,
   });
 
-  const data: T = await request.json();
+  const data: T | ErrorResponse = await request.json();
 
-  return { ...request, statusText: request.statusText, data };
+  return { ...request, statusText: request.statusText, data, ok: request.ok };
 };

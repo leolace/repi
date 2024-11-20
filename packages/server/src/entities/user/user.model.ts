@@ -17,7 +17,7 @@ class UserModel {
       })
       .join(" AND ");
 
-    const query = `SELECT email, class, id FROM "user" WHERE ${searchedValues}`;
+    const query = `SELECT email, class, id, name FROM "user" WHERE ${searchedValues}`;
     const { rows } = await dbClient.query<IUser>(query, Object.values(values));
 
     console.log(rows);

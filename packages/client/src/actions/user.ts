@@ -7,6 +7,11 @@ export const getUsers = async () => {
   return users.data;
 };
 
+export const getUserById = async (userId: string) => {
+  const users = await client<IUser[]>(`/users?id=${userId}`);
+  return users.data;
+};
+
 export const getUserByEmail = async (email: string) => {
   const users = await client<IUser[]>(`/users?email=${email}`);
   return users.data;

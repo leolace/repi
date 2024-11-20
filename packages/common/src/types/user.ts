@@ -20,6 +20,11 @@ export interface IUserWithTags extends IUser {
   tags: ITag[] | null;
 }
 
-export interface ILogin {
+export interface IToken {
   token: string;
+}
+
+export interface IUserJWTPayload {
+  userId: string;
+  class: UserClassesEnum;
 }

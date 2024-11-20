@@ -37,7 +37,7 @@ export const CreateAccountProvider = ({
   children: React.ReactNode;
 }) => {
   const [form, formDispatch] = React.useReducer(formReducer, defaultForm);
-  const { debouncedFunction, isLoading } = useDebounced<Promise<IUser[]>>(1000);
+  const { debouncedFunction } = useDebounced<Promise<IUser[]>>(1000);
 
   function formReducer(state: FormState, action: FormActions): FormState {
     switch (action.type) {

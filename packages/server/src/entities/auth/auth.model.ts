@@ -1,9 +1,7 @@
 import { CreateUserDto, LoginUserDto } from "./auth.dto";
 import { dbClient } from "@db-client";
-import { ILogin, IUser } from "common";
+import { IToken, IUser } from "common";
 import { v4 as uuid } from "uuid";
-import jwt from "jsonwebtoken";
-import { env } from "@env";
 
 class AuthModel {
   async store(user: CreateUserDto) {
@@ -15,11 +13,8 @@ class AuthModel {
     return rows[0];
   }
 
-  async login(userId: string) {
-    const token = jwt.sign({ userId: userId }, env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-    const { rows } = await dbClient.query<ILogin>(
+  async login(userId: string, token: string) {
+    const { rows } = await dbClient.query<IToken>(
       "INSERT INTO sessions(id, user_id, token) VALUES($1, $2, $3) RETURNING token",
       [uuid(), userId, token]
     );

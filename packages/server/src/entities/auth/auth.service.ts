@@ -10,6 +10,9 @@ import { userService } from "../user/user.service";
 import { tagService } from "../tag/tag.service";
 import bcrypt from "bcrypt";
 import { userModel } from "@entities/user";
+import jwt from "jsonwebtoken";
+import { env } from "@env";
+import { IUserJWTPayload } from "common";
 
 class AuthService {
   async createUser(user: CreateUserDto) {
@@ -35,22 +38,28 @@ class AuthService {
 
   async login(user: LoginUserDto): Promise<string> {
     const validatedLogin = loginUserSchema.parse(user);
-    
+
     const userExists = await userService.findUserBy({
       email: validatedLogin.email,
     });
 
     if (!userExists) throw new ErrorE("Credenciais inválidas", 400);
-    
+
     const passwordMatch = await bcrypt.compare(
       validatedLogin.password,
       await userModel.getPassword(userExists.id)
     );
-    console.log(validatedLogin, await userModel.getPassword(userExists.id), userExists, passwordMatch);
-    
     if (!passwordMatch) throw new ErrorE("Credenciais inválidas", 400);
 
-    const { token } = await authModel.login(userExists.id);
+    const generatedToken = jwt.sign(
+      { userId: userExists.id, class: userExists.class } as IUserJWTPayload,
+      env.JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    const { token } = await authModel.login(userExists.id, generatedToken);
 
     return token;
   }
