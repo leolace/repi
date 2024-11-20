@@ -1,3 +1,4 @@
+import { isErrorResponse } from "@utils/is-error-response";
 import React from "react";
 
 export function useDebounced<T>(
@@ -9,7 +10,7 @@ export function useDebounced<T>(
   const timerRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const debouncedFunction = React.useCallback(
-    async (func: () => T) => {
+    async (func: () => Promise<T | ErrorResponse>) => {
       if (timerRef.current) clearTimeout(timerRef.current);
       setIsLoading(true);
       setResult(null);
@@ -17,6 +18,8 @@ export function useDebounced<T>(
       return new Promise<T | null>((resolve) => {
         timerRef.current = setTimeout(async () => {
           const data = await func();
+          if (isErrorResponse(data))
+            throw new Error(`erro: ${data.error} status: ${data.status}`);
           setResult(data);
           setIsLoading(false);
           resolve(data);
