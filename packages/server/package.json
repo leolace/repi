@@ -5,6 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "serve": "tsx src/index.ts",
     "start": "pnpm dev",
     "tsc": "tsc -b --noEmit",
     "build": "tsc"
