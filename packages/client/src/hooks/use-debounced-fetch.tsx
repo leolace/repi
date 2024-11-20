@@ -1,6 +1,6 @@
 import React from "react";
 
-export function useDebouncedFetch<T>(
+export function useDebounced<T>(
   delay: number,
   resetDependencies: unknown[] = []
 ) {
@@ -8,15 +8,15 @@ export function useDebouncedFetch<T>(
   const [isLoading, setIsLoading] = React.useState(false);
   const timerRef = React.useRef<NodeJS.Timeout | null>(null);
 
-  const deboundedFetch = React.useCallback(
-    async (fetchFunction: () => Promise<T>) => {
+  const debouncedFunction = React.useCallback(
+    async (func: () => T) => {
       if (timerRef.current) clearTimeout(timerRef.current);
       setIsLoading(true);
       setResult(null);
 
       return new Promise<T | null>((resolve) => {
         timerRef.current = setTimeout(async () => {
-          const data = await fetchFunction();
+          const data = await func();
           setResult(data);
           setIsLoading(false);
           resolve(data);
@@ -33,5 +33,5 @@ export function useDebouncedFetch<T>(
     };
   }, resetDependencies);
 
-  return { deboundedFetch, isLoading, result };
+  return { debouncedFunction, isLoading, result };
 }

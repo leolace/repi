@@ -4,10 +4,33 @@ import { InvisibleInput } from "@components/invisible-input";
 import { CreateAccountSteps } from "../../../page.types";
 import React from "react";
 import { Spinner } from "@components/spinner";
+import { isValidEmail } from "common";
 
 export const EmailStep = () => {
-  const { user, error, currentStep, isLoadingEmailVerify, handleForm } =
-    React.use(CreateAccountContext);
+  const { form, formDispatch, checkEmailAvailability } = React.use(CreateAccountContext);
+
+  React.useLayoutEffect(() => {
+    if (!form.user.email)
+      formDispatch({ type: "SET_ERROR", key: "EMAIL", value: true });
+  }, []);
+
+  const handleChange = async ({
+    currentTarget: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    formDispatch({
+      type: "SET_USER_FIELD",
+      key: "email",
+      value,
+    });
+    if (!isValidEmail(value))
+      return formDispatch({
+        type: "SET_ERROR",
+        key: "EMAIL",
+        value: "E-mail inválido",
+      });
+
+    await checkEmailAvailability(value);
+  };
 
   return (
     <div>
@@ -17,17 +40,15 @@ export const EmailStep = () => {
           placeholder="Digite seu email aqui"
           type="email"
           className="flex-1"
-          onChange={async ({ currentTarget }) =>
-            await handleForm(currentTarget.value)
-          }
+          onChange={handleChange}
           required
-          defaultValue={user.email || ""}
+          defaultValue={form.user.email || ""}
           name="name"
-          autoFocus={currentStep === CreateAccountSteps.EMAIL}
+          autoFocus={form.currentStep === CreateAccountSteps.EMAIL}
         />
-        {isLoadingEmailVerify && <Spinner />}
+        {form.loadings.EMAIL && <Spinner />}
       </div>
-      {error?.EMAIL && <Text>{error.EMAIL}</Text>}
+      {form.errors?.EMAIL && <Text>{form.errors.EMAIL}</Text>}
     </div>
   );
 };

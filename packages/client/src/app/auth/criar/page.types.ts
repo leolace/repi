@@ -21,23 +21,40 @@ export interface ICreateAccountUser extends Omit<IUserWithTags, "id" | "tags"> {
   tags: TagEnum[] | null;
 }
 
-export type FormError = Partial<
-  Record<CreateAccountSteps, string | null | false>
->;
+export type FormError = Partial<Record<CreateAccountSteps, string | boolean>>;
+
+export type FormLoading = Partial<Record<CreateAccountSteps, boolean>>;
+
+export type FormActions =
+  | {
+      type: "SET_USER_FIELD";
+      key: keyof ICreateAccountUser;
+      value: ICreateAccountUser[keyof ICreateAccountUser];
+      resetError?: boolean
+    }
+  | { type: "CLEAR_USER" }
+  | {
+      type: "SET_ERROR";
+      key: keyof typeof CreateAccountSteps;
+      value: string | boolean;
+    }
+  | {
+      type: "SET_LOADING";
+      key: keyof typeof CreateAccountSteps;
+      value: boolean;
+    }
+  | { type: "SET_CURRENT_STEP"; value: CreateAccountSteps }
+  | { type: "RESET_ERROR" };
+
+export type FormState = {
+  user: ICreateAccountUser;
+  errors: FormError;
+  loadings: FormLoading;
+  currentStep: CreateAccountSteps;
+};
 
 export interface ICreateAccountContext {
-  currentTitle: string;
-  setCurrentTitle: React.Dispatch<React.SetStateAction<string>>;
-  currentSubtitle: string;
-  setCurrentSubtitle: React.Dispatch<React.SetStateAction<string>>;
-  currentStep: CreateAccountSteps;
-  setCurrentStep: React.Dispatch<React.SetStateAction<CreateAccountSteps>>;
-  user: ICreateAccountUser;
-  setUser: React.Dispatch<React.SetStateAction<ICreateAccountUser>>;
-  error: null | FormError;
-  setError: React.Dispatch<React.SetStateAction<null | FormError>>;
-  isLoadingEmailVerify: boolean;
-  clearUser: () => void;
-  handleForm: (value: string) => Promise<void>;
-  enableNextStep: () => void;
+  form: FormState;
+  formDispatch: React.ActionDispatch<[action: FormActions]>;
+  checkEmailAvailability: (value: string) => Promise<void>
 }

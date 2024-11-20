@@ -4,19 +4,28 @@ import { InvisibleInput } from "@components/invisible-input";
 import React from "react";
 
 export const NameStep = () => {
-  const { user, currentStep, handleForm } = React.use(CreateAccountContext);
+  const { form, formDispatch } = React.use(CreateAccountContext);
+
+  React.useLayoutEffect(() => {
+    if (!form.user.name)
+      formDispatch({ type: "SET_ERROR", key: "NAME", value: true });
+  }, []);
 
   return (
     <InvisibleInput
       size="3xl"
       placeholder="Digite seu nome aqui"
       className="min-w-full"
-      onChange={async ({ currentTarget }) =>
-        await handleForm(currentTarget.value)
+      onChange={({ currentTarget }) =>
+        formDispatch({
+          type: "SET_USER_FIELD",
+          key: "name",
+          value: currentTarget.value,
+        })
       }
       required
-      defaultValue={user.name || ""}
-      autoFocus={currentStep === CreateAccountSteps.NAME}
+      defaultValue={form.user.name || ""}
+      autoFocus={form.currentStep === CreateAccountSteps.NAME}
       name="name"
     />
   );

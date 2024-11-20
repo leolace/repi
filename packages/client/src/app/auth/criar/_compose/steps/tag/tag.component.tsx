@@ -4,17 +4,30 @@ import { TagEnum } from "common";
 import React from "react";
 
 export const TagStep = () => {
-  const { user, handleForm, enableNextStep } = React.use(CreateAccountContext);
+  const { form, formDispatch } = React.use(CreateAccountContext);
 
-  React.useEffect(() => enableNextStep(), []);
+  const handleClick = (key: TagEnum) => {
+    const value: TagEnum[] = form.user.tags?.includes(key)
+      ? form.user.tags.filter((tag) => tag !== key)
+      : form.user.tags?.concat(key) || [key];
+
+    formDispatch({
+      type: "SET_USER_FIELD",
+      key: "tags",
+      value,
+    });
+  };
+
   return (
     <div className="flex flex-wrap gap-5">
       {Object.entries(TagEnum).map(([key, value]) => (
         <Button
           type="button"
           key={key}
-          style={user.tags?.includes(key as TagEnum) ? "primary" : "tertiary"}
-          onClick={async () => await handleForm(key)}
+          style={
+            form.user.tags?.includes(key as TagEnum) ? "primary" : "tertiary"
+          }
+          onClick={() => handleClick(key as TagEnum)}
         >
           {value}
         </Button>

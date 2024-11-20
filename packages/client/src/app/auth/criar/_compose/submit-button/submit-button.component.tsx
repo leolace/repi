@@ -1,3 +1,5 @@
+"use client"
+
 import React, { MouseEvent } from "react";
 import { CreateAccountSteps } from "@app/auth/criar/page.types";
 import { mapNextStep } from "@app/auth/criar/page.utils";
@@ -6,20 +8,16 @@ import { CreateAccountContext } from "@app/auth/criar/page.context";
 import { useFormStatus } from "react-dom";
 
 export const SubmitButton = () => {
-  const {
-    currentStep,
-    setCurrentStep,
-    setError,
-    error,
-    isLoadingEmailVerify,
-    user,
-  } = React.use(CreateAccountContext);
+  const { form, formDispatch } = React.use(CreateAccountContext);
   const { pending } = useFormStatus();
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleClick = (e: MouseEvent) => {
     e.preventDefault();
-    setCurrentStep(mapNextStep(currentStep, user.class));
+    formDispatch({
+      type: "SET_CURRENT_STEP",
+      value: mapNextStep(form.currentStep, form.user.class),
+    });
   };
 
   React.useEffect(() => {
@@ -36,14 +34,13 @@ export const SubmitButton = () => {
     };
   }, []);
 
-  if (currentStep !== CreateAccountSteps.CONFIRM) {
+  if (form.currentStep !== CreateAccountSteps.CONFIRM) {
     return (
       <Button
         onClick={handleClick}
         type="button"
-        disabled={error?.[currentStep] !== false}
+        disabled={!!form.errors[form.currentStep] || form.loadings[form.currentStep]}
         ref={buttonRef}
-        loading={currentStep === CreateAccountSteps.EMAIL && isLoadingEmailVerify} // TODO: map form loadings
       >
         Avançar
       </Button>

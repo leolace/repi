@@ -7,16 +7,16 @@ import { NavButtons } from "..";
 import { CreateAccountContext } from "../../page.context";
 
 export const Content = () => {
-  const { currentStep } = React.use(CreateAccountContext);
+  const { form } = React.use(CreateAccountContext);
 
   return (
     <div className={"gap-12 grid min-w-full w-full"}>
       <PageTitle
-        title={mapCurrentStepData[currentStep].title}
-        subtitle={mapCurrentStepData[currentStep].subtitle}
+        title={mapCurrentStepData[form.currentStep].title}
+        subtitle={mapCurrentStepData[form.currentStep].subtitle}
         titleSize="2xl"
       />
-      {mapCurrentStepData[currentStep].component}
+      {mapCurrentStepData[form.currentStep].component}
       <NavButtons />
     </div>
   );

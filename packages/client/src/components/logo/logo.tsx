@@ -6,7 +6,7 @@ import { SessionContext } from "@contexts/session";
 const LETTERS = ["R", "E", "P", "I"];
 
 export const Logo = () => {
-  const { logoHovered, setLogoHovered } = React.useContext(SessionContext);
+  const [ logoHovered, setLogoHovered ] = React.useState(false);
 
   return (
     <AnimatePresence mode="wait">
