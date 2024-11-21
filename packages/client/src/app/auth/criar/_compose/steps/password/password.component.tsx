@@ -9,6 +9,11 @@ export const PasswordStep = () => {
   const { form, formDispatch } = React.use(CreateAccountContext);
   const [show, setShow] = React.useState(false);
 
+  React.useLayoutEffect(() => {
+    if (!form.user.password)
+      formDispatch({ type: "SET_ERROR", key: "PASSWORD", value: true });
+  }, []);
+
   const handleChange = async ({
     currentTarget: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,8 +28,8 @@ export const PasswordStep = () => {
       type: "SET_USER_FIELD",
       key: "password",
       value: value,
+      resetError: true,
     });
-    formDispatch({ type: "RESET_ERROR" });
   };
 
   return (

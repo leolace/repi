@@ -29,7 +29,11 @@ const Entrar = () => {
         <PasswordInput />
       </div>
       <div className="flex justify-between items-center">
-        {isErrorResponse(state?.errors) && <p className="text-red-500">{state.errors.error}</p>}
+        <div>
+          {isErrorResponse(state?.errors) && (
+            <p className="text-red-500">{state.errors.error}</p>
+          )}
+        </div>
         <Button type="submit" loading={isPending}>
           Fazer login
         </Button>
