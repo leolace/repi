@@ -6,7 +6,7 @@ import React from "react";
 import { Spinner } from "@components/spinner";
 import { isValidEmail } from "common";
 
-export const EmailStep = () => {
+const EmailStep = () => {
   const { form, formDispatch, checkEmailAvailability } = React.use(CreateAccountContext);
 
   React.useLayoutEffect(() => {
@@ -52,3 +52,5 @@ export const EmailStep = () => {
     </div>
   );
 };
+
+export default EmailStep;

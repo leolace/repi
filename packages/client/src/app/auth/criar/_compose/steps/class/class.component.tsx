@@ -4,7 +4,7 @@ import { Card, CardSubtitle, CardTitle } from "@components";
 import { CARD_CLASSES } from "./class.utils";
 import { UserClassesEnum } from "common";
 
-export const ClassStep = () => {
+const ClassStep = () => {
   const { form, formDispatch } = React.use(CreateAccountContext);
 
   React.useLayoutEffect(() => {
@@ -31,3 +31,5 @@ export const ClassStep = () => {
     </div>
   );
 };
+
+export default ClassStep;
