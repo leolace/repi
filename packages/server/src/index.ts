@@ -5,7 +5,7 @@ import { dbClient } from "./db-client";
 import { authRoutes, tagRoutes, userRoutes } from "./routes/index";
 import { corsMiddleware } from "./middlewares/cors.middleware";
 import { ErrorE } from "./utils/error";
-import { env } from "./env";
+import { env } from "common";
 
 try {
   dbClient.connect();

@@ -2,12 +2,16 @@
 import "server-only";
 import { client } from "@services/client";
 import { parseFormData } from "@utils/parse-formdata";
-import { IToken, UserClassesEnum } from "common";
+import { env, IToken, IUserJWTPayload, UserClassesEnum } from "common";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { isErrorResponse } from "@utils/is-error-response";
+import jwt from "jsonwebtoken";
+import * as jose from "jose";
 
-export const createAccountAction = async (formData: FormData) => {
+console.log(env);
+
+export async function createAccountAction(formData: FormData) {
   const name = parseFormData(formData, "name");
   const email = parseFormData(formData, "email");
   const classType = parseFormData(formData, "class");
@@ -33,9 +37,54 @@ export const createAccountAction = async (formData: FormData) => {
     return { errors: res.data, request: JSON.stringify(res) };
 
   redirect("/");
-};
+}
 
-export const login = async (_: unknown, formData: FormData) => {
+export async function setSessionCookie(session: string) {
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  const c = await cookies();
+  console.log("SETANDO COOOKIES");
+  c.set("session", session, {
+    httpOnly: true,
+    secure: true,
+    expires: expiresAt,
+    sameSite: "lax",
+    path: "/",
+  });
+}
+
+export async function verifySession() {
+  const c = await cookies();
+  const sessionCookie = c.get("session")?.value;
+  if (!sessionCookie) return null;
+  let isValidSession: null | IUserJWTPayload = null;
+
+  try {
+    const encodedSecret = new TextEncoder().encode(env.JWT_SECRET);
+    const result = await jose.jwtVerify<IUserJWTPayload>(
+      sessionCookie,
+      encodedSecret
+    );
+    isValidSession = result.payload;
+  } catch (e) {
+    console.log(e);
+    isValidSession = null;
+  }
+
+  return isValidSession;
+}
+
+export async function getSession() {
+  const session = await verifySession();
+
+  if (!session) {
+    await logOut();
+    return null;
+  }
+
+  return session;
+}
+
+export async function login(_: unknown, formData: FormData) {
   const email = parseFormData(formData, "email");
   const password = parseFormData(formData, "password");
 
@@ -50,15 +99,16 @@ export const login = async (_: unknown, formData: FormData) => {
   if (!res.ok || isErrorResponse(res.data))
     return { errors: res.data, request: JSON.stringify(res) };
 
-  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  const c = await cookies();
-  c.set("session", res.data.token, {
-    httpOnly: true,
-    secure: true,
-    expires: expiresAt,
-    sameSite: "lax",
-    path: "/",
-  });
-
+  await setSessionCookie(res.data.token);
   redirect("/");
-};
+}
+
+export async function deleteSessionCookie() {
+  console.log("TESTEEEEEEEEEEEEEee");
+  (await cookies()).delete("session");
+}
+
+export async function logOut() {
+  await deleteSessionCookie();
+  redirect("/");
+}

@@ -11,8 +11,7 @@ import { tagService } from "../tag/tag.service";
 import bcrypt from "bcrypt";
 import { userModel } from "@entities/user";
 import jwt from "jsonwebtoken";
-import { env } from "@env";
-import { IUserJWTPayload } from "common";
+import { IUserJWTPayload, env } from "common";
 
 class AuthService {
   async createUser(user: CreateUserDto) {
