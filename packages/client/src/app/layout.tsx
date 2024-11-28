@@ -1,7 +1,6 @@
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { Rubik } from "next/font/google";
-import { SessionContextContext } from "@contexts/session";
 import { Header } from "@interfaces";
 
 const rubik = Rubik({
@@ -9,23 +8,19 @@ const rubik = Rubik({
   subsets: ["latin"],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: React.PropsWithChildren) {
   return (
     <html lang="pt-BR">
       <head>
         <title>REPI</title>
       </head>
       <body
-        className={`${rubik.className} w-full max-w-[60rem] px-2 mx-auto flex flex-col min-h-dvh`}
+        className={`${rubik.className} w-full max-w-[60rem] px-2 mx-auto flex flex-col min-h-dvh gap-12`}
       >
-        <SessionContextContext>
-          <Header />
-          <main className="flex-1 flex">{children}</main>
-        </SessionContextContext>
+        <Header />
+        <main className="flex-1 flex">{children}</main>
         <SpeedInsights />
       </body>
     </html>

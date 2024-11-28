@@ -3,7 +3,7 @@ import { Button } from "@components";
 import { TagEnum } from "common";
 import React from "react";
 
-export const TagStep = () => {
+const TagStep = () => {
   const { form, formDispatch } = React.use(CreateAccountContext);
 
   const handleClick = (key: TagEnum) => {
@@ -35,3 +35,5 @@ export const TagStep = () => {
     </div>
   );
 };
+
+export default TagStep;

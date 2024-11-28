@@ -3,7 +3,7 @@ import { CreateAccountSteps } from "@app/auth/criar/page.types";
 import { InvisibleInput } from "@components/invisible-input";
 import React from "react";
 
-export const NameStep = () => {
+const NameStep = () => {
   const { form, formDispatch } = React.use(CreateAccountContext);
 
   React.useLayoutEffect(() => {
@@ -30,3 +30,5 @@ export const NameStep = () => {
     />
   );
 };
+
+export default NameStep;

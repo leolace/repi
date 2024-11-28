@@ -1,14 +1,22 @@
 import React from "react";
-import {
-  ClassStep,
-  ConfirmStep,
-  NameStep,
-  PasswordStep,
-  EmailStep,
-  TagStep,
-} from "./_compose";
 import { CreateAccountSteps, CurrentStepData } from "./page.types";
 import { UserClassesEnum } from "common";
+import dynamic from "next/dynamic";
+
+const ClassStep = dynamic(
+  () => import("./_compose/steps/class/class.component")
+);
+const NameStep = dynamic(() => import("./_compose/steps/name/name.component"));
+const TagStep = dynamic(() => import("./_compose/steps/tag/tag.component"));
+const EmailStep = dynamic(
+  () => import("./_compose/steps/email/email.component")
+);
+const PasswordStep = dynamic(
+  () => import("./_compose/steps/password/password.component")
+);
+const ConfirmStep = dynamic(
+  () => import("./_compose/steps/confirm/confirm.component")
+);
 
 export const mapCurrentStepData: Record<CreateAccountSteps, CurrentStepData> = {
   [CreateAccountSteps.CLASS]: {
@@ -50,7 +58,7 @@ export const mapCurrentStepData: Record<CreateAccountSteps, CurrentStepData> = {
 
 export const mapNextStep = (
   currentStep: CreateAccountSteps,
-  userClass: UserClassesEnum = UserClassesEnum.NAO_DEFINIDA,
+  userClass: UserClassesEnum = UserClassesEnum.NAO_DEFINIDA
 ) => {
   const steps: Record<
     Partial<CreateAccountSteps>,
@@ -75,7 +83,7 @@ export const mapNextStep = (
 
 export const mapPrevStep = (
   currentStep: CreateAccountSteps,
-  userClass: UserClassesEnum = UserClassesEnum.NAO_DEFINIDA,
+  userClass: UserClassesEnum = UserClassesEnum.NAO_DEFINIDA
 ) => {
   const steps: Record<CreateAccountSteps, CreateAccountSteps> = {
     [CreateAccountSteps.CLASS]: CreateAccountSteps.CLASS,

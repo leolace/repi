@@ -4,7 +4,7 @@ import { Text, Card } from "@components";
 import React from "react";
 import { TagEnum, UserClassesEnum } from "common";
 
-export const ConfirmStep = () => {
+const ConfirmStep = () => {
   const { form, formDispatch } = React.use(CreateAccountContext);
 
   return (
@@ -69,3 +69,5 @@ export const ConfirmStep = () => {
     </Card>
   );
 };
+
+export default ConfirmStep;

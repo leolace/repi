@@ -5,7 +5,7 @@ import React from "react";
 import { ShowOrHidePassword } from "./_compose";
 import { isStrongPassword } from "@utils/regex";
 
-export const PasswordStep = () => {
+const PasswordStep = () => {
   const { form, formDispatch } = React.use(CreateAccountContext);
   const [show, setShow] = React.useState(false);
 
@@ -49,3 +49,5 @@ export const PasswordStep = () => {
     </div>
   );
 };
+
+export default PasswordStep;
