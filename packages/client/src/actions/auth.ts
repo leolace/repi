@@ -6,7 +6,6 @@ import { env, IToken, IUserJWTPayload, UserClassesEnum } from "common";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { isErrorResponse } from "@utils/is-error-response";
-import jwt from "jsonwebtoken";
 import * as jose from "jose";
 
 console.log(env);
@@ -104,7 +103,6 @@ export async function login(_: unknown, formData: FormData) {
 }
 
 export async function deleteSessionCookie() {
-  console.log("TESTEEEEEEEEEEEEEee");
   (await cookies()).delete("session");
 }
 

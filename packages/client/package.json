@@ -13,7 +13,6 @@
     "@vercel/speed-insights": "^1.1.0",
     "common": "workspace:*",
     "framer-motion": "12.0.0-alpha.0",
-    "jose": "^5.9.6",
     "lucide-react": "^0.453.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-5c56b873-20241107",
