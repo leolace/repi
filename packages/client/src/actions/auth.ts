@@ -8,8 +8,6 @@ import { cookies } from "next/headers";
 import { isErrorResponse } from "@utils/is-error-response";
 import * as jose from "jose";
 
-console.log(env);
-
 export async function createAccountAction(formData: FormData) {
   const name = parseFormData(formData, "name");
   const email = parseFormData(formData, "email");
@@ -41,7 +39,7 @@ export async function createAccountAction(formData: FormData) {
 export async function setSessionCookie(session: string) {
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
   const c = await cookies();
-  console.log("SETANDO COOOKIES");
+
   c.set("session", session, {
     httpOnly: true,
     secure: true,

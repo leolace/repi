@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const response = NextResponse.next();
-  console.log(pathname);
 
   response.headers.set("x-pathname", pathname);
   const isSessionValid = await verifySession();
