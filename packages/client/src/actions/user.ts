@@ -1,7 +1,7 @@
 "use server";
 import { client } from "@services/client";
-import { IUser } from "common";
-import { getSession, verifySession } from "./auth";
+import { ISelfUser, IUser, UserClassesEnum } from "common";
+import { verifySession } from "./auth";
 import { isErrorResponse } from "@utils/is-error-response";
 
 export const getUsers = async () => {
@@ -9,7 +9,7 @@ export const getUsers = async () => {
   return users.data;
 };
 
-export async function getUser(): Promise<IUser | null> {
+export async function getSelf(): Promise<ISelfUser | null> {
   const session = await verifySession();
   if (!session) return null;
 
@@ -17,7 +17,7 @@ export async function getUser(): Promise<IUser | null> {
 
   if (isErrorResponse(user)) return null;
 
-  return user[0];
+  return { ...user[0], session };
 }
 
 export async function getUserById(userId: string) {
@@ -27,5 +27,10 @@ export async function getUserById(userId: string) {
 
 export const getUserByEmail = async (email: string) => {
   const users = await client<IUser[]>(`/users?email=${email}`);
+  return users.data;
+};
+
+export const getUserByClass = async (classType: UserClassesEnum) => {
+  const users = await client<IUser[]>(`/users?class=${classType}`);
   return users.data;
 };

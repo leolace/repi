@@ -28,3 +28,5 @@ export interface IUserJWTPayload {
   userId: string;
   class: UserClassesEnum;
 }
+
+export type ISelfUser = IUser & { session: IUserJWTPayload };
