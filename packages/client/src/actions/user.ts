@@ -3,13 +3,14 @@ import { client } from "@services/client";
 import { ISelfUser, IUser, UserClassesEnum } from "common";
 import { verifySession } from "./auth";
 import { isErrorResponse } from "@utils/is-error-response";
+import { cache } from "react";
 
 export const getUsers = async () => {
   const users = await client<IUser[]>("/users");
   return users.data;
 };
 
-export async function getSelf(): Promise<ISelfUser | null> {
+export const getSelf = cache(async (): Promise<ISelfUser | null> => {
   const session = await verifySession();
   if (!session) return null;
 
@@ -17,8 +18,10 @@ export async function getSelf(): Promise<ISelfUser | null> {
 
   if (isErrorResponse(user)) return null;
 
-  return { ...user[0], session };
-}
+  const selfUser: ISelfUser = { ...user[0], session };
+
+  return selfUser;
+});
 
 export async function getUserById(userId: string) {
   const users = await client<IUser[]>(`/users?id=${userId}`);
