@@ -33,6 +33,7 @@ export async function createAccountAction(formData: FormData) {
   if (res.statusText !== "OK")
     return { errors: res.data, request: JSON.stringify(res) };
 
+  await loginUser({ email, password });
   redirect("/");
 }
 
@@ -81,10 +82,13 @@ export async function getSession() {
   return session;
 }
 
-export async function login(_: unknown, formData: FormData) {
-  const email = parseFormData(formData, "email");
-  const password = parseFormData(formData, "password");
-
+async function loginUser({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
   const res = await client<IToken>("/auth/login", {
     method: "POST",
     body: JSON.stringify({
@@ -97,6 +101,13 @@ export async function login(_: unknown, formData: FormData) {
     return { errors: res.data, request: JSON.stringify(res) };
 
   await setSessionCookie(res.data.token);
+}
+
+export async function loginFormData(_: unknown, formData: FormData) {
+  const email = parseFormData(formData, "email");
+  const password = parseFormData(formData, "password");
+
+  await loginUser({ email, password });
   redirect("/");
 }
 
