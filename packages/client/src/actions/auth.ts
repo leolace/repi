@@ -34,7 +34,6 @@ export async function createAccountAction(formData: FormData) {
     return { errors: res.data, request: JSON.stringify(res) };
 
   await loginUser({ email, password });
-  redirect("/");
 }
 
 export async function setSessionCookie(session: string) {
@@ -101,14 +100,14 @@ async function loginUser({
     return { errors: res.data, request: JSON.stringify(res) };
 
   await setSessionCookie(res.data.token);
+  redirect("/");
 }
 
 export async function loginFormData(_: unknown, formData: FormData) {
   const email = parseFormData(formData, "email");
   const password = parseFormData(formData, "password");
 
-  await loginUser({ email, password });
-  redirect("/");
+  return await loginUser({ email, password });
 }
 
 export async function deleteSessionCookie() {

@@ -1,7 +1,7 @@
-import { getSelf, getUserByClass, getUsers } from "@actions/user";
+import { getSelf, getUserByClass } from "@actions/user";
 import { isErrorResponse } from "@utils/is-error-response";
 import React from "react";
-import { UserCard } from "./user-card";
+import { UserCard } from "../(dashboard)/user-card";
 import { UserClassesEnum } from "common";
 import { RepCard } from "@interfaces/rep-card/rep-card.compoenent";
 
