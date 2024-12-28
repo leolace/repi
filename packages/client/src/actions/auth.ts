@@ -105,11 +105,11 @@ export async function deleteSessionCookie() {
 
 export async function logout() {
   const session = await verifySession();
-  await deleteSessionCookie();
   await client("/auth/logout", {
     method: "DELETE",
     body: JSON.stringify({ userId: session?.userId }),
   });
+  await deleteSessionCookie();
   redirect("/");
 }
 

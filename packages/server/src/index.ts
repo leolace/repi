@@ -6,7 +6,6 @@ import { authRoutes, tagRoutes, userRoutes } from "./routes/index";
 import { corsMiddleware } from "./middlewares/cors.middleware";
 import { ErrorE } from "./utils/error";
 import { env } from "common";
-import { authMiddleware } from "@middlewares/auth.middleware";
 
 try {
   dbClient.connect();
@@ -20,17 +19,16 @@ app.use(express.json());
 app.use(corsMiddleware);
 
 // unauthenticated endpoints
-app.use([authRoutes]);
+app.use([authRoutes, userRoutes]);
 
 // authenticated endpoints
-app.use(authMiddleware);
-app.use([tagRoutes, userRoutes]);
+app.use([tagRoutes]);
 
-app.use((err: ErrorE, _: Request, res: Response, __: NextFunction) => {
-  console.log(err.stack);
+app.use((err: ErrorE, req: Request, res: Response, __: NextFunction) => {
+  console.log(req.url, err.stack);
   res
     .status(err.statusCode || 500)
-    .json({ status: err.statusCode, error: err.message });
+    .json({ status: err.statusCode, error: err.message, path: req.url });
 });
 
 app.listen(env.PORT, () => {
