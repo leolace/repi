@@ -1,3 +1,5 @@
+import { getSessionToken } from "@actions";
+
 if (!process.env.NEXT_PUBLIC_SERVER_URL)
   throw new Error("SERVER_URL env not set.");
 
@@ -18,6 +20,7 @@ export const client = async <T>(
     headers: {
       ...headers,
       "Content-Type": "application/json",
+      authorization: await getSessionToken() || "",
     },
     ...options,
   });

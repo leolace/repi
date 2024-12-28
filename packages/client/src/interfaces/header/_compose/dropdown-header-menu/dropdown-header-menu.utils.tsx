@@ -5,7 +5,7 @@ import {
   MenuOptionsRoute,
 } from "./dropdown-header-menu.types";
 import { LogOut, School, Settings, Sparkle, UserRound } from "lucide-react";
-import { logOut } from "@actions";
+import { logout } from "@actions";
 
 export const menuDropdownOptions: Record<UserClassesEnum, MenuOption[]> = {
   [UserClassesEnum.BIXO]: [
@@ -40,7 +40,7 @@ export const commonMenuDropdownOptions: MenuOption[] = [
     name: "Sair",
     style: "text-red-600",
     Icon: LogOut,
-    onClick: () => logOut(),
+    onClick: () => logout(),
   },
 ];
 

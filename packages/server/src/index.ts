@@ -6,6 +6,7 @@ import { authRoutes, tagRoutes, userRoutes } from "./routes/index";
 import { corsMiddleware } from "./middlewares/cors.middleware";
 import { ErrorE } from "./utils/error";
 import { env } from "common";
+import { authMiddleware } from "@middlewares/auth.middleware";
 
 try {
   dbClient.connect();
@@ -18,7 +19,12 @@ const app = express();
 app.use(express.json());
 app.use(corsMiddleware);
 
-app.use([authRoutes, tagRoutes, userRoutes]);
+// unauthenticated endpoints
+app.use([authRoutes]);
+
+// authenticated endpoints
+app.use(authMiddleware);
+app.use([tagRoutes, userRoutes]);
 
 app.use((err: ErrorE, _: Request, res: Response, __: NextFunction) => {
   console.log(err.stack);

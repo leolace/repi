@@ -24,6 +24,13 @@ export class AuthController {
       .json({ token })
       .status(200);
   }
+
+  async logout(req: Request, res: Response) {
+    const { userId } = req.body;
+    await authService.logout(userId);
+
+    res.json({ userId }).status(200);
+  }
 }
 
 export const authController = new AuthController();

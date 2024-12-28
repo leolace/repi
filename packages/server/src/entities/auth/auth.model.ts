@@ -1,4 +1,4 @@
-import { CreateUserDto, LoginUserDto } from "./auth.dto";
+import { CreateUserDto, UserSession } from "./auth.dto";
 import { dbClient } from "@db-client";
 import { IToken, IUser } from "common";
 import { v4 as uuid } from "uuid";
@@ -20,6 +20,21 @@ class AuthModel {
     );
 
     return rows[0];
+  }
+
+  async getUserSession(userId: string) {
+    const { rows } = await dbClient.query<UserSession>(
+      "SELECT * FROM sessions WHERE user_id = $1",
+      [userId]
+    );
+
+    return rows[0];
+  }
+
+  async deleteSession(sessionId: string) {
+    await dbClient.query("DELETE FROM sessions WHERE id = $1", [sessionId]);
+
+    return;
   }
 }
 

@@ -70,17 +70,6 @@ export async function verifySession() {
   return isValidSession;
 }
 
-export async function getSession() {
-  const session = await verifySession();
-
-  if (!session) {
-    await logOut();
-    return null;
-  }
-
-  return session;
-}
-
 async function loginUser({
   email,
   password,
@@ -114,7 +103,18 @@ export async function deleteSessionCookie() {
   (await cookies()).delete("session");
 }
 
-export async function logOut() {
+export async function logout() {
+  const session = await verifySession();
   await deleteSessionCookie();
+  await client("/auth/logout", {
+    method: "DELETE",
+    body: JSON.stringify({ userId: session?.userId }),
+  });
   redirect("/");
+}
+
+export async function getSessionToken() {
+  const token = (await cookies()).get("session")?.value;
+
+  return token;
 }

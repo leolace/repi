@@ -10,8 +10,7 @@ import { userService } from "../user/user.service";
 import { tagService } from "../tag/tag.service";
 import bcrypt from "bcrypt";
 import { userModel } from "@entities/user";
-import * as jose from "jose";
-import { env } from "common";
+import { genSessionToken } from "@utils/generate-token";
 
 class AuthService {
   async createUser(user: CreateUserDto) {
@@ -50,21 +49,30 @@ class AuthService {
     );
     if (!passwordMatch) throw new ErrorE("Credenciais inválidas", 400);
 
-    const encodedSecret = new TextEncoder().encode(env.JWT_SECRET);
-    const generatedToken = await new jose.SignJWT({
+    const sessionTokenPayload = {
       userId: userExists.id,
       class: userExists.class,
-    })
-      .setProtectedHeader({ alg: "HS256" })
-      .setIssuedAt()
-      .setIssuer("urn:example:issuer")
-      .setAudience("urn:example:audience")
-      .setExpirationTime("2h")
-      .sign(encodedSecret);
+    };
+    const generatedToken = await genSessionToken(sessionTokenPayload, "7d");
+
+    const userSession = await authModel.getUserSession(userExists.id);
+    if (userSession) await authModel.deleteSession(userSession.id);
 
     const { token } = await authModel.login(userExists.id, generatedToken);
 
     return token;
+  }
+
+  async logout(userId: string) {
+    const userExists = await userService.findUserBy({
+      id: userId,
+    });
+    if (!userExists) throw new ErrorE("Usuário não encontrado", 400);
+
+    const userSession = await authModel.getUserSession(userId);
+    if (userSession) await authModel.deleteSession(userSession.id);
+
+    return;
   }
 }
 
