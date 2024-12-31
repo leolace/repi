@@ -4,9 +4,9 @@ import { client } from "@services/client";
 import { parseFormData } from "@utils/parse-formdata";
 import { env, IToken, IUserJWTPayload, UserClassesEnum } from "common";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import { isErrorResponse } from "@utils/is-error-response";
 import * as jose from "jose";
+import { cookies } from "next/headers";
 
 export async function createAccountAction(formData: FormData) {
   const name = parseFormData(formData, "name");
@@ -33,7 +33,7 @@ export async function createAccountAction(formData: FormData) {
   if (res.statusText !== "OK")
     return { errors: res.data, request: JSON.stringify(res) };
 
-  redirect("/");
+  await loginUser({ email, password });
 }
 
 export async function setSessionCookie(session: string) {
@@ -53,7 +53,7 @@ export async function verifySession() {
   const c = await cookies();
   const sessionCookie = c.get("session")?.value;
   if (!sessionCookie) return null;
-  let isValidSession: null | IUserJWTPayload = null;
+  let isValidSession: null | (IUserJWTPayload & { token: string }) = null;
 
   try {
     const encodedSecret = new TextEncoder().encode(env.JWT_SECRET);
@@ -61,7 +61,7 @@ export async function verifySession() {
       sessionCookie,
       encodedSecret
     );
-    isValidSession = result.payload;
+    isValidSession = { ...result.payload, token: sessionCookie };
   } catch (e) {
     console.log(e);
     isValidSession = null;
@@ -70,21 +70,13 @@ export async function verifySession() {
   return isValidSession;
 }
 
-export async function getSession() {
-  const session = await verifySession();
-
-  if (!session) {
-    await logOut();
-    return null;
-  }
-
-  return session;
-}
-
-export async function login(_: unknown, formData: FormData) {
-  const email = parseFormData(formData, "email");
-  const password = parseFormData(formData, "password");
-
+async function loginUser({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
   const res = await client<IToken>("/auth/login", {
     method: "POST",
     body: JSON.stringify({
@@ -100,11 +92,30 @@ export async function login(_: unknown, formData: FormData) {
   redirect("/");
 }
 
+export async function loginFormData(_: unknown, formData: FormData) {
+  const email = parseFormData(formData, "email");
+  const password = parseFormData(formData, "password");
+
+  return await loginUser({ email, password });
+}
+
 export async function deleteSessionCookie() {
   (await cookies()).delete("session");
 }
 
-export async function logOut() {
+export async function logout() {
+  const session = await verifySession();
+  if (session) {
+    await client("/auth/logout", {
+      method: "DELETE",
+      body: JSON.stringify({ userId: session.userId }),
+    });
+  }
   await deleteSessionCookie();
-  redirect("/");
+  }
+
+export async function getSessionToken() {
+  const token = (await cookies()).get("session")?.value;
+
+  return token;
 }

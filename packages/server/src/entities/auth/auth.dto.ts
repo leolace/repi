@@ -27,3 +27,9 @@ export const searchParamsUserSchema = z.object({
 });
 
 export type CreateUserDto = z.infer<typeof createUserSchema>;
+
+export interface UserSession {
+  id: string;
+  user_id: string;
+  token: string;
+}

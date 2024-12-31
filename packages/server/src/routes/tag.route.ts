@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { tagController } from "../entities/tag/index";
+import { authMiddleware } from "@middlewares/auth.middleware";
 
 const tagRoutes = Router();
 
+tagRoutes.use(authMiddleware);
 tagRoutes.get("/tags", tagController.findAllTags);
 tagRoutes.post("/tags", tagController.createTag);
 tagRoutes.delete("/tags", tagController.deleteTag);

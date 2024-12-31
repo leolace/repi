@@ -3,12 +3,12 @@
 import { Button, PageTitle } from "@components";
 import { Input } from "@components";
 import { PasswordInput } from "./_compose";
-import { login } from "@actions";
+import { loginFormData } from "@actions";
 import React from "react";
 import { isErrorResponse } from "@utils/is-error-response";
 
 const Entrar = () => {
-  const [state, formAction, isPending] = React.useActionState(login, null);
+  const [state, formAction, isPending] = React.useActionState(loginFormData, null);
 
   return (
     <form className="grid gap-12 min-w-full" action={formAction}>

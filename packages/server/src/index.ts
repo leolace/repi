@@ -1,11 +1,12 @@
 import "dotenv/config";
 import "express-async-errors";
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
 import { dbClient } from "./db-client";
 import { authRoutes, tagRoutes, userRoutes } from "./routes/index";
 import { corsMiddleware } from "./middlewares/cors.middleware";
 import { ErrorE } from "./utils/error";
 import { env } from "common";
+import { errorMiddleware } from "@middlewares/error.middleware";
 
 try {
   dbClient.connect();
@@ -18,14 +19,13 @@ const app = express();
 app.use(express.json());
 app.use(corsMiddleware);
 
-app.use([authRoutes, tagRoutes, userRoutes]);
+// unauthenticated endpoints
+app.use([authRoutes, userRoutes]);
 
-app.use((err: ErrorE, _: Request, res: Response, __: NextFunction) => {
-  console.log(err.stack);
-  res
-    .status(err.statusCode || 500)
-    .json({ status: err.statusCode, error: err.message });
-});
+// authenticated endpoints
+app.use([tagRoutes]);
+
+app.use(errorMiddleware);
 
 app.listen(env.PORT, () => {
   console.log(`Server is listening on http://localhost:${env.PORT}`);

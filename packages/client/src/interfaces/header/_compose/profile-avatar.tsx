@@ -1,3 +1,7 @@
-export const ProfileAvatar = () => {
-  return <span className="flex w-[3rem] h-[3rem] rounded-full bg-slate-300" />;
+import { HTMLAttributes } from "react";
+
+export const ProfileAvatar = ({ className, ...props }: HTMLAttributes<HTMLSpanElement>) => {
+  return (
+    <span className={`flex w-full h-full rounded-full bg-gray-light ring-1 ring-gray ${className}`} {...props}/>
+  );
 };
