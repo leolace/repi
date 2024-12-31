@@ -4,9 +4,9 @@ import { client } from "@services/client";
 import { parseFormData } from "@utils/parse-formdata";
 import { env, IToken, IUserJWTPayload, UserClassesEnum } from "common";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import { isErrorResponse } from "@utils/is-error-response";
 import * as jose from "jose";
+import { cookies } from "next/headers";
 
 export async function createAccountAction(formData: FormData) {
   const name = parseFormData(formData, "name");
@@ -53,7 +53,7 @@ export async function verifySession() {
   const c = await cookies();
   const sessionCookie = c.get("session")?.value;
   if (!sessionCookie) return null;
-  let isValidSession: null | IUserJWTPayload = null;
+  let isValidSession: null | (IUserJWTPayload & { token: string }) = null;
 
   try {
     const encodedSecret = new TextEncoder().encode(env.JWT_SECRET);
@@ -61,7 +61,7 @@ export async function verifySession() {
       sessionCookie,
       encodedSecret
     );
-    isValidSession = result.payload;
+    isValidSession = { ...result.payload, token: sessionCookie };
   } catch (e) {
     console.log(e);
     isValidSession = null;
@@ -105,13 +105,14 @@ export async function deleteSessionCookie() {
 
 export async function logout() {
   const session = await verifySession();
-  await client("/auth/logout", {
-    method: "DELETE",
-    body: JSON.stringify({ userId: session?.userId }),
-  });
+  if (session) {
+    await client("/auth/logout", {
+      method: "DELETE",
+      body: JSON.stringify({ userId: session.userId }),
+    });
+  }
   await deleteSessionCookie();
-  redirect("/");
-}
+  }
 
 export async function getSessionToken() {
   const token = (await cookies()).get("session")?.value;

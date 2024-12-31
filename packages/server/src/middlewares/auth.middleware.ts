@@ -8,10 +8,10 @@ export async function authMiddleware(
   next: NextFunction
 ) {
   const { authorization } = req.headers;
-  if (!authorization) throw new ErrorE("Authorization not found.");
+  if (!authorization) throw new ErrorE("Authorization not found.", 401);
 
-  const token = await validateSessionToken(authorization);
-  if (!token) throw new ErrorE("Invalid authorization");
+  const sessionToken = await validateSessionToken(authorization);
+  if (!sessionToken) throw new ErrorE("Invalid authorization", 401);
 
   next();
 }

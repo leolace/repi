@@ -17,7 +17,7 @@ export default async function RootLayout({
         <title>REPI</title>
       </head>
       <body
-        className={`${rubik.className} w-full max-w-[60rem] px-2 mx-auto flex flex-col min-h-dvh gap-12`}
+        className={`${rubik.className} w-full max-w-[60rem] mx-auto flex flex-col min-h-dvh gap-12`}
       >
         <Header />
         <main className="flex-1 flex">{children}</main>

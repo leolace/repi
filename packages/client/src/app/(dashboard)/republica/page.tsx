@@ -1,3 +1,3 @@
-export default function() {
-  return <div>rebublica</div>;
+export default function Page() {
+  return <div>republica</div>;
 }

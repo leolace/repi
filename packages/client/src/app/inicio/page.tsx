@@ -13,8 +13,8 @@ const Home = async () => {
   return (
     <div className="grid gap-6">
       <pre className="grid gap-4">
-        {users.map((user) => (
-          <RepCard {...user} />
+        {users?.slice(0, 15).map((user) => (
+          <RepCard {...user} key={user.email}/>
         ))}
       </pre>
     </div>

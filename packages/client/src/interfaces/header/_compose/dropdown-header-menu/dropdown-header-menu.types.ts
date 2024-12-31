@@ -5,7 +5,7 @@ import { ForwardRefExoticComponent, RefAttributes } from "react";
 export enum MenuOptionsRoute {
   PERFIL = "/perfil",
   CONFIGURACOES = "/configuracoes",
-  REPUBLICA = "/republica",
+  REPUBLICA = "/minha-republica",
   INTERESSES = "/interesses",
 }
 

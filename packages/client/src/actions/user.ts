@@ -1,5 +1,5 @@
 "use server";
-import { client } from "@services/client";
+import { authClient, client } from "@services/client";
 import { ISelfUser, IUser, UserClassesEnum } from "common";
 import { verifySession } from "./auth";
 import { isErrorResponse } from "@utils/is-error-response";
@@ -14,11 +14,14 @@ export const getSelf = cache(async (): Promise<ISelfUser | null> => {
   const session = await verifySession();
   if (!session) return null;
 
-  const user = await getUserById(session.userId);
+  // TODO: create a specific endpoint for self get
+  const user = await authClient<IUser[]>(`/users?id=${session.userId}`, {
+    sessionToken: session.token,
+  });
 
-  if (isErrorResponse(user)) return null;
+  if (isErrorResponse(user.data)) return null;
 
-  const selfUser: ISelfUser = { ...user[0], session };
+  const selfUser: ISelfUser = { ...user.data[0], session };
 
   return selfUser;
 });

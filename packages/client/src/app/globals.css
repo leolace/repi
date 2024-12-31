@@ -14,3 +14,7 @@ ol,
 ul {
   list-style: none;
 }
+
+html {
+  scrollbar-gutter: stable both-edges;
+}
