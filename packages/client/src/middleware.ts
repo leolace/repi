@@ -57,6 +57,6 @@ function handleRedirect(destination: string, base: string) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|manifest.webmanifest|robots.txt).*)",
   ],
 };
