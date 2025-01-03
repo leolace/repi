@@ -1,5 +1,5 @@
 import pg from "pg";
-import { env } from "common";
+import { env } from "common/src/environment.server";
 
 const ssl =
   env.ENV === "prod"

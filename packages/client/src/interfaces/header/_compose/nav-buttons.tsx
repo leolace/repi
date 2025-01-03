@@ -1,21 +1,19 @@
-"use client";
-
 import { Button } from "@components/button";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, useLocation, useNavigation } from "@remix-run/react";
 
 export const NavButtons = () => {
-  const path = usePathname();
+  const { pathname } = useLocation();
   const hiddenActionsPaths = [/\/auth/];
 
-  if (hiddenActionsPaths.some((regex) => regex.test(path))) return null;
+  if (hiddenActionsPaths.some((regex) => regex.test(pathname)))
+    return null;
 
   return (
     <nav className="flex gap-5 items-center">
-      <Link href="/auth/entrar">
+      <Link to="/auth/entrar">
         <Button style="secondary">Entrar</Button>
       </Link>
-      <Link href="/auth/criar">
+      <Link to="/auth/criar">
         <Button>Criar conta</Button>
       </Link>
     </nav>

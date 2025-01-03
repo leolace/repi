@@ -1,4 +1,4 @@
-import { env } from "common";
+import { env } from "common/src/environment.server";
 import { authService } from "./auth.service";
 import { Request, Response } from "express";
 

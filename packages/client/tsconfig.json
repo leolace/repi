@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["@remix-run/node", "vite/client", "./src/types/global"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -10,27 +11,24 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "allowImportingTsExtensions": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
     "paths": {
       "@*": ["./src/*"],
       "common": ["../common/src"]
     },
-    "target": "ES2017"
+    "target": "ES2022"
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.d.ts",
-    ".next/types/**/*.ts",
-    "eslint.config.js"
+    "**/.server/**/*.ts",
+    "**/.server/**/*.tsx",
+    "**/.client/**/*.ts",
+    "**/.client/**/*.tsx"
   ],
   "exclude": ["node_modules"]
 }

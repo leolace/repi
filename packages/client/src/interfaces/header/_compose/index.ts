@@ -1,2 +1,2 @@
-export * from "./profile-avatar"
+export * from "../../profile-avatar/profile-avatar"
 export * from "./nav-buttons"

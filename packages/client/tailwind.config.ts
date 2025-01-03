@@ -1,13 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/interfaces/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/utils/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -25,7 +19,7 @@ const config: Config = {
         gray: {
           DEFAULT: "#CCC",
           light: "#EEE",
-          "light-2": "#fafafa"          
+          "light-2": "#fafafa",
         },
       },
       borderColor: {

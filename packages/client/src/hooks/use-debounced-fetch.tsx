@@ -10,7 +10,7 @@ export function useDebounced<T>(
   const timerRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const debouncedFunction = React.useCallback(
-    async (func: () => Promise<T | ErrorResponse>) => {
+    async (func: () => Promise<T | ErrorResponseData>) => {
       if (timerRef.current) clearTimeout(timerRef.current);
       setIsLoading(true);
       setResult(null);

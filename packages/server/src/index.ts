@@ -5,7 +5,7 @@ import { dbClient } from "./db-client";
 import { authRoutes, tagRoutes, userRoutes } from "./routes/index";
 import { corsMiddleware } from "./middlewares/cors.middleware";
 import { ErrorE } from "./utils/error";
-import { env } from "common";
+import { env } from "common/src/environment.server";
 import { errorMiddleware } from "@middlewares/error.middleware";
 
 try {

@@ -24,7 +24,7 @@ export const Button = ({
 
   return (
     <button
-      className={`px-3 py-1 outline-0 rounded font-medium min-w-24 focus:shadow-pressed ${buttonTypes[style]} ${mapTextSizes[size]} ${disabledStyle} ${loadingStyle} ${className}`}
+      className={`px-3 py-1 outline-0 rounded font-semibold min-w-24 focus:shadow-pressed ${buttonTypes[style]} ${mapTextSizes[size]} ${disabledStyle} ${loadingStyle} ${className}`}
       disabled={disabled || loading}
       type={type}
       ref={ref}

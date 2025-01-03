@@ -1,14 +1,12 @@
-"use client";
-
-import { ProfileAvatar } from "../profile-avatar";
+import { ProfileAvatar } from "../../../profile-avatar/profile-avatar";
 import { ISelfUser } from "common";
-import { DropdownHeaderMenu } from "../dropdown-header-menu";
+import { DropdownHeaderMenu } from "@interfaces/header-dropdown-menu";
 import React, { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useLocation, useNavigation } from "@remix-run/react";
 
 export const HeaderMenu = (user: ISelfUser) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const pathname = usePathname();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     setShowDropdown(false);
