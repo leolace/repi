@@ -7,7 +7,7 @@
     "dev": "tsx watch src/index.ts",
     "serve": "tsx src/index.ts",
     "start": "pnpm dev",
-    "tsc": "tsc -b --noEmit",
+    "tsc": "tsc -b",
     "build": "tsc"
   },
   "keywords": [],
