@@ -6,6 +6,7 @@ export enum MenuOptionsRoutes {
   CONFIGURACOES = "/configuracoes",
   REPUBLICA = "/minha-republica",
   INTERESSES = "/interesses",
+  SAIR = "/sair",
 }
 
 export interface IMenuOptionLink {

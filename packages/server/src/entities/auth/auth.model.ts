@@ -6,7 +6,7 @@ import { v4 as uuid } from "uuid";
 class AuthModel {
   async store(user: CreateUserDto) {
     const { rows } = await dbClient.query<IUser>(
-      `INSERT INTO "user"(id, name, email, password, class) VALUES($1, $2, $3, $4, $5) RETURNING id, name, email, class`,
+      `INSERT INTO users(id, name, email, password, class) VALUES($1, $2, $3, $4, $5) RETURNING id, name, email, class`,
       [uuid(), user.name, user.email, user.password, user.class]
     );
 

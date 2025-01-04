@@ -1,6 +1,6 @@
 import React from "react";
 import { PageTitle } from "@components";
-import { mapCurrentStepData } from "../../page.utils";
+import { mapCurrentStepData } from "../../utils";
 import { NavButtons } from "..";
 import { CreateAccountContext } from "../../context";
 

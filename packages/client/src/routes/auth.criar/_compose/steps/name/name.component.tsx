@@ -1,5 +1,5 @@
 import { CreateAccountContext } from "../../../context";
-import { CreateAccountSteps } from "../../../page.types";
+import { CreateAccountSteps } from "../../../types";
 import { InvisibleInput } from "@components/invisible-input";
 import React from "react";
 

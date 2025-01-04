@@ -4,7 +4,7 @@ import { dbClient } from "@db-client";
 class UserModel {
   async findAll() {
     const res = await dbClient.query<IUser>(
-      `SELECT name, email, class, id FROM "user";`
+      `SELECT name, email, class, id FROM users;`
     );
 
     return res.rows;
@@ -17,7 +17,7 @@ class UserModel {
       })
       .join(" AND ");
 
-    const query = `SELECT email, class, id, name FROM "user" WHERE ${searchedValues}`;
+    const query = `SELECT email, class, id, name FROM users WHERE ${searchedValues}`;
     const { rows } = await dbClient.query<IUser>(query, Object.values(values));
 
     return rows;
@@ -25,7 +25,7 @@ class UserModel {
 
   async getPassword(userId: string): Promise<string> {
     const { rows } = await dbClient.query<{ password: string }>(
-      `SELECT password FROM "user" WHERE id = $1`,
+      `SELECT password FROM users WHERE id = $1`,
       [userId]
     );
 

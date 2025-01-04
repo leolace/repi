@@ -1,7 +1,7 @@
 import { CreateAccountContext } from "../../../context";
 import { Text } from "@components";
 import { InvisibleInput } from "@components/invisible-input";
-import { CreateAccountSteps } from "../../../page.types";
+import { CreateAccountSteps } from "../../../types";
 import React from "react";
 import { Spinner } from "@components/spinner";
 import { isValidEmail } from "common";

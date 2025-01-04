@@ -1,15 +1,13 @@
 import { Text } from "@components";
-import { LogOut, Triangle } from "lucide-react";
+import { LogOut, Settings, Triangle } from "lucide-react";
 import React from "react";
-import { ProfileAvatar } from "@interfaces/profile-avatar";
+import { ProfileAvatar } from "@components/profile-avatar";
 import { ISelfUser } from "common";
-import {
-  commonMenuDropdownOptions,
-  menuDropdownOptions,
-} from "./dropdown-header-menu.utils";
+import { menuDropdownOptions } from "./dropdown-header-menu.utils";
 import { useDropdownHeaderMenu } from "./dropdown-header-menu.hooks";
 import { DropdownItem } from "./_compose";
-import { redirect, useNavigate } from "@remix-run/react";
+import { MenuOptionsRoutes } from "./dropdown-header-menu.types";
+import { Link } from "@remix-run/react";
 
 interface Props {
   showDropdown: boolean;
@@ -28,7 +26,8 @@ export const DropdownHeaderMenu = ({
     showDropdown,
     setShowDropdown,
   });
-  const navigate = useNavigate();
+
+  const userMenuOptions = menuDropdownOptions[user.class];
 
   return (
     <>
@@ -43,29 +42,40 @@ export const DropdownHeaderMenu = ({
         ref={dropdownContainerRef}
       >
         <nav className="flex flex-col">
-          <ul className="border-b-gray border-b p-2 py-4">
-            <li className="flex gap-2 items-center">
-              <span className="w-8 h-8 ">
-                <ProfileAvatar className="flex-1" />
-              </span>
-              <Text>{user?.name}</Text>
-            </li>
+          <ul className="border-b-gray border-b">
+            <Link to={`/${user.id}`}>
+              <li
+                className="flex gap-2 items-center hover:bg-gray-light p-2"
+                title={user.name}
+              >
+                <span className="w-8 h-8">
+                  <ProfileAvatar className="flex-1" />
+                </span>
+                <Text className="whitespace-nowrap overflow-hidden max-w-40 text-ellipsis">
+                  {user.name}
+                </Text>
+              </li>
+            </Link>
           </ul>
-          <ul className="border-b-gray border-b grid">
-            {menuDropdownOptions[user.class].map((item) => (
-              <DropdownItem {...item} key={item.name} />
-            ))}
-          </ul>
+          {userMenuOptions.length ? (
+            <ul className="border-b-gray border-b grid">
+              {userMenuOptions.map((item) => (
+                <DropdownItem {...item} key={item.name} />
+              ))}
+            </ul>
+          ) : null}
           <ul className="grid">
             <DropdownItem
-              onClick={() => navigate("/sair")}
+              link={MenuOptionsRoutes.CONFIGURACOES}
+              Icon={Settings}
+              name="Configurações"
+            />
+            <DropdownItem
+              link={MenuOptionsRoutes.SAIR}
               Icon={LogOut}
               name="Sair"
               style="text-red-600"
             />
-            {/* {commonMenuDropdownOptions.map((item) => (
-              <DropdownItem {...item} key={item.name} />
-            ))} */}
           </ul>
         </nav>
       </div>

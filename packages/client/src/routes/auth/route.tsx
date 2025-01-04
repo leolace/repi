@@ -13,7 +13,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 const Layout = () => {
   return (
-    <section className="flex items-center self-center w-full">
+    <section className="grid content-center mt-40">
       <Outlet />
     </section>
   );

@@ -1,5 +1,5 @@
 import { CreateAccountContext } from "../../../context";
-import { CreateAccountSteps } from "../../../page.types";
+import { CreateAccountSteps } from "../../../types";
 import { Text, Card } from "@components";
 import React from "react";
 import { TagEnum, UserClassesEnum } from "common";

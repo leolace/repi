@@ -41,10 +41,10 @@ export default function Root() {
         <Links />
       </head>
       <body
-        className={`w-full max-w-[60rem] mx-auto flex flex-col min-h-dvh gap-12`}
+        className={`w-full max-w-[60rem] mx-auto flex flex-col gap-12`}
       >
         <Header user={data.user} />
-        <main className="flex-1 flex">
+        <main className="flex-1 w-full">
           <Outlet />
         </main>
         {/* <SpeedInsights /> */}

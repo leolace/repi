@@ -5,10 +5,10 @@ import {
   FormState,
   ICreateAccountContext,
   ICreateAccountUser,
-} from "./page.types";
+} from "./types";
 import { IUser, UserClassesEnum } from "common";
 import { useDebounced } from "@hooks/use-debounced-fetch";
-import { useClient } from "@hooks/useClient";
+import { useClient } from "@hooks/use-client-fetch";
 
 const defaultCreateAccountUser: ICreateAccountUser = {
   name: "",

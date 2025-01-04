@@ -1,4 +1,4 @@
-import { ProfileAvatar } from "../../../profile-avatar/profile-avatar";
+import { ProfileAvatar } from "../../../../components/profile-avatar/profile-avatar";
 import { ISelfUser } from "common";
 import { DropdownHeaderMenu } from "@interfaces/header-dropdown-menu";
 import React, { useEffect, useState } from "react";

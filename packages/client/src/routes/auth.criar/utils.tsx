@@ -1,5 +1,5 @@
 import React from "react";
-import { CreateAccountSteps, CurrentStepData } from "./page.types";
+import { CreateAccountSteps, CurrentStepData } from "./types";
 import { UserClassesEnum } from "common";
 
 import ClassStep from "./_compose/steps/class/class.component";

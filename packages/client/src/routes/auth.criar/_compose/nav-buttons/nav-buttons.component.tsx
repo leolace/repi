@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "@components";
-import { mapPrevStep } from "../../page.utils";
+import { mapPrevStep } from "../../utils";
 import { CreateAccountContext } from "../../context";
 import { SubmitButton } from "../submit-button";
-import { CreateAccountSteps } from "../../page.types";
+import { CreateAccountSteps } from "../../types";
 
 export const NavButtons = () => {
   const { form, formDispatch } = React.use(CreateAccountContext);

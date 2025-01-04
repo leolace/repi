@@ -1,6 +1,6 @@
 import React, { MouseEvent } from "react";
-import { CreateAccountSteps } from "../../page.types";
-import { mapNextStep } from "../../page.utils";
+import { CreateAccountSteps } from "../../types";
+import { mapNextStep } from "../../utils";
 import { Button } from "@components";
 import { CreateAccountContext } from "../../context";
 import { useFormStatus } from "react-dom";

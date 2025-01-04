@@ -17,7 +17,6 @@ export function useClient() {
     });
 
     const data: T | ErrorResponseData = await request.json();
-
     const response: ClientType<T> = Object.assign(request, { data });
 
     return response;

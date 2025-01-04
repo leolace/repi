@@ -3,6 +3,8 @@ import { ISelfUser, IUser, UserClassesEnum } from "common";
 import { verifySession } from "./auth.server";
 import { isErrorResponseData } from "@utils/is-error-response";
 import { cache } from "react";
+import { deleteSessionCookie } from "@cookie.server";
+import { redirect } from "@remix-run/node";
 
 export const getUsers = async () => {
   const users = await client<IUser[]>("/users");
@@ -15,13 +17,21 @@ export const getSelf = cache(
     if (!session) return null;
 
     // TODO: create a specific endpoint for self get/verify
-    const user = await authClient<IUser[]>(`/users?id=${session.userId}`, {
+    const users = await authClient<IUser[]>(`/users?id=${session.userId}`, {
       sessionToken: session.token,
     });
 
-    if (isErrorResponseData(user.data)) return null;
+    if (isErrorResponseData(users.data)) return null;
 
-    const selfUser: ISelfUser = { ...user.data[0], session };
+    const user = users.data[0];
+    if (!user)
+      throw redirect("/", {
+        headers: {
+          "Set-Cookie": await deleteSessionCookie()
+        },
+      });
+
+    const selfUser: ISelfUser = Object.assign(user, { session });
 
     return selfUser;
   }

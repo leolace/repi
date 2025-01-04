@@ -1,6 +1,6 @@
 import { CreateAccountContext } from "../../../context";
 import { InvisibleInput } from "@components/invisible-input";
-import { CreateAccountSteps } from "../../../page.types";
+import { CreateAccountSteps } from "../../../types";
 import React from "react";
 import { ShowOrHidePassword } from "./_compose";
 import { isStrongPassword } from "@utils/regex";
