@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react";
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement> {}
+export type CardProps = HTMLAttributes<HTMLDivElement>;
 
 export interface CardTitleProps extends HTMLAttributes<HTMLHeadingElement> {
 	tag?: Tags;
@@ -8,4 +8,4 @@ export interface CardTitleProps extends HTMLAttributes<HTMLHeadingElement> {
 	weight?: Weights;
 };
 
-export interface CardSubtitleProps extends HTMLAttributes<HTMLParagraphElement> {};
+export type CardSubtitleProps = HTMLAttributes<HTMLParagraphElement>;

@@ -1,8 +1,8 @@
 import { useRouteLoaderData } from "@remix-run/react";
-import { ISelfUser } from "common";
+import { CompleteSelfUser } from "common";
 
 interface RootLoaderData {
-  user: ISelfUser | undefined;
+  user: CompleteSelfUser | undefined;
   ENV: Record<string, string>;
 }
 

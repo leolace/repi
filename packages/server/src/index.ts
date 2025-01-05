@@ -7,6 +7,7 @@ import { corsMiddleware } from "./middlewares/cors.middleware";
 import { ErrorE } from "./utils/error";
 import { env } from "common/src/environment.server";
 import { errorMiddleware } from "@middlewares/error.middleware";
+import { republicaRoutes } from "@routes/republica.routes";
 
 try {
   dbClient.connect();
@@ -19,11 +20,7 @@ const app = express();
 app.use(express.json());
 app.use(corsMiddleware);
 
-// unauthenticated endpoints
-app.use([authRoutes, userRoutes]);
-
-// authenticated endpoints
-app.use([tagRoutes]);
+app.use([authRoutes, userRoutes, republicaRoutes, tagRoutes]);
 
 app.use(errorMiddleware);
 

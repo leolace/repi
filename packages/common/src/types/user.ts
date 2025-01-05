@@ -1,3 +1,5 @@
+import { IUserJWTPayload } from "./session";
+
 export enum UserClassesEnum {
   NAO_DEFINIDA = "NAO_DEFINIDA",
   BIXO = "BIXO",
@@ -20,13 +22,22 @@ export interface IUserWithTags extends IUser {
   tags: ITag[] | null;
 }
 
-export interface IToken {
-  token: string;
-}
-
-export interface IUserJWTPayload {
+export interface Republica {
   userId: string;
-  class: UserClassesEnum;
+  class: UserClassesEnum.REPUBLICA;
+  imageUrl?: string;
+  rentalValue: number;
+  occupantsCount: number;
+  postsCount: number;
 }
 
-export type ISelfUser = IUser & { session: IUserJWTPayload };
+export interface Bixo {
+  userId: string;
+  class: UserClassesEnum.BIXO;
+  imageUrl?: string;
+}
+
+export type CompleteSelfUser = IUser & {
+  classData: Bixo | Republica;
+  session: IUserJWTPayload;
+};

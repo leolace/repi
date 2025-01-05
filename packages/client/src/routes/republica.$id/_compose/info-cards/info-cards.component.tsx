@@ -1,23 +1,10 @@
 import { Card, CardSubtitle, CardTitle } from "@components";
-import { useGetRootData } from "@hooks/use-get-root-data";
+import { useGetRepublicaRouteData } from "@routes/republica.$id/hooks";
+import { getInfos } from "./info-cards.utils";
 
 export function InfoCards() {
-  const { user } = useGetRootData();
-
-  const infos = [
-    {
-      label: "Aluguel",
-      data: "R$ 500,00",
-    },
-    {
-      label: "Moradores",
-      data: "8",
-    },
-    {
-      label: "Publicações",
-      data: "7",
-    },
-  ];
+  const { republica } = useGetRepublicaRouteData();
+  const infos = getInfos(republica);
 
   return (
     <div className="flex justify-between gap-6">

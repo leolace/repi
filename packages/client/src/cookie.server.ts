@@ -1,7 +1,7 @@
 import { CookieSerializeOptions, createCookie } from "@remix-run/node";
 
 export const sessionCookie = createCookie("user-session", {
-  maxAge: 999_999,
+  maxAge: 999_999
 });
 
 export const getSessionCookie = async (request: Request) =>

@@ -1,18 +1,22 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { RepHeader, InfoCards, Content } from "./_compose";
-import { getUserById } from "@actions/user.server";
+import { getRepublicaByUser, getUserById } from "@actions/user.server";
 import { isErrorResponseData } from "@utils/is-error-response";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const userId = params.userId;
+  const userId = params.id;
   if (!userId) throw new Error("User Id not found");
 
   const userByIdData = await getUserById(userId);
   if (isErrorResponseData(userByIdData)) throw new Error(userByIdData.error);
-  
+
   const user = userByIdData[0];
 
-  return { user };
+  const republica = await getRepublicaByUser(user.id);
+
+  if (isErrorResponseData(republica)) throw new Error(republica.error);
+
+  return { user, republica };
 };
 
 export default function Page() {

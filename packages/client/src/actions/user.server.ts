@@ -1,5 +1,5 @@
 import { authClient, client } from "@services/client.server";
-import { ISelfUser, IUser, UserClassesEnum } from "common";
+import { CompleteSelfUser, IUser, Republica, UserClassesEnum } from "common";
 import { verifySession } from "./auth.server";
 import { isErrorResponseData } from "@utils/is-error-response";
 import { cache } from "react";
@@ -12,26 +12,24 @@ export const getUsers = async () => {
 };
 
 export const getSelf = cache(
-  async (request: Request): Promise<ISelfUser | null> => {
+  async (request: Request): Promise<CompleteSelfUser | null> => {
     const session = await verifySession(request);
     if (!session) return null;
 
-    // TODO: create a specific endpoint for self get/verify
-    const users = await authClient<IUser[]>(`/users?id=${session.userId}`, {
-      sessionToken: session.token,
+    const { data: user } = await authClient<CompleteSelfUser>("/user/me", {
+      sessionToken: session.token
     });
 
-    if (isErrorResponseData(users.data)) return null;
+    if (isErrorResponseData(user)) return null;
 
-    const user = users.data[0];
     if (!user)
       throw redirect("/", {
         headers: {
           "Set-Cookie": await deleteSessionCookie()
-        },
+        }
       });
 
-    const selfUser: ISelfUser = Object.assign(user, { session });
+    const selfUser: CompleteSelfUser = Object.assign(user, { session });
 
     return selfUser;
   }
@@ -40,6 +38,11 @@ export const getSelf = cache(
 export async function getUserById(userId: string) {
   const users = await client<IUser[]>(`/users?id=${userId}`);
   return users.data;
+}
+
+export async function getRepublicaByUser(userId: string) {
+  const republica = await client<Republica>(`/republica/${userId}`);
+  return republica.data;
 }
 
 export const getUserByEmail = async (email: string) => {

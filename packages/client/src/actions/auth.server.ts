@@ -1,7 +1,6 @@
 import { authClient, client } from "@services/client.server";
 import { parseFormData } from "@utils/parse-formdata";
 import { IToken, IUser, IUserJWTPayload, UserClassesEnum } from "common";
-import { isErrorResponse } from "@utils/is-error-response";
 import * as jose from "jose";
 import { redirect } from "@remix-run/react";
 import { createSessionCookie, getSessionCookie } from "@cookie.server";
@@ -14,36 +13,22 @@ export async function createAccountAction(formData: FormData) {
   const password = parseFormData(formData, "password");
   let tags: string[] | undefined;
 
-  if (classType === UserClassesEnum.BIXO) {
+  if (classType === UserClassesEnum.BIXO) 
     tags = parseFormData(formData, "tags").split(",").filter(Boolean);
-  }
 
-  const res = await client<IUser>("/auth", {
+  const res = await client<IUser>("/user", {
     method: "POST",
     body: JSON.stringify({
       name,
       email,
       class: classType,
       password,
-      tags,
-    }),
+      tags
+    })
   });
 
   return res;
 }
-
-// export async function setSessionCookie(session: string) {
-//   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
-//   const c = await cookies();
-
-//   c.set("session", session, {
-//     httpOnly: true,
-//     secure: true,
-//     expires: expiresAt,
-//     sameSite: "lax",
-//     path: "/",
-//   });
-// }
 
 export async function verifySession(request: Request) {
   const sessionCookie = await getSessionCookie(request);
@@ -67,7 +52,7 @@ export async function verifySession(request: Request) {
 
 async function loginUser({
   email,
-  password,
+  password
 }: {
   email: string;
   password: string;
@@ -76,8 +61,8 @@ async function loginUser({
     method: "POST",
     body: JSON.stringify({
       email,
-      password,
-    }),
+      password
+    })
   });
 
   return res;
@@ -97,13 +82,13 @@ export async function logout(request: Request) {
   await authClient("/auth/logout", {
     sessionToken: session.token,
     method: "DELETE",
-    body: JSON.stringify({ userId: session.userId }),
+    body: JSON.stringify({ userId: session.userId })
   });
 
   return redirect("/inicio", {
     headers: {
-      "Set-Cookie": await createSessionCookie("", { maxAge: -1 }),
-    },
+      "Set-Cookie": await createSessionCookie("", { maxAge: -1 })
+    }
   });
 }
 
@@ -113,8 +98,8 @@ export async function requireAuth(request: Request) {
   if (!token)
     throw redirect("/inicio", {
       headers: {
-        "Set-Cookie": await createSessionCookie("", { maxAge: -1 }),
-      },
+        "Set-Cookie": await createSessionCookie("", { maxAge: -1 })
+      }
     });
 
   return token;
@@ -129,8 +114,8 @@ export async function requireClass(
   if (!token)
     throw redirect("/inicio", {
       headers: {
-        "Set-Cookie": await createSessionCookie("", { maxAge: -1 }),
-      },
+        "Set-Cookie": await createSessionCookie("", { maxAge: -1 })
+      }
     });
 
   if (token.class !== userClass) throw redirect("/inicio");

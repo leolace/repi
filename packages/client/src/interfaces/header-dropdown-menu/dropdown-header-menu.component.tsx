@@ -2,7 +2,7 @@ import { Text } from "@components";
 import { LogOut, Settings, Triangle } from "lucide-react";
 import React from "react";
 import { ProfileAvatar } from "@components/profile-avatar";
-import { ISelfUser } from "common";
+import { CompleteSelfUser, UserClassesEnum } from "common";
 import { menuDropdownOptions } from "./dropdown-header-menu.utils";
 import { useDropdownHeaderMenu } from "./dropdown-header-menu.hooks";
 import { DropdownItem } from "./_compose";
@@ -12,7 +12,7 @@ import { Link } from "@remix-run/react";
 interface Props {
   showDropdown: boolean;
   setShowDropdown: React.Dispatch<React.SetStateAction<boolean>>;
-  user: ISelfUser;
+  user: CompleteSelfUser;
 }
 
 const baseClass = "left-1/2 -translate-x-1/2 absolute transition duration-300";
@@ -28,6 +28,9 @@ export const DropdownHeaderMenu = ({
   });
 
   const userMenuOptions = menuDropdownOptions[user.class];
+  const userPageLink =
+    (user.class === UserClassesEnum.REPUBLICA ? "/republica/" : "/bixo/") +
+    user.id;
 
   return (
     <>
@@ -43,13 +46,17 @@ export const DropdownHeaderMenu = ({
       >
         <nav className="flex flex-col">
           <ul className="border-b-gray border-b">
-            <Link to={`/${user.id}`}>
+            <Link to={userPageLink}>
               <li
                 className="flex gap-2 items-center hover:bg-gray-light p-2"
                 title={user.name}
               >
                 <span className="w-8 h-8">
-                  <ProfileAvatar className="flex-1" />
+                  <ProfileAvatar
+                    className="flex-1"
+                    user={user}
+                    src={user.classData.imageUrl}
+                  />
                 </span>
                 <Text className="whitespace-nowrap overflow-hidden max-w-40 text-ellipsis">
                   {user.name}

@@ -10,8 +10,10 @@ export async function authMiddleware(
   const { authorization } = req.headers;
   if (!authorization) throw new ErrorE("Authorization not found.", 401);
 
-  const sessionToken = await validateSessionToken(authorization);
-  if (!sessionToken) throw new ErrorE("Invalid authorization", 401);
+  const payload = await validateSessionToken(authorization);
+  if (!payload) throw new ErrorE("Invalid authorization", 401);
+
+  req.app.locals = { user: payload };
 
   next();
 }

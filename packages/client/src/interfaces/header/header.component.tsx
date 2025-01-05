@@ -3,9 +3,10 @@ import React from "react";
 import { NavButtons } from "./_compose";
 import { HeaderMenu } from "./_compose/header-menu";
 import { Link } from "@remix-run/react";
-import { ISelfUser } from "common";
+import { useGetRootData } from "@hooks/use-get-root-data";
 
-export const Header = ({ user }: { user: ISelfUser | null }) => {
+export const Header = () => {
+  const { user } = useGetRootData();
 
   return (
     <header className="py-2 flex justify-between items-center">
@@ -13,7 +14,7 @@ export const Header = ({ user }: { user: ISelfUser | null }) => {
         <Logo />
       </Link>
 
-      {user ? <HeaderMenu {...user} /> : <NavButtons />}
+      {user ? <HeaderMenu /> : <NavButtons />}
     </header>
   );
 };

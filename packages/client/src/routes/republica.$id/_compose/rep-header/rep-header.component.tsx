@@ -1,20 +1,19 @@
 import { Button, ProfileAvatar, Text } from "@components";
-import { useRouteLoaderData } from "@remix-run/react";
-import { RouteData } from "@routes/$userId/types";
+import { useGetRepublicaRouteData } from "@routes/republica.$id/hooks";
 import { Edit } from "lucide-react";
 
 export function RepHeader() {
-  const data = useRouteLoaderData<RouteData>("routes/$userId");
+  const { user, republica } = useGetRepublicaRouteData();
 
   return (
     <header className="flex items-center">
       <div className="flex items-center gap-4 flex-1">
         <span className="w-20 h-20">
-          <ProfileAvatar />
+          <ProfileAvatar src={republica.imageUrl} user={user} />
         </span>
         <div className="flex-1">
           <Text size="3xl" className="font-medium">
-            {data?.user.name}
+            {user.name}
           </Text>
           <Text className="text-gray-400">São Carlos</Text>
         </div>

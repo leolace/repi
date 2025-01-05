@@ -1,4 +1,4 @@
-import { isErrorResponse, isErrorResponseData } from "@utils/is-error-response";
+import { isErrorResponseData } from "@utils/is-error-response";
 import React from "react";
 
 export function useDebounced<T>(
@@ -18,8 +18,7 @@ export function useDebounced<T>(
       return new Promise<T | null>((resolve) => {
         timerRef.current = setTimeout(async () => {
           const data = await func();
-          if (isErrorResponseData(data))
-            throw new Error(`erro: ${data.error} status: ${data.status}`);
+          if (isErrorResponseData(data)) throw new Error(`erro: ${data.error} status: ${data.status}`);
           setResult(data);
           setIsLoading(false);
           resolve(data);

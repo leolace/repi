@@ -18,9 +18,9 @@ export const Button = ({
     primary:
       "bg-primary text-white ring-1 ring-primary hover:bg-primary-dark disabled:hover:bg-primary",
     secondary:
-      "text-carbon ring-1 ring-gray bg-gray-light-2 disabled:hover:bg-secondary",
+      "text-carbon ring-1 ring-gray bg-white disabled:hover:bg-secondary",
     tertiary:
-      "ring-0 ring-gray-light bg-transparent hover:bg-gray-light focus:shadow-none disabled:ring-1 disabled:hover:bg-transparent",
+      "text-carbon ring-0 ring-gray-light bg-transparent hover:bg-gray-light focus:shadow-none disabled:ring-1 disabled:hover:bg-transparent",
   };
 
   const disabledStyle = "disabled:opacity-75 disabled:cursor-not-allowed";

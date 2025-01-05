@@ -1,5 +1,5 @@
 import { Button } from "@components/button";
-import { Link, useLocation, useNavigation } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 
 export const NavButtons = () => {
   const { pathname } = useLocation();

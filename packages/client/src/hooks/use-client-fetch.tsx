@@ -5,14 +5,12 @@ export function useClient() {
     path: string,
     { headers, ...options }: RequestInit = {}
   ): Promise<ClientType<T | ErrorResponseData>> {
-    const defaultHeaders: Record<string, any> = {
-      ...headers,
-      "Content-Type": "application/json",
-    };
-
     const request = await fetch(window.ENV.API_ENDPOINT + path, {
       method: "GET",
-      headers: defaultHeaders,
+      headers: {
+        ...headers,
+        "Content-Type": "application/json",
+      },
       ...options,
     });
 

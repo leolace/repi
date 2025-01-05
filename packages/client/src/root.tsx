@@ -13,11 +13,6 @@ import { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { getSelf } from "@actions/user.server";
 import { env } from "common/src/environment.server";
 
-// const rubik = Rubik({
-//   weight: ["400", "500", "600", "700"],
-//   subsets: ["latin"],
-// });
-
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
 ];
@@ -26,6 +21,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await getSelf(request);
   const { API_ENDPOINT } = env;
 
+  console.log(user);
   return { user, ENV: { API_ENDPOINT } };
 };
 
@@ -40,14 +36,12 @@ export default function Root() {
         <Meta />
         <Links />
       </head>
-      <body
-        className={`w-full max-w-[60rem] mx-auto flex flex-col gap-12`}
-      >
-        <Header user={data.user} />
+      <body className={`w-full max-w-[60rem] mx-auto flex flex-col gap-12`}>
+        <Header />
         <main className="flex-1 w-full">
           <Outlet />
         </main>
-        {/* <SpeedInsights /> */}
+        <SpeedInsights />
 
         <ScrollRestoration />
         <script

@@ -1,32 +1,41 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS users (
-    id char(36) NOT NULL PRIMARY KEY,
+    id UUID NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    class VARCHAR(15) NOT NULL
+    class VARCHAR(15) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS republicas (
-    id char(36) NOT NULL PRIMARY KEY REFERENCES users(id),
-    class VARCHAR(15) NOT NULL
+    id UUID NOT NULL PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users(id) UNIQUE,
+    class VARCHAR(15) NOT NULL,
+    image_url TEXT,
+    rental_value DECIMAL(10, 2) DEFAULT 0.00,
+    occupants_count INTEGER DEFAULT 0,
+    posts_count INTEGER DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS bixos (
-    id char(36) NOT NULL PRIMARY KEY REFERENCES users(id),
-    class VARCHAR(15) NOT NULL
+    id UUID NOT NULL PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users(id),
+    class VARCHAR(15) NOT NULL,
+    image_url TEXT
 );
 
 CREATE TABLE IF NOT EXISTS tags (
-	id char(36) not null primary key,
-	name text not null unique
+	id UUID NOT NULL PRIMARY KEY,
+	name TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS user_tag (
-	user_id char(36) not null references users(id) on delete cascade,
-	tag_id char(36) not null references tags(id) on delete cascade,
-	primary key (user_id, tag_id)
+	user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	tag_id UUID NOT NULL REFERENCES tags(id) ON DELETE CASCADE,
+	PRIMARY KEY (user_id, tag_id)
 );
 
 INSERT INTO tags (id, name)
@@ -59,6 +68,6 @@ ON CONFLICT (name) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS sessions (
 	id TEXT NOT NULL PRIMARY KEY,
-	user_id CHAR(36) NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
 	token TEXT NOT NULL
 );

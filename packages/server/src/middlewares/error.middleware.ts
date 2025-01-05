@@ -9,6 +9,7 @@ export const errorMiddleware = (
 ) => {
   const statusCode = err.statusCode || 500;
   console.log(`[${req.url} - ${statusCode}]`, err.message);
+  console.log(err.stack);
   res
     .status(statusCode)
     .json({ status: statusCode, error: err.message, path: req.url });

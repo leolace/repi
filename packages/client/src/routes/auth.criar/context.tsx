@@ -4,7 +4,7 @@ import {
   FormActions,
   FormState,
   ICreateAccountContext,
-  ICreateAccountUser,
+  ICreateAccountUser
 } from "./types";
 import { IUser, UserClassesEnum } from "common";
 import { useDebounced } from "@hooks/use-debounced-fetch";
@@ -15,7 +15,7 @@ const defaultCreateAccountUser: ICreateAccountUser = {
   email: "",
   password: "",
   tags: null,
-  class: UserClassesEnum.NAO_DEFINIDA,
+  class: UserClassesEnum.NAO_DEFINIDA
 };
 
 export const CreateAccountContext = createContext<ICreateAccountContext>(
@@ -26,11 +26,11 @@ const defaultForm: FormState = {
   user: defaultCreateAccountUser,
   errors: {},
   loadings: {},
-  currentStep: CreateAccountSteps.CLASS,
+  currentStep: CreateAccountSteps.CLASS
 };
 
 export const CreateAccountProvider = ({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) => {
@@ -40,7 +40,6 @@ export const CreateAccountProvider = ({
 
   const getUserByEmail = async (email: string) => {
     const users = await client<IUser[]>(`/users?email=${email}`);
-    console.log(users);
     return users.data;
   };
 
@@ -53,7 +52,7 @@ export const CreateAccountProvider = ({
           errors:
             action.resetError !== false
               ? { ...state.errors, [state.currentStep]: "" }
-              : state.errors,
+              : state.errors
         };
       case "CLEAR_USER":
         return { ...state, user: defaultCreateAccountUser };
@@ -66,7 +65,7 @@ export const CreateAccountProvider = ({
       case "RESET_ERROR":
         return {
           ...state,
-          errors: { ...state.errors, [state.currentStep]: false },
+          errors: { ...state.errors, [state.currentStep]: false }
         };
     }
   }
@@ -75,29 +74,29 @@ export const CreateAccountProvider = ({
     formDispatch({
       type: "SET_LOADING",
       key: "EMAIL",
-      value: true,
+      value: true
     });
     const result = await debouncedFunction(() => getUserByEmail(value));
 
     formDispatch({
       type: "SET_LOADING",
       key: "EMAIL",
-      value: false,
+      value: false
     });
 
     if (result?.length)
-      return formDispatch({
+      {return formDispatch({
         type: "SET_ERROR",
         key: "EMAIL",
-        value: "Este e-mail já está em uso",
-      });
+        value: "Este e-mail já está em uso"
+      });}
   };
 
   const value = React.useMemo(
     () => ({
       form,
       formDispatch,
-      checkEmailAvailability,
+      checkEmailAvailability
     }),
     [form, formDispatch, checkEmailAvailability]
   );
