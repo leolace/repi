@@ -1,10 +1,10 @@
-import { authClient, client } from "@services/client.server";
+import { authClient, client } from "../services/client.server";
 import { CompleteSelfUser, IUser, Republica, UserClassesEnum } from "common";
 import { verifySession } from "./auth.server";
-import { isErrorResponseData } from "@utils/is-error-response";
+import { isErrorResponseData } from "../utils/is-error-response";
 import { cache } from "react";
-import { deleteSessionCookie } from "@cookie.server";
-import { redirect } from "@remix-run/node";
+import { deleteSessionCookie } from "../cookie.server";
+import { redirect } from "react-router";
 
 export const getUsers = async () => {
   const users = await client<IUser[]>("/users");

@@ -2,7 +2,7 @@ import { Logo } from "@components";
 import React from "react";
 import { NavButtons } from "./_compose";
 import { HeaderMenu } from "./_compose/header-menu";
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { useGetRootData } from "@hooks/use-get-root-data";
 
 export const Header = () => {

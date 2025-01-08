@@ -3,7 +3,7 @@ import React from "react";
 import { UserClassesEnum } from "common";
 import { RepCard } from "@interfaces/rep-card/rep-card.compoenent";
 import { getUserByClass } from "@actions/user.server";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 
 export const loader = async () => {
   const users = await getUserByClass(UserClassesEnum.REPUBLICA);

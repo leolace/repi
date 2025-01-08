@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["@remix-run/node", "vite/client", "./src/types/global"],
+    "types": ["@react-router/node", "vite/client", "./src/types/global"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -16,6 +16,7 @@
     "allowImportingTsExtensions": true,
     "forceConsistentCasingInFileNames": true,
     "removeComments": true,
+    "rootDirs": [".", "./.react-router/types"],
     "paths": {
       "@*": ["./src/*"],
       "common": ["../common/src"]
@@ -29,7 +30,8 @@
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx",
-    "postcss.config.cjs"
+    "postcss.config.cjs",
+    "./.react-router/types/**/*"
   ],
   "exclude": ["node_modules"]
 }

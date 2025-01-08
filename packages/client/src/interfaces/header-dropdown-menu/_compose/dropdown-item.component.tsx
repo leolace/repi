@@ -1,7 +1,7 @@
 import { Text } from "@components";
 import { MenuOption } from "../dropdown-header-menu.types";
 import { isClickableMenuOption } from "../dropdown-header-menu.utils";
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 
 export function DropdownItem(menuOption: MenuOption) {
   if (isClickableMenuOption(menuOption)) {

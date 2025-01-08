@@ -32,3 +32,6 @@ yarn-error.log*
 next-env.d.ts
 
 /.cache
+
+# react-router
+**/.react-router

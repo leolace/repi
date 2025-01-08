@@ -1,6 +1,6 @@
-import { verifySession } from "@actions/auth.server";
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { Outlet, redirect } from "@remix-run/react";
+import { verifySession } from "../../actions/auth.server";
+import { LoaderFunctionArgs } from "react-router";
+import { Outlet, redirect } from "react-router";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const session = await verifySession(request);

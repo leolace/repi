@@ -1,5 +1,5 @@
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-import { Outlet } from "@remix-run/react";
+import { LoaderFunctionArgs, redirect } from "react-router";
+import { Outlet } from "react-router";
 
 export const loader = ({ request }: LoaderFunctionArgs) => {
   if (request.url.replaceAll("/", "").endsWith("republica"))

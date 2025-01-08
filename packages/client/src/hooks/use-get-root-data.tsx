@@ -1,4 +1,4 @@
-import { useRouteLoaderData } from "@remix-run/react";
+import { useRouteLoaderData } from "react-router";
 import { CompleteSelfUser } from "common";
 
 interface RootLoaderData {

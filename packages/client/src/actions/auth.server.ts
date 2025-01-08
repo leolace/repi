@@ -1,9 +1,9 @@
-import { authClient, client } from "@services/client.server";
-import { parseFormData } from "@utils/parse-formdata";
+import { authClient, client } from "../services/client.server";
+import { parseFormData } from "../utils/parse-formdata";
 import { IToken, IUser, IUserJWTPayload, UserClassesEnum } from "common";
 import * as jose from "jose";
-import { redirect } from "@remix-run/react";
-import { createSessionCookie, getSessionCookie } from "@cookie.server";
+import { redirect } from "react-router";
+import { createSessionCookie, getSessionCookie } from "../cookie.server";
 import { env } from "common/src/environment.server";
 
 export async function createAccountAction(formData: FormData) {

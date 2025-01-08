@@ -1,16 +1,9 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Header } from "@interfaces";
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from "@remix-run/react";
+import { Header } from "./interfaces";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
 import appStylesHref from "./globals.css?url";
-import { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { getSelf } from "@actions/user.server";
+import { LinksFunction, LoaderFunctionArgs } from "react-router";
+import { getSelf } from "./actions/user.server";
 import { env } from "common/src/environment.server";
 
 export const links: LinksFunction = () => [

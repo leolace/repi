@@ -1,4 +1,4 @@
-import { CookieSerializeOptions, createCookie } from "@remix-run/node";
+import { CookieSerializeOptions, createCookie } from "react-router";
 import { MAX_SESSION_TIME_SEC } from "common";
 
 export const sessionCookie = createCookie("user-session", {

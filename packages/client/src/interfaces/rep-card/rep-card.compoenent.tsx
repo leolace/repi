@@ -1,5 +1,5 @@
 import { Text } from "@components";
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { IUser } from "common";
 
 export const RepCard = ({ id, name, email }: IUser) => {
