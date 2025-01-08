@@ -1,7 +1,8 @@
 import { CookieSerializeOptions, createCookie } from "@remix-run/node";
+import { MAX_SESSION_TIME_SEC } from "common";
 
 export const sessionCookie = createCookie("user-session", {
-  maxAge: 999_999
+  maxAge: MAX_SESSION_TIME_SEC,
 });
 
 export const getSessionCookie = async (request: Request) =>
@@ -9,7 +10,7 @@ export const getSessionCookie = async (request: Request) =>
 
 export const createSessionCookie = async (
   value: string,
-  options?: CookieSerializeOptions
+  options?: CookieSerializeOptions,
 ) => await sessionCookie.serialize(value, options);
 
 export const deleteSessionCookie = async () =>

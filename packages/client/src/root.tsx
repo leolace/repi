@@ -21,7 +21,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await getSelf(request);
   const { API_ENDPOINT } = env;
 
-  console.log(user);
   return { user, ENV: { API_ENDPOINT } };
 };
 
@@ -36,11 +35,13 @@ export default function Root() {
         <Meta />
         <Links />
       </head>
-      <body className={`w-full max-w-[60rem] mx-auto flex flex-col gap-12`}>
-        <Header />
-        <main className="flex-1 w-full">
-          <Outlet />
-        </main>
+      <body>
+        <div className="max-w-[60rem] mx-auto w-full flex flex-col gap-12">
+          <Header />
+          <main className="flex-1 w-full">
+            <Outlet />
+          </main>
+        </div>
         <SpeedInsights />
 
         <ScrollRestoration />

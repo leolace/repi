@@ -1,4 +1,4 @@
-import { ITag, TagEnum } from "common";
+import { ITag } from "common";
 import { dbClient } from "../../db-client";
 import { v4 as uuid } from "uuid";
 
@@ -24,7 +24,7 @@ class TagModel {
   }
 
   async assignTagToUser(tag: ITag, userId: string) {
-    const query = `INSERT INTO user_tag (user_id, tag_id) VALUES ($1, $2) RETURNING user_id AS userId, tag_id AS tagId`;
+    const query = "INSERT INTO user_tag (user_id, tag_id) VALUES ($1, $2) RETURNING user_id AS userId, tag_id AS tagId";
 
     const res = await dbClient.query<{ userId: string; tagId: string }>(query, [
       userId,

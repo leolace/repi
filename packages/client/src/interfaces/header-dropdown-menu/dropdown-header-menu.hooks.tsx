@@ -8,7 +8,7 @@ export function useDropdownHeaderMenu({
   const dropdownContainerRef = useRef<null | HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const isOpenClass = open
-    ? "opacity-100 z-10 -translate-y-[0%]"
+    ? "opacity-100 z-10 translate-y-0"
     : "opacity-0 -translate-y-1/4 -z-10";
 
   useEffect(() => {
@@ -17,15 +17,15 @@ export function useDropdownHeaderMenu({
 
   useEffect(() => {
     const handleClick = ({ target }: MouseEvent) => {
-      if (target instanceof HTMLAnchorElement) {
+      if (target instanceof HTMLAnchorElement) 
         return setShowDropdown(false);
-      }
+      
       if (
         target instanceof HTMLElement &&
         !dropdownContainerRef.current?.contains(target)
-      ) {
+      ) 
         return setShowDropdown(false);
-      }
+      
     };
     document.addEventListener("click", handleClick);
 

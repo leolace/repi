@@ -1,14 +1,13 @@
-import { IUser, IUserJWTPayload, Republica, UserClassesEnum } from "common";
+import { IUser, IUserJWTPayload, UserClassesEnum } from "common";
 import { dbClient } from "@db-client";
 import { CreateUserDto } from "./user.dto";
 import { v4 as uuid } from "uuid";
 import { republicaModel } from "@entities/republica/republica.model";
-import { unRawRepublicaData } from "@entities/republica/republica.utils";
 
 class UserModel {
   async store(user: CreateUserDto) {
     const { rows } = await dbClient.query<IUser>(
-      `INSERT INTO users(id, name, email, password, class) VALUES($1, $2, $3, $4, $5) RETURNING id, name, email, class`,
+      "INSERT INTO users(id, name, email, password, class) VALUES($1, $2, $3, $4, $5) RETURNING id, name, email, class",
       [uuid(), user.name, user.email, user.password, user.class]
     );
 
@@ -17,7 +16,7 @@ class UserModel {
 
   async findAll() {
     const res = await dbClient.query<IUser>(
-      `SELECT name, email, class, id FROM users;`
+      "SELECT name, email, class, id FROM users;"
     );
 
     return res.rows;
@@ -38,7 +37,7 @@ class UserModel {
 
   async getPassword(userId: string): Promise<string> {
     const { rows } = await dbClient.query<{ password: string }>(
-      `SELECT password FROM users WHERE id = $1`,
+      "SELECT password FROM users WHERE id = $1",
       [userId]
     );
 
@@ -47,16 +46,14 @@ class UserModel {
 
   async getSelf({ userId, class: userClass }: IUserJWTPayload) {
     const [user] = await this.findBy({ id: userId });
-    let userData = null;
+    let classData = null;
 
     if (userClass === UserClassesEnum.REPUBLICA) {
       const republica = await republicaModel.findByUser(userId);
-      userData = republica;
-    } else {
-      userData = {};
-    }
+      classData = republica;
+    } else classData = {};
 
-    return { ...user, userData };
+    return { ...user, classData };
   }
 }
 

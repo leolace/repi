@@ -11,7 +11,7 @@ class AuthService {
     const validatedLogin = loginUserSchema.parse(user);
 
     const userExists = await userService.findUserBy({
-      email: validatedLogin.email,
+      email: validatedLogin.email
     });
 
     if (!userExists) throw new ErrorE("Credenciais inválidas", 400);
@@ -24,9 +24,9 @@ class AuthService {
 
     const sessionTokenPayload = {
       userId: userExists.id,
-      class: userExists.class,
+      class: userExists.class
     };
-    const generatedToken = await genSessionToken(sessionTokenPayload, "7d");
+    const generatedToken = await genSessionToken(sessionTokenPayload);
 
     const userSession = await authModel.getUserSession(userExists.id);
     if (userSession) await authModel.deleteSession(userSession.id);
@@ -38,7 +38,7 @@ class AuthService {
 
   async logout(userId: string) {
     const userExists = await userService.findUserBy({
-      id: userId,
+      id: userId
     });
     if (!userExists) throw new ErrorE("Usuário não encontrado", 400);
 

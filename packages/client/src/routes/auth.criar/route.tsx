@@ -10,14 +10,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
 
   const createAccountResponse = await createAccountAction(formData);
-  if (isErrorResponseData(createAccountResponse.data)) {
+  if (isErrorResponseData(createAccountResponse.data)) 
     return createAccountResponse.data;
-  }
 
   const loginResponse = await loginAction(formData);
-  if (isErrorResponseData(loginResponse.data)) {
+  if (isErrorResponseData(loginResponse.data)) 
     return loginResponse.data;
-  }
 
   return redirect("/inicio", {
     headers: {

@@ -7,8 +7,7 @@ import {
 import { republicaModel } from "./republica.model";
 import { userService } from "@entities/user";
 import { ErrorE } from "@utils/error";
-import { RawRepublica, RawRepublicaEdit } from "./republica.types";
-import { unRawRepublicaData } from "./republica.utils";
+import { RawRepublicaEdit } from "./republica.types";
 
 class RepublicaService {
   async find(id: string) {

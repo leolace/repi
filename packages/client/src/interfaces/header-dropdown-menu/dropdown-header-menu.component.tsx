@@ -1,5 +1,5 @@
 import { Text } from "@components";
-import { LogOut, Settings, Triangle } from "lucide-react";
+import { LogOut, Triangle } from "lucide-react";
 import React from "react";
 import { ProfileAvatar } from "@components/profile-avatar";
 import { CompleteSelfUser, UserClassesEnum } from "common";
@@ -41,7 +41,7 @@ export const DropdownHeaderMenu = ({
         className={`${baseClass} ${isOpenClass} bottom-0`}
       />
       <div
-        className={`${baseClass} ${isOpenClass} ring-1 ring-gray-light min-w-[12rem] rounded flex flex-col gap-5 bg-gray-light-2`}
+        className={`${baseClass} ${isOpenClass} ring-1 ring-gray min-w-[12rem] top-14 rounded flex flex-col gap-5 bg-gray-light-2`}
         ref={dropdownContainerRef}
       >
         <nav className="flex flex-col">
@@ -72,11 +72,11 @@ export const DropdownHeaderMenu = ({
             </ul>
           ) : null}
           <ul className="grid">
-            <DropdownItem
+            {/* <DropdownItem
               link={MenuOptionsRoutes.CONFIGURACOES}
               Icon={Settings}
               name="Configurações"
-            />
+            /> */}
             <DropdownItem
               link={MenuOptionsRoutes.SAIR}
               Icon={LogOut}

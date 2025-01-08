@@ -6,14 +6,13 @@ import { ErrorE } from "@utils/error";
 import { tagService } from "@entities/tag";
 import bcrypt from "bcrypt";
 import { republicaService } from "@entities/republica/republica.service";
-import { unRawRepublicaData } from "@entities/republica/republica.utils";
 
 class UserService {
   async createUser(user: CreateUserDto) {
     const validatedUser = createUserSchema.parse(user);
 
     const userAlreadyExists = await userService.findUserBy({
-      email: user.email,
+      email: user.email
     });
     if (userAlreadyExists)
       throw new ErrorE(`E-mail ${user.email} is already in use.`, 400);
@@ -23,14 +22,13 @@ class UserService {
 
     if (user.tags) await tagService.assignTagToUser(user.tags, createdUser.id);
 
-    if ("password" in createdUser) {
+    if ("password" in createdUser) 
       delete createdUser.password;
-    }
 
     if (user.class === UserClassesEnum.REPUBLICA)
       await republicaService.store({
         userId: createdUser.id,
-        class: user.class,
+        class: user.class
       });
 
     return createdUser;
@@ -60,7 +58,7 @@ class UserService {
     return users[0];
   }
 
-  async findUsersBy(values: Record<string, any>) {
+  async findUsersBy(values: Record<string, unknown>) {
     const { data } = searchParamsUserSchema.safeParse(values);
     if (!data) return [];
 

@@ -32,7 +32,7 @@ export const SubmitButton = () => {
     };
   }, []);
 
-  if (form.currentStep !== CreateAccountSteps.CONFIRM) {
+  if (form.currentStep !== CreateAccountSteps.CONFIRM) 
     return (
       <Button
         onClick={handleClick}
@@ -43,7 +43,6 @@ export const SubmitButton = () => {
         Avançar
       </Button>
     );
-  }
 
   return (
     <Button type="submit" disabled={pending}>

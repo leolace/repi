@@ -1,9 +1,10 @@
 import { Button, ProfileAvatar, Text } from "@components";
+import { Link } from "@remix-run/react";
 import { useGetRepublicaRouteData } from "@routes/republica.$id/hooks";
 import { Edit } from "lucide-react";
 
 export function RepHeader() {
-  const { user, republica } = useGetRepublicaRouteData();
+  const { user, republica, isOwnerUser } = useGetRepublicaRouteData();
 
   return (
     <header className="flex items-center">
@@ -19,7 +20,13 @@ export function RepHeader() {
         </div>
       </div>
       <div>
-        <Button Icon={<Edit size={"20px"} />}>Editar</Button>
+        {isOwnerUser ? (
+          <Link to={`/republica/${user.id}/editar`}>
+            <Button Icon={<Edit size={"20px"} />}>Editar</Button>
+          </Link>
+        ) : (
+          <Button>Interesse</Button>
+        )}
       </div>
     </header>
   );

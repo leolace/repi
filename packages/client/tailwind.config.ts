@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss";
+import tailwindAnimate from "tailwindcss-animate";
 
 const config: Config = {
+  darkMode: ["class"],
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
@@ -42,9 +44,14 @@ const config: Config = {
       },
       boxShadow: {
         pressed: "inset 0px 2px 1px rgba(0, 0, 0, 0.1)"
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)"
       }
     }
   },
-  plugins: []
+  plugins: [tailwindAnimate]
 };
 export default config;

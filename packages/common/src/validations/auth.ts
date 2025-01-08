@@ -5,8 +5,8 @@ export const isUserClass = (value?: string): value is UserClassesEnum => {
 };
 
 export const isValidEmail = (value?: string) => {
-	if (!value) return false;
-	const emailRegex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+  if (!value) return false;
+  const emailRegex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
 
-	return emailRegex.test(value);
-}
+  return emailRegex.test(value);
+};

@@ -33,7 +33,7 @@ class RepublicaModel {
 
   async store(republica: CreateRepublicaDto) {
     const { rows } = await dbClient.query<RawRepublica>(
-      `INSERT INTO republicas(id, user_id, class) VALUES($1, $2, $3) RETURNING *`,
+      "INSERT INTO republicas(id, user_id, class) VALUES($1, $2, $3) RETURNING *",
       [uuid(), republica.userId, republica.class]
     );
 

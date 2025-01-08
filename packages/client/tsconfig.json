@@ -28,7 +28,8 @@
     "**/.server/**/*.ts",
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
-    "**/.client/**/*.tsx"
+    "**/.client/**/*.tsx",
+    "postcss.config.cjs"
   ],
   "exclude": ["node_modules"]
 }
