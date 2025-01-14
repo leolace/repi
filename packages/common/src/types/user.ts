@@ -10,6 +10,7 @@ export interface IUser {
   id: string;
   name: string;
   email: string;
+  imageUrl: string | null;
   class: UserClassesEnum;
 }
 
@@ -25,8 +26,7 @@ export interface IUserWithTags extends IUser {
 export interface Republica {
   userId: string;
   class: UserClassesEnum.REPUBLICA;
-  imageUrl?: string;
-  rentalValue: number;
+  rentalValue: string;
   occupantsCount: number;
   postsCount: number;
 }
@@ -34,8 +34,11 @@ export interface Republica {
 export interface Bixo {
   userId: string;
   class: UserClassesEnum.BIXO;
-  imageUrl?: string;
 }
+
+export type CompleteUser<T> = IUser & {
+  classData: T;
+};
 
 export type CompleteSelfUser = IUser & {
   classData: Bixo | Republica;

@@ -1,7 +1,19 @@
 import { userModel } from "./user.model";
 import { searchParamsUserSchema } from "../auth/auth.dto";
-import { IUser, IUserJWTPayload, UserClassesEnum } from "common";
-import { CreateUserDto, createUserSchema } from "./user.dto";
+import {
+  Bixo,
+  CompleteUser,
+  IUser,
+  IUserJWTPayload,
+  Republica,
+  UserClassesEnum,
+} from "common";
+import {
+  CreateUserDto,
+  createUserSchema,
+  EditUserDto,
+  editUserSchema,
+} from "./user.dto";
 import { ErrorE } from "@utils/error";
 import { tagService } from "@entities/tag";
 import bcrypt from "bcrypt";
@@ -12,7 +24,7 @@ class UserService {
     const validatedUser = createUserSchema.parse(user);
 
     const userAlreadyExists = await userService.findUserBy({
-      email: user.email
+      email: user.email,
     });
     if (userAlreadyExists)
       throw new ErrorE(`E-mail ${user.email} is already in use.`, 400);
@@ -22,13 +34,12 @@ class UserService {
 
     if (user.tags) await tagService.assignTagToUser(user.tags, createdUser.id);
 
-    if ("password" in createdUser) 
-      delete createdUser.password;
+    if ("password" in createdUser) delete createdUser.password;
 
     if (user.class === UserClassesEnum.REPUBLICA)
       await republicaService.store({
         userId: createdUser.id,
-        class: user.class
+        class: user.class,
       });
 
     return createdUser;
@@ -49,13 +60,30 @@ class UserService {
   }
 
   async findUserBy(values: Partial<IUser>) {
-    const { data } = searchParamsUserSchema.safeParse(values);
-    if (!data) return;
+    const { data, error } = searchParamsUserSchema.safeParse(values);
+    if (!data) throw new ErrorE(error.message);
 
     const searchedValues: Partial<IUser> = data;
     const users = await userModel.findBy(searchedValues);
 
     return users[0];
+  }
+
+  async findCompleteUser(
+    values: Partial<IUser>,
+  ): Promise<CompleteUser<Bixo | Republica>> {
+    const { data, error } = searchParamsUserSchema.safeParse(values);
+
+    if (!data) throw new ErrorE(error.message);
+
+    const users = await userModel.findBy(data);
+    const user = users[0];
+    const classData: Bixo | Republica =
+      user.class === UserClassesEnum.REPUBLICA
+        ? await republicaService.findByUser(user.id)
+        : ({} as Bixo); // TODO: add bixo entity
+
+    return Object.assign(user, { classData });
   }
 
   async findUsersBy(values: Record<string, unknown>) {
@@ -65,6 +93,26 @@ class UserService {
     const searchedValues: Partial<IUser> = data;
 
     return userModel.findBy(searchedValues);
+  }
+
+  async edit(userId: string, partialUser: EditUserDto) {
+    const parsedData = editUserSchema.safeParse(partialUser);
+    if (!parsedData.success) throw new ErrorE(parsedData.error.message);
+
+    const validatedEditUser = parsedData.data;
+
+    let classData: Republica | undefined;
+    if (validatedEditUser.classData)
+      classData = await republicaService.edit(
+        userId,
+        validatedEditUser.classData,
+      );
+
+    delete validatedEditUser.classData;
+
+    const editedUser = await userModel.edit(userId, validatedEditUser);
+
+    return Object.assign(editedUser, { classData });
   }
 }
 

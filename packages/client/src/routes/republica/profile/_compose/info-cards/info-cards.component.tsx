@@ -1,10 +1,10 @@
 import { Card, CardSubtitle, CardTitle } from "@components";
-import { useGetRepublicaRouteData } from "../../hooks";
 import { getInfos } from "./info-cards.utils";
+import { useGetRepublicaRouteData } from "@routes/republica/hooks";
 
 export function InfoCards() {
-  const { republica } = useGetRepublicaRouteData();
-  const infos = getInfos(republica);
+  const { user } = useGetRepublicaRouteData();
+  const infos = getInfos(user.classData);
 
   return (
     <div className="flex justify-between gap-6">

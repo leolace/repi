@@ -4,6 +4,7 @@ import { UserClassesEnum } from "common";
 import { RepCard } from "@interfaces/rep-card/rep-card.compoenent";
 import { getUserByClass } from "@actions/user.server";
 import { useLoaderData } from "react-router";
+import { PageTitle } from "@components";
 
 export const loader = async () => {
   const users = await getUserByClass(UserClassesEnum.REPUBLICA);
@@ -16,9 +17,10 @@ export default function Home() {
 
   if (isErrorResponseData(users)) return;
   return (
-    <section className="flex-1 h-full w-full">
-      <div className="grid gap-6">
-        <pre className="grid gap-4">
+    <section className="flex-1 h-full w-full grid gap-10">
+      <PageTitle title="Encontre a sua república" />
+      <div>
+        <pre className="grid gap-8">
           {users.map((user) => (
             <RepCard {...user} key={user.email} />
           ))}

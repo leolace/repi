@@ -1,5 +1,4 @@
-import { HTMLProps } from "react";
-
-export interface InputProps extends Omit<HTMLProps<HTMLInputElement>, "size"> {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
 	size?: Sizes;
+  label: string;
 }

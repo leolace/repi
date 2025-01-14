@@ -9,8 +9,7 @@ export const createRepublicaSchema = z.object({
 export type CreateRepublicaDto = z.infer<typeof createRepublicaSchema>;
 
 export const editRepublicaSchema = z.object({
-  imageUrl: z.string().optional(),
-  rentalValue: z.number().optional(),
+  rentalValue: z.string().optional(),
   occupantsCount: z.number().optional(),
 });
 

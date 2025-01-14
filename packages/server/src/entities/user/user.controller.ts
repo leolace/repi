@@ -21,12 +21,27 @@ class UserController {
     res.json(response);
   }
 
+  async getUser(req: Request, res: Response) {
+    const { id } = req.params;
+    const completeUser = await userService.findCompleteUser({ id });
+
+    res.json(completeUser);
+  }
+
   async getSelf(req: Request, res: Response) {
     const user = req.app.locals.user;
 
     const self = await userService.getSelf(user);
 
     res.json(self);
+  }
+
+  async edit(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const editedUser = await userService.edit(id, req.body);
+
+    res.json(editedUser);
   }
 }
 

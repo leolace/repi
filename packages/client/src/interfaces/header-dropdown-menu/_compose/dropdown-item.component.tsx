@@ -19,7 +19,7 @@ export function DropdownItem(menuOption: MenuOption) {
 
   const { Icon, name, link } = menuOption;
   return (
-    <li className="cursor-pointer hover:bg-gray-light">
+    <li className={`cursor-pointer hover:bg-gray-light ${menuOption.style || ""}`}>
       <Link to={link} className="flex gap-2 items-center p-2">
         <Icon size="20px" />
         <Text>{name}</Text>

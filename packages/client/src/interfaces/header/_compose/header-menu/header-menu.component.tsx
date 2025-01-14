@@ -18,10 +18,10 @@ export const HeaderMenu = () => {
   return (
     <div className="relative p-2">
       <div
-        className="cursor-pointer w-10 h-10 bg-white select-none"
+        className="cursor-pointer w-12 h-12 bg-white select-none"
         onClick={() => setShowDropdown((prev) => !prev)}
       >
-        <ProfileAvatar user={user} src={user.classData.imageUrl} />
+        <ProfileAvatar user={user} />
       </div>
       {showDropdown && (
         <DropdownHeaderMenu

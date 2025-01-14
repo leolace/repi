@@ -1,17 +1,11 @@
+import { formatRentalValue } from "@routes/republica/republica.utils";
 import { Republica } from "common";
-
-export function parseRentalValue(value: number) {
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  }).format(value);
-}
 
 export function getInfos(republicaData: Republica) {
   const infos = [
     {
       label: "Aluguel",
-      data: parseRentalValue(republicaData.rentalValue)
+      data: formatRentalValue(republicaData.rentalValue)
     },
     {
       label: "Moradores",

@@ -52,11 +52,7 @@ export const DropdownHeaderMenu = ({
                 title={user.name}
               >
                 <span className="w-8 h-8">
-                  <ProfileAvatar
-                    className="flex-1"
-                    user={user}
-                    src={user.classData.imageUrl}
-                  />
+                  <ProfileAvatar className="flex-1" user={user} />
                 </span>
                 <Text className="whitespace-nowrap overflow-hidden max-w-40 text-ellipsis">
                   {user.name}
@@ -72,11 +68,6 @@ export const DropdownHeaderMenu = ({
             </ul>
           ) : null}
           <ul className="grid">
-            {/* <DropdownItem
-              link={MenuOptionsRoutes.CONFIGURACOES}
-              Icon={Settings}
-              name="Configurações"
-            /> */}
             <DropdownItem
               link={MenuOptionsRoutes.SAIR}
               Icon={LogOut}

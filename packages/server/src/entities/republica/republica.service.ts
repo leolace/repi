@@ -61,7 +61,6 @@ class RepublicaService {
 
     const entriesToEdit: RawRepublicaEdit = Object.fromEntries(
       Object.entries({
-        image_url: validatedEditRepublica.imageUrl,
         occupants_count: validatedEditRepublica.occupantsCount,
         rental_value: validatedEditRepublica.rentalValue,
       }).filter(([, value]) => Boolean(value))

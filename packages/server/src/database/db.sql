@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     class VARCHAR(15) NOT NULL,
+    "imageUrl" TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -14,7 +15,6 @@ CREATE TABLE IF NOT EXISTS republicas (
     id UUID NOT NULL PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES users(id) UNIQUE,
     class VARCHAR(15) NOT NULL,
-    image_url TEXT,
     rental_value DECIMAL(10, 2) DEFAULT 0.00,
     occupants_count INTEGER DEFAULT 0,
     posts_count INTEGER DEFAULT 0
@@ -23,8 +23,7 @@ CREATE TABLE IF NOT EXISTS republicas (
 CREATE TABLE IF NOT EXISTS bixos (
     id UUID NOT NULL PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES users(id),
-    class VARCHAR(15) NOT NULL,
-    image_url TEXT
+    class VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tags (

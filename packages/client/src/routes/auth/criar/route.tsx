@@ -17,7 +17,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   if (isErrorResponseData(loginResponse.data)) 
     return loginResponse.data;
 
-  return redirect("/inicio", {
+  return redirect(`/republica/${createAccountResponse.data.id}`, {
     headers: {
       "Set-Cookie": await createSessionCookie(loginResponse.data.token),
     },

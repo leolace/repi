@@ -1,15 +1,13 @@
-import { CompleteSelfUser, IUser, UserClassesEnum } from "common";
+import { Bixo, CompleteUser, IUser, Republica, UserClassesEnum } from "common";
 import { LayoutGrid, User } from "lucide-react";
 
 interface AvatarProps extends React.HTMLAttributes<HTMLSpanElement> {
-  src?: string;
   alt?: string;
   className?: string;
-  user: IUser | CompleteSelfUser;
+  user: IUser | CompleteUser<Bixo | Republica>;
 }
 
 export const ProfileAvatar = ({
-  src,
   alt,
   className,
   user,
@@ -24,9 +22,9 @@ export const ProfileAvatar = ({
       title={`Avatar de ${user.name}`}
       {...props}
     >
-      {src ? (
+      {user.imageUrl ? (
         <img
-          src={src}
+          src={user.imageUrl}
           alt={alt || `Avatar de ${user.name}`}
           className="w-full h-full object-cover"
         />

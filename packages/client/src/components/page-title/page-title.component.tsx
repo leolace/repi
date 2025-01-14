@@ -5,7 +5,7 @@ export const PageTitle = ({
   title,
   subtitle,
   subtitleSize = "md",
-  titleSize = "xl"
+  titleSize = "3xl"
 }: PageTitleProps) => {
 
   return (
