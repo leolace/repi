@@ -5,5 +5,7 @@ export enum ContentTabs {
   // POINTS_OF_INTEREST = "pontos-de-interesse",
 }
 
-export type ContentTabContent = Record<ContentTabs, React.ReactNode>;
-export type ContentTabLabels = Record<ContentTabs, string>;
+export interface ITab {
+  label: string;
+  content: React.ReactNode;
+}

@@ -1,10 +1,6 @@
 import { Button } from "@components";
 import { Link, useSearchParams } from "react-router";
-import {
-  tabContents,
-  getActiveContentTab,
-  tabLabels,
-} from "./content.utils";
+import { getActiveContentTab, tabs } from "./content.utils";
 
 export function Content() {
   const [searchParams] = useSearchParams();
@@ -13,15 +9,18 @@ export function Content() {
   return (
     <div>
       <nav className="flex gap-2">
-        {Object.entries(tabLabels).map(([name, label]) => (
+        {Object.entries(tabs).map(([name, value]) => (
           <Link to={{ search: `tab=${name}` }} className="flex-1" key={name}>
-            <Button style={activeTab === name ? "primary" : "tertiary"} className="w-full">
-              {label}
+            <Button
+              style={activeTab === name ? "primary" : "tertiary"}
+              className="w-full"
+            >
+              {value.label}
             </Button>
           </Link>
         ))}
       </nav>
-      {tabContents[activeTab]}
+      {tabs[activeTab].content}
     </div>
   );
 }
