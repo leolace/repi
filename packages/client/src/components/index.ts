@@ -6,3 +6,4 @@ export * from "./text";
 export * from "./input";
 export * from "./profile-avatar";
 export * from "./select";
+export * from "./edit-profile-avatar";

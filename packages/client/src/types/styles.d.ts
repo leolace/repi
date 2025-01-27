@@ -28,6 +28,8 @@ enum TypesEnum {
 	PRIMARY = "primary",
 	SECONDARY = "secondary",
 	TERTIARY = "tertiary",
+  DANGER = "danger",
+  DANGER_OUTLINE = "dangerOutline",
 }
 
 type Sizes = `${SizesEnum}`;

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "serve": "tsx src/index.ts",
+    "knex": "tsx ./node_modules/knex/bin/cli.js",
     "start": "pnpm dev",
     "tsc": "tsc -b",
     "build": "tsc"
@@ -23,9 +24,12 @@
     "vercel": "^39.2.2"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.735.0",
+    "@aws-sdk/s3-request-presigner": "^3.735.0",
     "bcrypt": "^5.1.1",
     "common": "workspace:*",
     "express": "^4.21.1",
+    "knex": "^3.1.0",
     "pg": "^8.13.0",
     "uuid": "^11.0.2",
     "zod": "^3.23.8"

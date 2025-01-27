@@ -75,11 +75,23 @@ export const editUser = async (
   const session = await verifySession(request);
   if (!session) throw new Error("Verify session failed");
 
-  const editedUser = await authClient<CompleteUser<Bixo | Republica>>(`/user/${userId}`, {
-    sessionToken: session.token,
-    method: "PATCH",
-    body: JSON.stringify(dataToEdit),
-  });
+  const editedUser = await authClient<{ presignedUrl?: string }>(
+    `/user/${userId}`,
+    {
+      sessionToken: session.token,
+      method: "PATCH",
+      body: JSON.stringify(dataToEdit),
+    },
+  );
 
   return editedUser;
+};
+
+export const uploadFile = async (url: string, file: File) => {
+  const uploadedFile = await fetch(url, {
+    method: "PUT",
+    body: file,
+  });
+
+  return uploadedFile;
 };

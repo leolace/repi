@@ -15,8 +15,8 @@ export const searchParamsUserSchema = z.object({
   class: z.nativeEnum(UserClassesEnum).optional(),
 });
 
-export interface UserSession {
+export interface Session {
   id: string;
-  user_id: string;
+  userId: string;
   token: string;
 }

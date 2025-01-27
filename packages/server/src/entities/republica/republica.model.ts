@@ -1,59 +1,53 @@
 import { dbClient } from "@db-client";
 import { CreateRepublicaDto } from "./republica.dto";
 import { v4 as uuid } from "uuid";
-import { RawRepublica, RawRepublicaEdit } from "./republica.types";
-import { unRawRepublicaData } from "./republica.utils";
+import { RepublicaEdit } from "./republica.types";
+import { Republica } from "common";
 
 class RepublicaModel {
   async find(id: string) {
-    const { rows } = await dbClient.query<RawRepublica>(
-      "SELECT * FROM republicas WHERE id = $1",
-      [id],
-    );
+    const republica = await dbClient<Republica>("republicas")
+      .where({ id })
+      .select("*")
+      .then((rows) => rows[0]);
 
-    return unRawRepublicaData(rows[0]);
+    return republica;
   }
 
   async findByUser(userId: string) {
-    const { rows } = await dbClient.query<RawRepublica>(
-      "SELECT * FROM republicas WHERE user_id = $1",
-      [userId],
-    );
+    const republica = await dbClient<Republica>("republicas")
+      .where({ userId: userId })
+      .select("*")
+      .then((rows) => rows[0]);
 
-    return unRawRepublicaData(rows[0]);
+    return republica;
   }
 
   async findAll() {
-    const { rows } = await dbClient.query<RawRepublica>(
-      "SELECT * FROM republicas",
-    );
-
-    return rows.map(unRawRepublicaData);
+    const republicas = await dbClient<Republica>("republicas").select("*");
+    return republicas;
   }
 
   async store(republica: CreateRepublicaDto) {
-    const { rows } = await dbClient.query<RawRepublica>(
-      "INSERT INTO republicas(id, user_id, class) VALUES($1, $2, $3) RETURNING *",
-      [uuid(), republica.userId, republica.class],
-    );
+    const [editedRepublica] = await dbClient<Republica>("republicas")
+      .insert({
+        id: uuid(),
+        userId: republica.userId,
+        class: republica.class,
+      })
+      .returning("*");
 
-    return unRawRepublicaData(rows[0]);
+    return editedRepublica;
   }
 
-  async edit(userId: string, republicaEditValues: RawRepublicaEdit) {
-    const columnsToEdit = Object.keys(republicaEditValues);
-    const valuesToEdit = Object.values(republicaEditValues);
+  async edit(userId: string, republicaEditValues: RepublicaEdit) {
+    const editedRepublica = await dbClient<Republica>("republicas")
+      .where({ userId })
+      .update(republicaEditValues)
+      .returning("*")
+      .then((rows) => rows[0]);
 
-    const valuesToEditQuery = columnsToEdit
-      .map((key, i) => `"${key}" = $${i + 1}`)
-      .join(", ");
-
-    const { rows } = await dbClient.query<RawRepublica>(
-      `UPDATE republicas SET ${valuesToEditQuery} WHERE user_id = $${columnsToEdit.length + 1} RETURNING *`,
-      [...valuesToEdit, userId],
-    );
-
-    return unRawRepublicaData(rows[0]);
+    return editedRepublica;
   }
 }
 

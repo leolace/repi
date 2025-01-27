@@ -18,6 +18,7 @@ import { ErrorE } from "@utils/error";
 import { tagService } from "@entities/tag";
 import bcrypt from "bcrypt";
 import { republicaService } from "@entities/republica/republica.service";
+import { S3 } from "@s3";
 
 class UserService {
   async createUser(user: CreateUserDto) {
@@ -98,21 +99,30 @@ class UserService {
   async edit(userId: string, partialUser: EditUserDto) {
     const parsedData = editUserSchema.safeParse(partialUser);
     if (!parsedData.success) throw new ErrorE(parsedData.error.message);
+    const { classData, avatarFilename, name } = parsedData.data;
 
-    const validatedEditUser = parsedData.data;
+    const user = await this.findUserBy({ id: userId });
+    if (!user) throw new ErrorE("User not exists");
 
-    let classData: Republica | undefined;
-    if (validatedEditUser.classData)
-      classData = await republicaService.edit(
-        userId,
-        validatedEditUser.classData,
-      );
+    if (classData)
+      await republicaService.edit(userId, classData);
 
-    delete validatedEditUser.classData;
+    let imageUpload = { presignedUrl: "", filename: "" };
+    if (avatarFilename)
+      imageUpload = await S3.genPreSignedUrl(`avatars/${userId}`);
 
-    const editedUser = await userModel.edit(userId, validatedEditUser);
+    const userToUpdate = {
+      name,
+      ...(imageUpload.filename && {
+        imageUrl: `https://repi-web-s3.s3.us-east-2.amazonaws.com/${imageUpload.filename}`,
+      }),
+    };
 
-    return Object.assign(editedUser, { classData });
+    await userModel.edit(userId, userToUpdate);
+
+    return imageUpload.presignedUrl
+      ? { presignedUrl: imageUpload.presignedUrl }
+      : {};
   }
 }
 

@@ -24,6 +24,7 @@ export interface IUserWithTags extends IUser {
 }
 
 export interface Republica {
+  id: string;
   userId: string;
   class: UserClassesEnum.REPUBLICA;
   rentalValue: string;

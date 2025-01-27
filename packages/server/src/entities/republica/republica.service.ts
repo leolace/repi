@@ -7,7 +7,6 @@ import {
 import { republicaModel } from "./republica.model";
 import { userService } from "@entities/user";
 import { ErrorE } from "@utils/error";
-import { RawRepublicaEdit } from "./republica.types";
 
 class RepublicaService {
   async find(id: string) {
@@ -59,14 +58,9 @@ class RepublicaService {
     const republica = await republicaModel.findByUser(userId);
     if (!republica) throw new ErrorE("Republica not found");
 
-    const entriesToEdit: RawRepublicaEdit = Object.fromEntries(
-      Object.entries({
-        occupants_count: validatedEditRepublica.occupantsCount,
-        rental_value: validatedEditRepublica.rentalValue,
-      }).filter(([, value]) => Boolean(value))
-    );
-
-    const editedRepublica = await republicaModel.edit(userId, entriesToEdit);
+    const editedRepublica = await republicaModel.edit(userId, {
+      ...validatedEditRepublica,
+    });
 
     return editedRepublica;
   }

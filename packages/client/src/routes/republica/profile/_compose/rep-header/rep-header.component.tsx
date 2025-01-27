@@ -1,6 +1,5 @@
 import { Button, ProfileAvatar, Text } from "@components";
 import { Link } from "react-router";
-import { Edit } from "lucide-react";
 import { useGetRepublicaRouteData } from "@routes/republica/hooks";
 
 export function RepHeader() {
@@ -22,7 +21,7 @@ export function RepHeader() {
       <div>
         {isOwnerUser ? (
           <Link to={`/republica/${user.id}/editar`}>
-            <Button Icon={<Edit size={"20px"} />}>Editar</Button>
+            <Button>Editar</Button>
           </Link>
         ) : (
           <Button>Interesse</Button>

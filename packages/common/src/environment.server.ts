@@ -8,6 +8,8 @@ const env = {
   ENV: process.env.ENV,
   JWT_SECRET: process.env.JWT_SECRET,
   API_ENDPOINT: process.env.PUBLIC_API_ENDPOINT,
-};
+  AWS_ACESS_KEY: process.env.AWS_ACESS_KEY,
+  AWS_SECRET_ACESS_KEY: process.env.AWS_SECRET_ACESS_KEY,
+} as Record<string, string>;
 
 export { env };

@@ -18,7 +18,7 @@ export type CreateUserDto = z.infer<typeof createUserSchema>;
 export const editUserSchema = z.object({
   name: z.string().min(1, "O nome é obrigatório").optional(),
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres").optional(),
-  imageUrl: z.string().optional(),
+  avatarFilename: z.string().optional(),
   classData: editRepublicaSchema.optional(),
 });
 
