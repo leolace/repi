@@ -1,8 +1,8 @@
-export function formatRentalValue(value: number) {
+export function formatRentalValue(value: string) {
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
-  }).format(value);
+  }).format(Number(value));
 }
 
 export function parseRentalValue(value: number) {
