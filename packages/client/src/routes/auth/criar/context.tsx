@@ -15,7 +15,8 @@ const defaultCreateAccountUser: ICreateAccountUser = {
   email: "",
   password: "",
   tags: null,
-  class: UserClassesEnum.NAO_DEFINIDA
+  class: UserClassesEnum.NAO_DEFINIDA,
+  imageUrl: ""
 };
 
 export const CreateAccountContext = createContext<ICreateAccountContext>(
