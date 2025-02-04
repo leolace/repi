@@ -15,15 +15,14 @@ class AuthService {
       email: validatedLogin.email,
     });
 
-    if (!userExists)
-      throw AppError.BadRequestException("Credenciais inválidas");
+    if (!userExists) throw AppError.BadRequestException("Invalid credentials.");
 
     const passwordMatch = await bcrypt.compare(
       validatedLogin.password,
       await userRepository.getPassword(userExists.id),
     );
     if (!passwordMatch)
-      throw AppError.BadRequestException("Credenciais inválidas");
+      throw AppError.BadRequestException("Invalid credentials.");
 
     const sessionTokenPayload = {
       userId: userExists.id,
@@ -43,7 +42,7 @@ class AuthService {
     const userExists = await userService.findUserBy({
       id: userId,
     });
-    if (!userExists) throw AppError.NotFoundException("Usuário não encontrado");
+    if (!userExists) throw AppError.NotFoundException("User not found.");
 
     const userSession = await authRepository.getUserSession(userId);
     if (userSession) await authRepository.deleteSession(userSession.id);
@@ -53,7 +52,7 @@ class AuthService {
 
   async me(user?: IUserJWTPayload) {
     if (!user)
-      throw AppError.UnauthorizedException("User is not authenticated");
+      throw AppError.UnauthorizedException("User is not authenticated.");
 
     const self = await userRepository.getComplete(user);
 
