@@ -1,5 +1,5 @@
 import { tagModel } from "./tag.model";
-import { ErrorE } from "../../utils/error";
+import { AppError } from "../../shared/utils/error";
 import { userService } from "../user/user.service";
 import { ITag, TagEnum } from "common";
 
@@ -10,19 +10,22 @@ class TagService {
     return tags;
   }
 
-  async assignTagToUser(tagName: TagEnum | TagEnum[], userId: string): Promise<void> {
+  async assignTagToUser(
+    tagName: TagEnum | TagEnum[],
+    userId: string,
+  ): Promise<void> {
     const user = await userService.findUserBy({ id: userId });
-    if (!user) throw new ErrorE("User not found", 400);
+    if (!user) throw AppError.NotFoundException("User not found");
     const userTags = await this.getUserTags(userId);
 
     const handleAssignTag = async (tag: TagEnum) => {
       const tagFounded = await tagModel.show({ name: tag });
-      if (!tagFounded) throw new ErrorE("Tag not found", 400);
+      if (!tagFounded) throw AppError.NotFoundException("Tag not found");
 
       const userAlreadyHasTag = !!userTags.find((t) => t.id === tagFounded.id);
 
       if (userAlreadyHasTag)
-        throw new ErrorE("User already has this tag assigned", 400);
+        throw AppError.NotFoundException("User already has this tag assigned");
 
       await tagModel.assignTagToUser(tagFounded, userId);
     };
@@ -34,7 +37,7 @@ class TagService {
   async getUserTags(userId: string): Promise<ITag[]> {
     const userExists = await userService.findUserBy({ id: userId });
 
-    if (!userExists) throw new ErrorE("User not found", 400);
+    if (!userExists) throw AppError.NotFoundException("User not found");
 
     const userTags = await tagModel.getUserTags(userId);
 
@@ -47,7 +50,7 @@ class TagService {
         name: value.toUpperCase(),
       });
       if (tagAlreadyExists)
-        throw new ErrorE(`Tag ${value} already exists`, 400);
+        throw AppError.ConflictException(`Tag ${value} already exists`);
 
       const tag = await tagModel.store(value.toUpperCase());
       return tag;
@@ -62,7 +65,7 @@ class TagService {
   async deleteTag(id: string): Promise<void> {
     const tag = await tagModel.show({ id });
 
-    if (!tag) throw new ErrorE("Tag not found");
+    if (!tag) throw AppError.NotFoundException("Tag not found");
 
     await tagModel.delete(id);
   }

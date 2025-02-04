@@ -1,8 +1,8 @@
-import { ErrorE } from "@utils/error";
+import { AppError } from "@shared/utils/error";
 import { NextFunction, Request, Response } from "express";
 
 export const errorMiddleware = (
-  err: ErrorE,
+  err: AppError,
   req: Request,
   res: Response,
   _: NextFunction

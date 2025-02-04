@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { tagService } from "./tag.service";
-import { ErrorE } from "../../utils/error";
+import { AppError } from "../../shared/utils/error";
 
 class TagController {
   async findAllTags(_: Request, res: Response) {
@@ -11,7 +11,7 @@ class TagController {
 
   async createTag(req: Request, res: Response) {
     const { name } = req.body;
-    if (!name) throw new ErrorE("Name not found", 400);
+    if (!name) throw AppError.NotFoundException("Name not found");
 
     const createdTag = await tagService.createTag(req.body.name);
 
@@ -20,7 +20,7 @@ class TagController {
 
   async deleteTag(req: Request, res: Response) {
     const { id } = req.body;
-    if (!id) throw new ErrorE("Id not found", 400);
+    if (!id) throw AppError.NotFoundException("Id not found");
 
     await tagService.deleteTag(req.body.id);
 
@@ -30,7 +30,8 @@ class TagController {
   async assignTagToUser(req: Request, res: Response) {
     const { userId, tagId } = req.body;
 
-    if (!userId || !tagId) throw new ErrorE("Invalid request");
+    if (!userId || !tagId)
+      throw AppError.BadRequestException("Invalid request");
 
     await tagService.assignTagToUser(userId, tagId);
 
@@ -40,7 +41,7 @@ class TagController {
   async getUserTags(req: Request, res: Response) {
     const { userId } = req.params;
 
-    if (!userId) throw new ErrorE("Invalid request");
+    if (!userId) throw AppError.BadRequestException("Invalid request");
 
     const userTags = await tagService.getUserTags(userId);
 

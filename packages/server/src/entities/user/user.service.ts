@@ -14,11 +14,11 @@ import {
   EditUserDto,
   editUserSchema,
 } from "./user.dto";
-import { ErrorE } from "@utils/error";
 import { tagService } from "@entities/tag";
 import bcrypt from "bcrypt";
 import { republicaService } from "@entities/republica/republica.service";
 import { S3 } from "@shared/s3";
+import { AppError } from "@shared/utils/error";
 
 class UserService {
   async createUser(user: CreateUserDto) {
@@ -28,7 +28,9 @@ class UserService {
       email: user.email,
     });
     if (userAlreadyExists)
-      throw new ErrorE(`E-mail ${user.email} is already in use.`, 400);
+      throw AppError.NotFoundException(
+        `E-mail ${user.email} is already in use.`,
+      );
 
     validatedUser.password = await bcrypt.hash(validatedUser.password, 10);
     const createdUser = await userModel.store(validatedUser);
@@ -53,7 +55,8 @@ class UserService {
   }
 
   async getSelf(user?: IUserJWTPayload) {
-    if (!user) throw new ErrorE("User is not authenticated");
+    if (!user)
+      throw AppError.UnauthorizedException("User is not authenticated");
 
     const self = await userModel.getSelf(user);
 
@@ -62,7 +65,7 @@ class UserService {
 
   async findUserBy(values: Partial<IUser>) {
     const { data, error } = searchParamsUserSchema.safeParse(values);
-    if (!data) throw new ErrorE(error.message);
+    if (!data) throw AppError.BadRequestException(error.message);
 
     const searchedValues: Partial<IUser> = data;
     const users = await userModel.findBy(searchedValues);
@@ -75,7 +78,7 @@ class UserService {
   ): Promise<CompleteUser<Bixo | Republica>> {
     const { data, error } = searchParamsUserSchema.safeParse(values);
 
-    if (!data) throw new ErrorE(error.message);
+    if (!data) throw AppError.BadRequestException(error.message);
 
     const users = await userModel.findBy(data);
     const user = users[0];
@@ -98,14 +101,14 @@ class UserService {
 
   async edit(userId: string, partialUser: EditUserDto) {
     const parsedData = editUserSchema.safeParse(partialUser);
-    if (!parsedData.success) throw new ErrorE(parsedData.error.message);
+    if (!parsedData.success)
+      throw AppError.BadRequestException(parsedData.error.message);
     const { classData, avatarFilename, name } = parsedData.data;
 
     const user = await this.findUserBy({ id: userId });
-    if (!user) throw new ErrorE("User not exists");
+    if (!user) throw AppError.NotFoundException("User not exists");
 
-    if (classData)
-      await republicaService.edit(userId, classData);
+    if (classData) await republicaService.edit(userId, classData);
 
     let imageUpload = { presignedUrl: "", filename: "" };
     if (avatarFilename)
