@@ -1,8 +1,8 @@
-import { Session } from "./auth.dto";
+import { Session } from "@modules/auth/auth.types";
 import { knex } from "@database/knex";
 import { v4 as uuid } from "uuid";
 
-class AuthModel {
+class AuthRepository {
   async login(userId: string, token: string) {
     const [row] = await knex<Session>("sessions")
       .insert({
@@ -29,4 +29,4 @@ class AuthModel {
   }
 }
 
-export const authModel = new AuthModel();
+export const authRepository = new AuthRepository();

@@ -1,11 +1,11 @@
-import { tagModel } from "./tag.model";
-import { AppError } from "../../shared/utils/error";
+import { tagRepository } from "@shared/repositories/tag.repository";
+import { AppError } from "@shared/utils/error";
 import { userService } from "../user/user.service";
 import { ITag, TagEnum } from "common";
 
 class TagService {
   async findAllTags(): Promise<ITag[]> {
-    const tags = await tagModel.index();
+    const tags = await tagRepository.index();
 
     return tags;
   }
@@ -19,7 +19,7 @@ class TagService {
     const userTags = await this.getUserTags(userId);
 
     const handleAssignTag = async (tag: TagEnum) => {
-      const tagFounded = await tagModel.show({ name: tag });
+      const tagFounded = await tagRepository.show({ name: tag });
       if (!tagFounded) throw AppError.NotFoundException("Tag not found");
 
       const userAlreadyHasTag = !!userTags.find((t) => t.id === tagFounded.id);
@@ -27,7 +27,7 @@ class TagService {
       if (userAlreadyHasTag)
         throw AppError.NotFoundException("User already has this tag assigned");
 
-      await tagModel.assignTagToUser(tagFounded, userId);
+      await tagRepository.assignTagToUser(tagFounded, userId);
     };
 
     if (Array.isArray(tagName)) await Promise.all(tagName.map(handleAssignTag));
@@ -39,20 +39,20 @@ class TagService {
 
     if (!userExists) throw AppError.NotFoundException("User not found");
 
-    const userTags = await tagModel.getUserTags(userId);
+    const userTags = await tagRepository.getUserTags(userId);
 
     return userTags;
   }
 
   async createTag(value: string | string[]): Promise<ITag[] | ITag> {
     const handleCreateTags = async (value: string) => {
-      const tagAlreadyExists = await tagModel.show({
+      const tagAlreadyExists = await tagRepository.show({
         name: value.toUpperCase(),
       });
       if (tagAlreadyExists)
         throw AppError.ConflictException(`Tag ${value} already exists`);
 
-      const tag = await tagModel.store(value.toUpperCase());
+      const tag = await tagRepository.store(value.toUpperCase());
       return tag;
     };
 
@@ -63,11 +63,11 @@ class TagService {
   }
 
   async deleteTag(id: string): Promise<void> {
-    const tag = await tagModel.show({ id });
+    const tag = await tagRepository.show({ id });
 
     if (!tag) throw AppError.NotFoundException("Tag not found");
 
-    await tagModel.delete(id);
+    await tagRepository.delete(id);
   }
 }
 

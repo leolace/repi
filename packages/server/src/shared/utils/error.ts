@@ -1,6 +1,6 @@
 export class AppError extends Error {
   statusCode = 500;
-  message: string = "Something went wrong";
+  message: string;
 
   constructor(
     message: string = "Something went wrong",
@@ -8,6 +8,7 @@ export class AppError extends Error {
   ) {
     super(message);
     this.statusCode = statusCode;
+    this.message = message;
   }
 
   static NotFoundException(message?: string) {

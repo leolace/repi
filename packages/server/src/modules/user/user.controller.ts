@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { userService } from "./user.service";
-import { userModel } from "./user.model";
 
 class UserController {
   async createUser(req: Request, res: Response) {
@@ -17,7 +16,7 @@ class UserController {
       return;
     }
 
-    const response = await userModel.findAll();
+    const response = await userService.getAllUsers();
     res.json(response);
   }
 
@@ -28,18 +27,10 @@ class UserController {
     res.json(completeUser);
   }
 
-  async getSelf(req: Request, res: Response) {
-    const user = req.app.locals.user;
-
-    const self = await userService.getSelf(user);
-
-    res.json(self);
-  }
-
   async edit(req: Request, res: Response) {
     const { id } = req.params;
 
-    const editedUser = await userService.edit(id, req.body);
+    const editedUser = await userService.update(id, req.body);
 
     res.json(editedUser);
   }

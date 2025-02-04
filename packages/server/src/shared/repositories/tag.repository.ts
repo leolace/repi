@@ -2,7 +2,7 @@ import { knex } from "@database/knex";
 import { ITag } from "common";
 import { v4 as uuid } from "uuid";
 
-class TagModel {
+class TagRepository {
   async index(values?: Partial<ITag>) {
     if (!values) return await knex("tags").select("*");
 
@@ -48,4 +48,4 @@ class TagModel {
   }
 }
 
-export const tagModel = new TagModel();
+export const tagRepository = new TagRepository();

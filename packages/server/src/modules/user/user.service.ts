@@ -1,24 +1,13 @@
-import { userModel } from "./user.model";
-import { searchParamsUserSchema } from "../auth/auth.dto";
-import {
-  Bixo,
-  CompleteUser,
-  IUser,
-  IUserJWTPayload,
-  Republica,
-  UserClassesEnum,
-} from "common";
-import {
-  CreateUserDto,
-  createUserSchema,
-  EditUserDto,
-  editUserSchema,
-} from "./user.dto";
-import { tagService } from "@entities/tag";
+import { userRepository } from "@shared/repositories/user.repository";
+import { Bixo, CompleteUser, IUser, Republica, UserClassesEnum } from "common";
+import { tagService } from "@modules/tag/tag.service";
 import bcrypt from "bcrypt";
-import { republicaService } from "@entities/republica/republica.service";
+import { republicaService } from "@modules/republica/republica.service";
 import { S3 } from "@shared/s3";
 import { AppError } from "@shared/utils/error";
+import { CreateUserDto, createUserSchema } from "./schemas/create";
+import { EditUserDto, updateUserSchema } from "./schemas/update";
+import { searchParamsUserSchema } from "./schemas/search-params";
 
 class UserService {
   async createUser(user: CreateUserDto) {
@@ -33,7 +22,7 @@ class UserService {
       );
 
     validatedUser.password = await bcrypt.hash(validatedUser.password, 10);
-    const createdUser = await userModel.store(validatedUser);
+    const createdUser = await userRepository.create(validatedUser);
 
     if (user.tags) await tagService.assignTagToUser(user.tags, createdUser.id);
 
@@ -49,18 +38,9 @@ class UserService {
   }
 
   async getAllUsers() {
-    const res = await userModel.findAll();
+    const res = await userRepository.findAll();
 
     return res;
-  }
-
-  async getSelf(user?: IUserJWTPayload) {
-    if (!user)
-      throw AppError.UnauthorizedException("User is not authenticated");
-
-    const self = await userModel.getSelf(user);
-
-    return self;
   }
 
   async findUserBy(values: Partial<IUser>) {
@@ -68,7 +48,7 @@ class UserService {
     if (!data) throw AppError.BadRequestException(error.message);
 
     const searchedValues: Partial<IUser> = data;
-    const users = await userModel.findBy(searchedValues);
+    const users = await userRepository.findBy(searchedValues);
 
     return users[0];
   }
@@ -80,7 +60,7 @@ class UserService {
 
     if (!data) throw AppError.BadRequestException(error.message);
 
-    const users = await userModel.findBy(data);
+    const users = await userRepository.findBy(data);
     const user = users[0];
     const classData: Bixo | Republica =
       user.class === UserClassesEnum.REPUBLICA
@@ -96,11 +76,11 @@ class UserService {
 
     const searchedValues: Partial<IUser> = data;
 
-    return userModel.findBy(searchedValues);
+    return userRepository.findBy(searchedValues);
   }
 
-  async edit(userId: string, partialUser: EditUserDto) {
-    const parsedData = editUserSchema.safeParse(partialUser);
+  async update(userId: string, dataToUpdate: EditUserDto) {
+    const parsedData = updateUserSchema.safeParse(dataToUpdate);
     if (!parsedData.success)
       throw AppError.BadRequestException(parsedData.error.message);
     const { classData, avatarFilename, name } = parsedData.data;
@@ -121,7 +101,7 @@ class UserService {
       }),
     };
 
-    await userModel.edit(userId, userToUpdate);
+    await userRepository.update(userId, userToUpdate);
 
     return imageUpload.presignedUrl
       ? { presignedUrl: imageUpload.presignedUrl }

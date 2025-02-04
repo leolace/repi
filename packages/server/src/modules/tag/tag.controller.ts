@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { tagService } from "./tag.service";
-import { AppError } from "../../shared/utils/error";
+import { AppError } from "@shared/utils/error";
 
 class TagController {
   async findAllTags(_: Request, res: Response) {

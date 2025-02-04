@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { tagController } from "../entities/tag/index";
+import { tagController } from "@modules/tag/tag.controller";
 import { authMiddleware } from "@middlewares/auth.middleware";
 
 const tagRoutes = Router();

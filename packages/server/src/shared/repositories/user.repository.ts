@@ -1,11 +1,12 @@
 import { IUser, IUserJWTPayload, UserClassesEnum } from "common";
 import { knex } from "@database/knex";
-import { CreateUserDto, EditUserDto } from "./user.dto";
 import { v4 as uuid } from "uuid";
-import { republicaModel } from "@entities/republica/republica.model";
+import { republicaRepository } from "@shared/repositories/republica.repository";
+import { CreateUserDto } from "@modules/user/schemas/create";
+import { EditUserDto } from "@modules/user/schemas/update";
 
-class UserModel {
-  async store(user: CreateUserDto) {
+class UserRepository {
+  async create(user: CreateUserDto) {
     const [row] = await knex<IUser & { password: string }>("users")
       .insert({
         id: uuid(),
@@ -19,7 +20,7 @@ class UserModel {
     return row;
   }
 
-  async findAll() {
+  async findAll(): Promise<IUser[]> {
     return await knex("users").select(
       "name",
       "email",
@@ -30,17 +31,7 @@ class UserModel {
   }
 
   async findBy(values: Partial<IUser>) {
-    // const searchedValues = Object.keys(values)
-    //   .map((key, index) => {
-    //     return `${key}=$${index + 1}`;
-    //   })
-    //   .join(" AND ");
-
-    // const query = `SELECT email, class, id, name, "imageUrl" FROM users WHERE ${searchedValues}`;
-
     const user = await knex<IUser>("users").where(values).select("*");
-
-    // const { rows } = await knex.query<IUser>(query, Object.values(values));
 
     return user;
   }
@@ -54,20 +45,20 @@ class UserModel {
     return row.password;
   }
 
-  async getSelf({ userId, class: userClass }: IUserJWTPayload) {
+  async getComplete({ userId, class: userClass }: IUserJWTPayload) {
     const [user] = await this.findBy({ id: userId });
     const classData =
       userClass === UserClassesEnum.REPUBLICA
-        ? await republicaModel.findByUser(userId)
+        ? await republicaRepository.findByUser(userId)
         : {};
 
     return { ...user, classData };
   }
 
-  async edit(userId: string, userEditValues: EditUserDto) {
+  async update(userId: string, dataToUpdate: EditUserDto) {
     const editedUser = await knex<IUser>("users")
       .where({ id: userId })
-      .update(userEditValues)
+      .update(dataToUpdate)
       .returning("*")
       .then((rows) => rows[0]);
 
@@ -77,4 +68,4 @@ class UserModel {
   }
 }
 
-export const userModel = new UserModel();
+export const userRepository = new UserRepository();

@@ -1,30 +1,26 @@
-import {
-  CreateRepublicaDto,
-  createRepublicaSchema,
-  EditRepublicaDto,
-  editRepublicaSchema,
-} from "./republica.dto";
-import { republicaModel } from "./republica.model";
-import { userService } from "@entities/user";
+import { republicaRepository } from "@shared/repositories/republica.repository";
 import { AppError } from "@shared/utils/error";
+import { CreateRepublicaDto, createRepublicaSchema } from "./schemas/create";
+import { userRepository } from "@shared/repositories/user.repository";
+import { EditRepublicaDto, editRepublicaSchema } from "./schemas/update";
 
 class RepublicaService {
   async find(id: string) {
-    const republica = await republicaModel.find(id);
+    const republica = await republicaRepository.find(id);
     if (!republica) throw AppError.NotFoundException("Republica not found");
 
     return republica;
   }
 
   async findByUser(userId: string) {
-    const republica = await republicaModel.findByUser(userId);
+    const republica = await republicaRepository.findByUser(userId);
     if (!republica) throw AppError.NotFoundException("Republica not found");
 
     return republica;
   }
 
   async findAll() {
-    const republicas = await republicaModel.findAll();
+    const republicas = await republicaRepository.findAll();
 
     return republicas;
   }
@@ -36,13 +32,13 @@ class RepublicaService {
 
     const validatedRepublica = parsedData.data;
 
-    const user = await userService.findUserBy({
+    const user = await userRepository.findBy({
       id: validatedRepublica.userId,
     });
 
     if (!user) throw AppError.NotFoundException("User not found");
 
-    await republicaModel.store(validatedRepublica);
+    await republicaRepository.store(validatedRepublica);
   }
 
   async edit(userId: string, partialRepublica: EditRepublicaDto) {
@@ -52,15 +48,15 @@ class RepublicaService {
 
     const validatedEditRepublica = parsedData.data;
 
-    const user = await userService.findUserBy({
+    const user = await userRepository.findBy({
       id: userId,
     });
     if (!user) throw AppError.NotFoundException("User not found");
 
-    const republica = await republicaModel.findByUser(userId);
+    const republica = await republicaRepository.findByUser(userId);
     if (!republica) throw AppError.NotFoundException("Republica not found");
 
-    const editedRepublica = await republicaModel.edit(userId, {
+    const editedRepublica = await republicaRepository.edit(userId, {
       ...validatedEditRepublica,
     });
 

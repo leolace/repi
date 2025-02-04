@@ -1,10 +1,10 @@
 import { knex } from "@database/knex";
-import { CreateRepublicaDto } from "./republica.dto";
 import { v4 as uuid } from "uuid";
-import { RepublicaEdit } from "./republica.types";
+import { RepublicaEdit } from "@modules/republica/republica.types";
 import { Republica } from "common";
+import { CreateRepublicaDto } from "@modules/republica/schemas/create";
 
-class RepublicaModel {
+class RepublicaRepository {
   async find(id: string) {
     const republica = await knex<Republica>("republicas")
       .where({ id })
@@ -51,4 +51,4 @@ class RepublicaModel {
   }
 }
 
-export const republicaModel = new RepublicaModel();
+export const republicaRepository = new RepublicaRepository();

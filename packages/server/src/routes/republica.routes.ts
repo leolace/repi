@@ -1,4 +1,4 @@
-import { republicaController } from "@entities/republica/republica.controller";
+import { republicaController } from "@modules/republica/republica.controller";
 import { authMiddleware } from "@middlewares/auth.middleware";
 import { Router } from "express";
 

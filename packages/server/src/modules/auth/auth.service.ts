@@ -1,10 +1,11 @@
-import { LoginUserDto, loginUserSchema } from "./auth.dto";
-import { authModel } from "./auth.model";
-import { AppError } from "../../shared/utils/error";
+import { authRepository } from "../../shared/repositories/auth.repository";
+import { AppError } from "@shared/utils/error";
 import { userService } from "../user/user.service";
 import bcrypt from "bcrypt";
-import { userModel } from "@entities/user";
 import { genSessionToken } from "@shared/utils/generate-token";
+import { userRepository } from "@shared/repositories/user.repository";
+import { LoginUserDto, loginUserSchema } from "./schemas/login";
+import { IUserJWTPayload } from "common";
 
 class AuthService {
   async login(user: LoginUserDto): Promise<string> {
@@ -19,7 +20,7 @@ class AuthService {
 
     const passwordMatch = await bcrypt.compare(
       validatedLogin.password,
-      await userModel.getPassword(userExists.id),
+      await userRepository.getPassword(userExists.id),
     );
     if (!passwordMatch)
       throw AppError.BadRequestException("Credenciais inválidas");
@@ -30,10 +31,10 @@ class AuthService {
     };
     const generatedToken = await genSessionToken(sessionTokenPayload);
 
-    const userSession = await authModel.getUserSession(userExists.id);
-    if (userSession) await authModel.deleteSession(userSession.id);
+    const userSession = await authRepository.getUserSession(userExists.id);
+    if (userSession) await authRepository.deleteSession(userSession.id);
 
-    const { token } = await authModel.login(userExists.id, generatedToken);
+    const { token } = await authRepository.login(userExists.id, generatedToken);
 
     return token;
   }
@@ -44,10 +45,19 @@ class AuthService {
     });
     if (!userExists) throw AppError.NotFoundException("Usuário não encontrado");
 
-    const userSession = await authModel.getUserSession(userId);
-    if (userSession) await authModel.deleteSession(userSession.id);
+    const userSession = await authRepository.getUserSession(userId);
+    if (userSession) await authRepository.deleteSession(userSession.id);
 
     return;
+  }
+
+  async me(user?: IUserJWTPayload) {
+    if (!user)
+      throw AppError.UnauthorizedException("User is not authenticated");
+
+    const self = await userRepository.getComplete(user);
+
+    return self;
   }
 }
 
