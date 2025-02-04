@@ -1,16 +1,16 @@
+import { knex } from "@database/knex";
 import { ITag } from "common";
-import { dbClient } from "../../db-client";
 import { v4 as uuid } from "uuid";
 
 class TagModel {
   async index(values?: Partial<ITag>) {
-    if (!values) return await dbClient("tags").select("*");
+    if (!values) return await knex("tags").select("*");
 
-    return await dbClient("tags").where(values);
+    return await knex("tags").where(values);
   }
 
   async assignTagToUser(tag: ITag, userId: string) {
-    const [res] = await dbClient("user_tag")
+    const [res] = await knex("user_tag")
       .insert({
         userId: userId,
         tagId: tag.id,
@@ -21,7 +21,7 @@ class TagModel {
   }
 
   async getUserTags(userId: string) {
-    return await dbClient("users")
+    return await knex("users")
       .select("t.id as id", "t.name as name")
       .innerJoin("user_tag as ut", "users.id", "ut.userId")
       .innerJoin("tags as t", "ut.tagId", "t.id")
@@ -29,11 +29,11 @@ class TagModel {
   }
 
   async show(values: Partial<ITag>) {
-    return await dbClient("tags").where(values).first();
+    return await knex("tags").where(values).first();
   }
 
   async store(name: string) {
-    const [tag] = await dbClient("tags")
+    const [tag] = await knex("tags")
       .insert({
         id: uuid(),
         name: name,
@@ -44,7 +44,7 @@ class TagModel {
   }
 
   async delete(id: string) {
-    await dbClient("tags").where("id", id).delete();
+    await knex("tags").where("id", id).delete();
   }
 }
 

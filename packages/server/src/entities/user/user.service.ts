@@ -18,7 +18,7 @@ import { ErrorE } from "@utils/error";
 import { tagService } from "@entities/tag";
 import bcrypt from "bcrypt";
 import { republicaService } from "@entities/republica/republica.service";
-import { S3 } from "@s3";
+import { S3 } from "@shared/s3";
 
 class UserService {
   async createUser(user: CreateUserDto) {

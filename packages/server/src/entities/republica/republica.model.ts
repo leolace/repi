@@ -1,4 +1,4 @@
-import { dbClient } from "@db-client";
+import { knex } from "@database/knex";
 import { CreateRepublicaDto } from "./republica.dto";
 import { v4 as uuid } from "uuid";
 import { RepublicaEdit } from "./republica.types";
@@ -6,7 +6,7 @@ import { Republica } from "common";
 
 class RepublicaModel {
   async find(id: string) {
-    const republica = await dbClient<Republica>("republicas")
+    const republica = await knex<Republica>("republicas")
       .where({ id })
       .select("*")
       .then((rows) => rows[0]);
@@ -15,7 +15,7 @@ class RepublicaModel {
   }
 
   async findByUser(userId: string) {
-    const republica = await dbClient<Republica>("republicas")
+    const republica = await knex<Republica>("republicas")
       .where({ userId: userId })
       .select("*")
       .then((rows) => rows[0]);
@@ -24,12 +24,12 @@ class RepublicaModel {
   }
 
   async findAll() {
-    const republicas = await dbClient<Republica>("republicas").select("*");
+    const republicas = await knex<Republica>("republicas").select("*");
     return republicas;
   }
 
   async store(republica: CreateRepublicaDto) {
-    const [editedRepublica] = await dbClient<Republica>("republicas")
+    const [editedRepublica] = await knex<Republica>("republicas")
       .insert({
         id: uuid(),
         userId: republica.userId,
@@ -41,7 +41,7 @@ class RepublicaModel {
   }
 
   async edit(userId: string, republicaEditValues: RepublicaEdit) {
-    const editedRepublica = await dbClient<Republica>("republicas")
+    const editedRepublica = await knex<Republica>("republicas")
       .where({ userId })
       .update(republicaEditValues)
       .returning("*")

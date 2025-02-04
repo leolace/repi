@@ -1,12 +1,12 @@
 import { IUser, IUserJWTPayload, UserClassesEnum } from "common";
-import { dbClient } from "@db-client";
+import { knex } from "@database/knex";
 import { CreateUserDto, EditUserDto } from "./user.dto";
 import { v4 as uuid } from "uuid";
 import { republicaModel } from "@entities/republica/republica.model";
 
 class UserModel {
   async store(user: CreateUserDto) {
-    const [row] = await dbClient<IUser & { password: string }>("users")
+    const [row] = await knex<IUser & { password: string }>("users")
       .insert({
         id: uuid(),
         name: user.name,
@@ -20,7 +20,7 @@ class UserModel {
   }
 
   async findAll() {
-    return await dbClient("users").select(
+    return await knex("users").select(
       "name",
       "email",
       "class",
@@ -38,15 +38,15 @@ class UserModel {
 
     // const query = `SELECT email, class, id, name, "imageUrl" FROM users WHERE ${searchedValues}`;
 
-    const user = await dbClient<IUser>("users").where(values).select("*");
+    const user = await knex<IUser>("users").where(values).select("*");
 
-    // const { rows } = await dbClient.query<IUser>(query, Object.values(values));
+    // const { rows } = await knex.query<IUser>(query, Object.values(values));
 
     return user;
   }
 
   async getPassword(userId: string): Promise<string> {
-    const row = await dbClient<IUser>("users")
+    const row = await knex<IUser>("users")
       .select("password")
       .where({ id: userId })
       .first();
@@ -65,7 +65,7 @@ class UserModel {
   }
 
   async edit(userId: string, userEditValues: EditUserDto) {
-    const editedUser = await dbClient<IUser>("users")
+    const editedUser = await knex<IUser>("users")
       .where({ id: userId })
       .update(userEditValues)
       .returning("*")

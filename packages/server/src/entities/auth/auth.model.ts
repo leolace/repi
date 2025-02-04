@@ -1,10 +1,10 @@
 import { Session } from "./auth.dto";
-import { dbClient } from "@db-client";
+import { knex } from "@database/knex";
 import { v4 as uuid } from "uuid";
 
 class AuthModel {
   async login(userId: string, token: string) {
-    const [row] = await dbClient<Session>("sessions")
+    const [row] = await knex<Session>("sessions")
       .insert({
         id: uuid(),
         userId: userId,
@@ -16,7 +16,7 @@ class AuthModel {
   }
 
   async getUserSession(userId: string) {
-    const row = await dbClient<Session>("sessions")
+    const row = await knex<Session>("sessions")
       .select("*")
       .where({ userId })
       .first();
@@ -25,7 +25,7 @@ class AuthModel {
   }
 
   async deleteSession(sessionId: string) {
-    await dbClient<Session>("sessions").where({ id: sessionId }).delete();
+    await knex<Session>("sessions").where({ id: sessionId }).delete();
   }
 }
 
