@@ -1,9 +1,10 @@
-import { IUser, IUserJWTPayload, UserClassesEnum } from "common";
 import { knex } from "@database/knex";
-import { v4 as uuid } from "uuid";
-import { republicaRepository } from "@shared/repositories/republica.repository";
 import { CreateUserDto } from "@modules/user/schemas/create";
-import { EditUserDto } from "@modules/user/schemas/update";
+import { republicaRepository } from "@shared/repositories/republica.repository";
+import { IUser, IUserJWTPayload, UserClassesEnum } from "common";
+import fs from "fs";
+import { v4 as uuid } from "uuid";
+import { s3Repository } from "./s3.repository";
 
 class UserRepository {
   async create(user: CreateUserDto) {
@@ -55,7 +56,7 @@ class UserRepository {
     return { ...user, classData };
   }
 
-  async update(userId: string, dataToUpdate: EditUserDto) {
+  async update(userId: string, dataToUpdate: Partial<IUser>) {
     const editedUser = await knex<IUser>("users")
       .where({ id: userId })
       .update(dataToUpdate)
@@ -65,6 +66,17 @@ class UserRepository {
     if ("password" in editedUser) delete editedUser.password;
 
     return editedUser;
+  }
+
+  saveAvatarToS3(userId: string, file: Express.Multer.File) {
+    const fileStream = fs.createReadStream(file.path);
+    const filename = `avatars/${userId}`;
+    const fileSize = fs.statSync(file.path).size;
+
+    return s3Repository.upload(fileStream, filename, {
+      ContentType: file.mimetype,
+      ContentLength: fileSize,
+    });
   }
 }
 

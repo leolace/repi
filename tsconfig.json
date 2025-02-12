@@ -12,6 +12,7 @@
     "jsx": "preserve",
     "incremental": true,
     "target": "ES2017",
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+  },
+  "include": ["./packages"]
 }

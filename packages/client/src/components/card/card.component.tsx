@@ -4,7 +4,7 @@ import { Text } from "@components";
 
 export const Card = ({ children, className = "", ...props }: CardProps) => {
   return (
-    <div className={`p-5 border rounded-md ${className}`} {...props}>
+    <div className={`p-5 border rounded-md bg-white ${className}`} {...props}>
       {children}
     </div>
   );

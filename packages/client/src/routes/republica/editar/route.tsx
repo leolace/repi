@@ -7,11 +7,10 @@ import {
   redirectDocument,
 } from "react-router";
 import { useGetRepublicaRouteData } from "../hooks";
-import { editUser, uploadFile } from "@actions/user.server";
+import { editUser } from "@actions/user.server";
 import invariant from "tiny-invariant";
 import { RepublicaEditData } from "./types";
-import { EditProfileAvatar } from "@components/edit-profile-avatar";
-import { isErrorResponseData } from "@utils/is-error-response";
+import { EditProfileAvatar } from "./_compose/edit-profile-avatar";
 
 export const loader = ({ params }: LoaderFunctionArgs) => {
   return { params };
@@ -21,8 +20,6 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   invariant(params.id, "User id not found");
   const formData = await request.formData();
 
-  const file = formData.get("file") as File;
-
   const dataToUpdate: RepublicaEditData = {
     name: formData.get("name")?.toString(),
     classData: {
@@ -31,14 +28,8 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
     },
   };
 
-  if (file.name) dataToUpdate.avatarFilename = file.name;
-
   const editedUserResponse = await editUser(request, params.id, dataToUpdate);
-  if (isErrorResponseData(editedUserResponse.data))
-    return new Error("Something went wrong");
-
-  if (editedUserResponse.data.presignedUrl)
-    await uploadFile(editedUserResponse.data.presignedUrl, file);
+  if (!editedUserResponse.ok) return new Error("Something went wrong");
 
   return redirectDocument(`/republica/${params.id}`);
 };
@@ -47,12 +38,12 @@ export default function EditRepublica() {
   const { user } = useGetRepublicaRouteData();
 
   return (
-    <Form method="POST" className="grid gap-8" encType="multipart/form-data">
+    <div className="grid gap-8">
       <PageTitle title="Editar república" />
 
       <Card className="grid gap-10 items-center grid-cols-[0.3fr_1fr]">
-        <EditProfileAvatar user={user} />
-        <div className="grid gap-5 grid-rows-2 grid-cols-2">
+        <EditProfileAvatar />
+        <Form method="POST" className="grid gap-5 grid-rows-2 grid-cols-2">
           <Input
             defaultValue={user.name}
             placeholder={user.name}
@@ -83,7 +74,7 @@ export default function EditRepublica() {
             className="row-[2]"
             min={0}
           />
-        </div>
+        </Form>
       </Card>
       <div className="col-[1/-1] flex gap-4 justify-between">
         <Link to={`/republica/${user.id}`}>
@@ -91,6 +82,6 @@ export default function EditRepublica() {
         </Link>
         <Button type="submit">Salvar</Button>
       </div>
-    </Form>
+    </div>
   );
 }

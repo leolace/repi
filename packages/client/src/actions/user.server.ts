@@ -23,7 +23,7 @@ export const getSelf = cache(
     const session = await verifySession(request);
     if (!session) return null;
 
-    const { data: user } = await authClient<CompleteSelfUser>("/user/me", {
+    const { data: user } = await authClient<CompleteSelfUser>("/auth/me", {
       sessionToken: session.token,
     });
 
@@ -75,7 +75,7 @@ export const editUser = async (
   const session = await verifySession(request);
   if (!session) throw new Error("Verify session failed");
 
-  const editedUser = await authClient<{ presignedUrl?: string }>(
+  const editedUser = await authClient<void>(
     `/user/${userId}`,
     {
       sessionToken: session.token,

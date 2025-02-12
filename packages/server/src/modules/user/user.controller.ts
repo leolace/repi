@@ -27,12 +27,19 @@ class UserController {
     res.json(completeUser);
   }
 
-  async edit(req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     const { id } = req.params;
 
-    const editedUser = await userService.update(id, req.body);
+    await userService.update(id, req.body);
 
-    res.json(editedUser);
+    res.status(200).json(null);
+  }
+
+  async updateAvatar(req: Request, res: Response) {
+    const user = req.app.locals.user;
+    const pathname = await userService.updateAvatar(req.file, user?.userId);
+
+    res.json({ pathname });
   }
 }
 

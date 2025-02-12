@@ -25,12 +25,11 @@ export const client = async <T>(
 export const authClient = async <T>(
   path: string,
   {
-    headers,
     sessionToken,
     ...options
   }: RequestInit & { sessionToken: string }
 ): Promise<ClientType<T | ErrorResponseData>> => {
-  const defaultHeaders: Record<string, string> = Object.assign({ ...headers }, { "Content-Type": "application/json" });
+  const defaultHeaders: Record<string, string> = Object.assign({ ...options.headers }, { "Content-Type": "application/json" });
 
   defaultHeaders.authorization = sessionToken;
   const request = await fetch(process.env.PUBLIC_API_ENDPOINT! + path, {

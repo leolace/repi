@@ -31,7 +31,8 @@
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx",
     "postcss.config.cjs",
-    "./.react-router/types/**/*"
+    "./.react-router/types/**/*",
+    "../common"
   ],
   "exclude": ["node_modules"]
 }

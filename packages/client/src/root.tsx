@@ -1,10 +1,17 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Header } from "./interfaces";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "react-router";
+import {
+  Links,
+  Meta,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+} from "react-router";
 import appStylesHref from "./globals.css?url";
 import { LinksFunction, LoaderFunctionArgs } from "react-router";
 import { getSelf } from "./actions/user.server";
 import { env } from "common/src/environment.server";
+import { Main } from "@components/main/main.component";
+import { Provider } from "@Provider";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
@@ -12,13 +19,14 @@ export const links: LinksFunction = () => [
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await getSelf(request);
-  const { API_ENDPOINT } = env;
+  const { PUBLIC_API_ENDPOINT } = env;
 
-  return { user, ENV: { API_ENDPOINT } };
+  return { user, ENV: { PUBLIC_API_ENDPOINT } };
 };
 
 export default function Root() {
   const data = useLoaderData<typeof loader>();
+
   return (
     <html lang="pt-BR">
       <head>
@@ -29,12 +37,9 @@ export default function Root() {
         <Links />
       </head>
       <body>
-        <div className="max-w-[60rem] mx-auto w-full flex flex-col gap-12">
-          <Header />
-          <main className="flex-1 w-full">
-            <Outlet />
-          </main>
-        </div>
+        <Provider>
+          <Main user={data.user}/>
+        </Provider>
         <SpeedInsights />
 
         <ScrollRestoration />

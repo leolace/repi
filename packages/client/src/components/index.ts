@@ -6,4 +6,4 @@ export * from "./text";
 export * from "./input";
 export * from "./profile-avatar";
 export * from "./select";
-export * from "./edit-profile-avatar";
+export * from "../routes/republica/editar/_compose/edit-profile-avatar";

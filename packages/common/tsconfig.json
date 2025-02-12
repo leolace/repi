@@ -1,19 +1,4 @@
 {
-  "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": false,
-    "esModuleInterop": true,
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "outDir": "dist",
-		"baseUrl": ".",
-    "target": "ES2017",
-    "allowImportingTsExtensions": false
-  }
+  "extends": "../../tsconfig.json",
+  "include": ["./src", "./src/types/env.d.ts"]
 }

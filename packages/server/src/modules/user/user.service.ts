@@ -3,11 +3,11 @@ import { Bixo, CompleteUser, IUser, Republica, UserClassesEnum } from "common";
 import { tagService } from "@modules/tag/tag.service";
 import bcrypt from "bcrypt";
 import { republicaService } from "@modules/republica/republica.service";
-import { S3 } from "@shared/s3";
 import { AppError } from "@shared/utils/error";
 import { CreateUserDto, createUserSchema } from "./schemas/create";
 import { EditUserDto, updateUserSchema } from "./schemas/update";
 import { searchParamsUserSchema } from "./schemas/search-params";
+import fs from "fs";
 
 class UserService {
   async createUser(user: CreateUserDto) {
@@ -83,29 +83,32 @@ class UserService {
     const parsedData = updateUserSchema.safeParse(dataToUpdate);
     if (!parsedData.success)
       throw AppError.BadRequestException(parsedData.error.message);
-    const { classData, avatarFilename, name } = parsedData.data;
+    const { classData, name } = parsedData.data;
 
     const user = await this.findUserBy({ id: userId });
     if (!user) throw AppError.NotFoundException("User not exists");
 
     if (classData) await republicaService.edit(userId, classData);
 
-    let imageUpload = { presignedUrl: "", filename: "" };
-    if (avatarFilename)
-      imageUpload = await S3.genPreSignedUrl(`avatars/${userId}`);
-
     const userToUpdate = {
       name,
-      ...(imageUpload.filename && {
-        imageUrl: `https://repi-web-s3.s3.us-east-2.amazonaws.com/${imageUpload.filename}`,
-      }),
     };
 
     await userRepository.update(userId, userToUpdate);
+  }
 
-    return imageUpload.presignedUrl
-      ? { presignedUrl: imageUpload.presignedUrl }
-      : {};
+  async updateAvatar(
+    file: Express.Multer.File | undefined,
+    userId: string | undefined,
+  ) {
+    if (!file) throw AppError.BadRequestException("File not sent");
+    if (!userId) throw AppError.BadRequestException("User id not found");
+
+    const uploadedFile = await userRepository.saveAvatarToS3(userId, file);
+
+    fs.unlinkSync(file.path);
+
+    return uploadedFile.url;
   }
 }
 

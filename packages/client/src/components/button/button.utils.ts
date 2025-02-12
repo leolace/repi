@@ -1,3 +1,5 @@
+import { SpinnerTypes } from "@components/spinner/types";
+
 export const buttonTypes: Record<Types, string> = {
   primary:
     "bg-primary text-white ring-1 ring-primary hover:bg-primary-dark disabled:hover:bg-primary",
@@ -14,7 +16,18 @@ export const buttonTypes: Record<Types, string> = {
 export const buttonBaseStyles =
   "px-3 py-1 outline-0 rounded font-semibold focus:shadow-pressed cursor-pointer";
 
-export const disabledStyle = "disabled:opacity-75 disabled:cursor-not-allowed";
+export const disabledStyles = "disabled:opacity-75 disabled:cursor-not-allowed";
 
-export const isLoadingStyle = (loading?: boolean) =>
+export const getIsLoadingStyles = (loading?: boolean) =>
   loading ? "opacity-75 cursor-wait" : "";
+
+export const MapStyleToSpinnerBorderColor: Record<
+  keyof typeof buttonTypes,
+  SpinnerTypes
+> = {
+  primary: "white",
+  secondary: "primary",
+  tertiary: "primary",
+  danger: "primary",
+  dangerOutline: "primary",
+};

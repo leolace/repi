@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
+    "@types/multer": "^1.4.12",
     "dotenv": "^16.4.5",
     "tsx": "^4.19.2"
   },
@@ -27,6 +28,7 @@
     "common": "workspace:*",
     "express": "^5.0.1",
     "knex": "^3.1.0",
+    "multer": "1.4.5-lts.1",
     "pg": "^8.13.1",
     "uuid": "^11.0.2",
     "zod": "3.24.1"

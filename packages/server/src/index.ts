@@ -14,6 +14,6 @@ app.use([authRoutes, userRoutes, republicaRoutes, tagRoutes]);
 
 app.use(errorMiddleware);
 
-app.listen(env.PORT, () => {
-  console.log(`Server is listening on http://localhost:${env.PORT}`);
+app.listen(env.SERVER_PORT, () => {
+  console.log(`Server is listening on http://localhost:${env.SERVER_PORT}`);
 });

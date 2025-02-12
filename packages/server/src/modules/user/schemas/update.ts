@@ -7,7 +7,6 @@ export const updateUserSchema = z.object({
     .string()
     .min(6, "A senha deve ter pelo menos 6 caracteres")
     .optional(),
-  avatarFilename: z.string().optional(),
   classData: editRepublicaSchema.optional(),
 });
 
