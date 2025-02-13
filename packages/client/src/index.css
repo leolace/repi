@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+@font-face {
+  font-family: "Rubik";
+  src: url(/fonts/rubik/Rubik-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url(/fonts/rubik/Rubik-Medium.ttf) format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url(/fonts/rubik/Rubik-SemiBold.ttf) format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url(/fonts/rubik/Rubik-Bold.ttf) format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Rubik";
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}

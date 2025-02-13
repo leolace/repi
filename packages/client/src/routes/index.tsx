@@ -1,5 +1,21 @@
-import { Navigate } from "react-router";
+import { Layout } from "@layout";
+import { AuthRoutes } from "@pages/auth";
+import { ConfiguracoesRoutes } from "@pages/configuracoes";
+import { Inicio } from "@pages/inicio";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 
-export default function RootRoute() {
-  return <Navigate to="/inicio" />;
+export function AppRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Navigate to="/inicio" replace />} />
+
+          <Route path="/inicio" element={<Inicio />} />
+          <Route path="/configuracoes/*" element={<ConfiguracoesRoutes />} />
+          <Route path="/auth/*" element={<AuthRoutes />}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
