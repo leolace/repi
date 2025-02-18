@@ -19,7 +19,8 @@
     "rootDirs": [".", "./.react-router/types"],
     "paths": {
       "@*": ["./src/*"],
-      "common": ["../common/src"]
+      "$*": ["./src/pages/*"],
+      "common": ["../common/src"],
     },
     "target": "ES2022"
   },
@@ -30,8 +31,6 @@
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
     "**/.client/**/*.tsx",
-    "postcss.config.cjs",
-    "./.react-router/types/**/*",
     "../common"
   ],
   "exclude": ["node_modules"]

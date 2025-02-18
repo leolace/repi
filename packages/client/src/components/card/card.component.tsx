@@ -1,10 +1,17 @@
 import React from "react";
 import { CardProps, CardSubtitleProps, CardTitleProps } from "./card.types";
 import { Text } from "@components";
+import { twMerge } from "tailwind-merge";
 
 export const Card = ({ children, className = "", ...props }: CardProps) => {
   return (
-    <div className={`p-5 border rounded-md bg-white ${className}`} {...props}>
+    <div
+      className={twMerge(
+        "p-5 border border-gray rounded-md bg-white",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </div>
   );

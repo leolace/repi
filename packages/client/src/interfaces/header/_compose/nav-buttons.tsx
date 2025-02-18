@@ -1,4 +1,4 @@
-import { Button } from "@components/button";
+import { Button } from "@components/forms/button";
 import { Link, useLocation } from "react-router";
 
 export const NavButtons = () => {
