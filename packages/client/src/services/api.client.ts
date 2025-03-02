@@ -4,9 +4,9 @@ function getCookie(name: string) {
   const cookies = window.document.cookie.split("; ");
   for (const cookie of cookies) {
     const [cookieName, cookieValue] = cookie.split("=");
-    if (cookieName === name) return decodeURIComponent(cookieValue); // Decodifica o valor do cookie
+    if (cookieName === name) return decodeURIComponent(cookieValue);
   }
-  return null; // Retorna null se o cookie não for encontrado
+  return null;
 }
 
 const Authorization = getCookie("user-session");

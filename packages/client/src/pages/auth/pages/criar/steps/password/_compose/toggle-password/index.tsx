@@ -6,7 +6,7 @@ interface Props {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const ShowOrHidePassword = ({ setShow, show }: Props) => {
+export const TogglePassword = ({ setShow, show }: Props) => {
   return (
     <div
       onClick={() => setShow((prev) => !prev)}

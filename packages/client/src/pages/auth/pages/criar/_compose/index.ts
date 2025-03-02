@@ -1,3 +1,2 @@
-export * from "./steps";
-export * from "./nav-buttons";
-export * from "./content";
+export * from "./form-content";
+export * from "./step-wrapper";

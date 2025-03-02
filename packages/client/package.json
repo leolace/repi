@@ -12,6 +12,7 @@
     "tsc": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@hookform/resolvers": "^4.1.0",
     "@radix-ui/react-select": "^2.1.4",
     "@radix-ui/react-slot": "^1.1.1",
     "@react-router/node": "^7.0.0",

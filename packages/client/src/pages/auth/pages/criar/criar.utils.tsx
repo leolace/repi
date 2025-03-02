@@ -1,13 +1,15 @@
 import React from "react";
 import { CreateAccountSteps, CurrentStepData } from "./criar.types";
+import {
+  ClassStep,
+  EmailStep,
+  NameStep,
+  TagStep,
+  PasswordStep,
+  ConfirmStep,
+} from "./steps";
+import { z } from "zod";
 import { UserClassesEnum } from "common";
-
-import ClassStep from "./_compose/steps/class/class.component";
-import NameStep from "./_compose/steps/name/name.component";
-import TagStep from "./_compose/steps/tag/tag.component";
-import EmailStep from "./_compose/steps/email/email.component";
-import PasswordStep from "./_compose/steps/password/password.component";
-import ConfirmStep from "./_compose/steps/confirm/confirm.component";
 
 export const mapCurrentStepData: Record<CreateAccountSteps, CurrentStepData> = {
   [CreateAccountSteps.CLASS]: {
@@ -40,56 +42,18 @@ export const mapCurrentStepData: Record<CreateAccountSteps, CurrentStepData> = {
     subtitle: "Voce pode voltar atrás e editar.",
     component: <ConfirmStep />,
   },
-  [CreateAccountSteps.NOT_DEFINED]: {
-    title: "[ERROR]",
-    subtitle: "STEP NOT DEFINED.",
-    component: <div>STEP NOT DEFINED</div>,
-  },
 };
 
-export const mapNextStep = (
-  currentStep: CreateAccountSteps,
-  userClass: UserClassesEnum = UserClassesEnum.NAO_DEFINIDA
-) => {
-  const steps: Record<
-    Partial<CreateAccountSteps>,
-    Partial<CreateAccountSteps>
-  > = {
-    [CreateAccountSteps.CLASS]: CreateAccountSteps.NAME,
-    [CreateAccountSteps.NAME]: CreateAccountSteps.EMAIL,
-    [CreateAccountSteps.EMAIL]: CreateAccountSteps.PASSWORD,
-    [CreateAccountSteps.PASSWORD]: CreateAccountSteps.CONFIRM,
-    [CreateAccountSteps.CONFIRM]: CreateAccountSteps.CONFIRM,
-    [CreateAccountSteps.NOT_DEFINED]: CreateAccountSteps.NOT_DEFINED,
-    [CreateAccountSteps.TAG]: CreateAccountSteps.NOT_DEFINED,
-  };
-
-  if (userClass === UserClassesEnum.BIXO) {
-    steps[CreateAccountSteps.NAME] = CreateAccountSteps.TAG;
-    steps[CreateAccountSteps.TAG] = CreateAccountSteps.EMAIL;
-  }
-
-  return steps[currentStep];
+export const defaultCreateAccountUser = {
+  name: "",
+  email: "",
+  password: "",
+  class: undefined,
 };
 
-export const mapPrevStep = (
-  currentStep: CreateAccountSteps,
-  userClass: UserClassesEnum = UserClassesEnum.NAO_DEFINIDA
-) => {
-  const steps: Record<CreateAccountSteps, CreateAccountSteps> = {
-    [CreateAccountSteps.CLASS]: CreateAccountSteps.CLASS,
-    [CreateAccountSteps.NAME]: CreateAccountSteps.CLASS,
-    [CreateAccountSteps.TAG]: CreateAccountSteps.NAME,
-    [CreateAccountSteps.EMAIL]: CreateAccountSteps.NAME,
-    [CreateAccountSteps.PASSWORD]: CreateAccountSteps.EMAIL,
-    [CreateAccountSteps.CONFIRM]: CreateAccountSteps.PASSWORD,
-    [CreateAccountSteps.NOT_DEFINED]: CreateAccountSteps.CLASS,
-  };
-
-  if (userClass === UserClassesEnum.BIXO) {
-    steps[CreateAccountSteps.EMAIL] = CreateAccountSteps.TAG;
-    steps[CreateAccountSteps.TAG] = CreateAccountSteps.NAME;
-  }
-
-  return steps[currentStep];
-};
+export const CreateAccountFormSchema = z.object({
+  name: z.string().min(3),
+  email: z.string().email(),
+  password: z.string().min(8),
+  class: z.nativeEnum(UserClassesEnum),
+});

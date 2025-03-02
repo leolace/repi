@@ -11,7 +11,6 @@ export default tseslint.config(
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
-  prettier,
   {
     files: ["**/*.tsx", "**/*.ts"],
     ignores: ["**/dist", "**/build"],
@@ -39,4 +38,5 @@ export default tseslint.config(
       "object-curly-spacing": ["error", "always"],
     },
   },
+  prettier,
 );
