@@ -1,4 +1,4 @@
-import { SessionProvider } from "@contexts/session.context";
+import { SessionProvider } from "@contexts/session";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren } from "react";
 import { CookiesProvider } from "react-cookie";

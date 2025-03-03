@@ -2,17 +2,17 @@ import { Text } from "@components";
 import { LogOut, Triangle } from "lucide-react";
 import React from "react";
 import { ProfileAvatar } from "@components/profile-avatar";
-import { CompleteSelfUser, UserClassesEnum } from "common";
+import { UserClassesEnum } from "common";
 import { menuDropdownOptions } from "./dropdown-header-menu.utils";
 import { useDropdownHeaderMenu } from "./dropdown-header-menu.hooks";
 import { DropdownItem } from "./_compose";
 import { MenuOptionsRoutes } from "./dropdown-header-menu.types";
 import { Link } from "react-router";
+import { useSession } from "@contexts/session";
 
 interface Props {
   showDropdown: boolean;
   setShowDropdown: React.Dispatch<React.SetStateAction<boolean>>;
-  user: CompleteSelfUser;
 }
 
 const baseClass = "left-1/2 -translate-x-1/2 absolute transition duration-300";
@@ -20,12 +20,14 @@ const baseClass = "left-1/2 -translate-x-1/2 absolute transition duration-300";
 export const DropdownHeaderMenu = ({
   showDropdown,
   setShowDropdown,
-  user,
 }: Props) => {
   const { isOpenClass, dropdownContainerRef } = useDropdownHeaderMenu({
     showDropdown,
     setShowDropdown,
   });
+  const { user } = useSession();
+
+  if (!user) return null;
 
   const userMenuOptions = menuDropdownOptions[user.class];
   const userPageLink =

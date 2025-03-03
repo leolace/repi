@@ -8,5 +8,6 @@ export const endpoints = {
   auth: {
     getLoginUrl: () => `${env.API_ENDPOINT}/auth/login`,
     getCreateUserAccountUrl: () => `${env.API_ENDPOINT}/user`,
+    getSelfUserUrl: () => `${env.API_ENDPOINT}/auth/me`,
   }
 };

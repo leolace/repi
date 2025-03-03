@@ -4,19 +4,10 @@ import { InputSecure } from "@components/forms/input-secure";
 import { useLoginMutation } from "$auth/pages/entrar/entrar.mutations";
 import { ILoginForm } from "$auth/pages/entrar/entrar.types";
 import { useForm } from "react-hook-form";
-import { useSession } from "@contexts/session.context";
-import { useNavigate } from "react-router";
 
 const Login = () => {
-  const { setToken } = useSession();
   const { register, handleSubmit } = useForm<ILoginForm>();
-  const navigate = useNavigate();
-  const { mutateAsync } = useLoginMutation({
-    onSuccess: ({ token }) => {
-      setToken(token);
-      navigate("/inicio");
-    },
-  });
+  const { mutateAsync } = useLoginMutation();
 
   const onSubmit = async (data: ILoginForm) => {
     await mutateAsync(data);

@@ -1,5 +1,3 @@
-import { IUserJWTPayload } from "./session";
-
 export enum UserClassesEnum {
   NAO_DEFINIDA = "NAO_DEFINIDA",
   BIXO = "BIXO",
@@ -43,5 +41,4 @@ export type CompleteUser<T> = IUser & {
 
 export type CompleteSelfUser = IUser & {
   classData: Bixo | Republica;
-  session: IUserJWTPayload;
 };

@@ -3,8 +3,9 @@ import { CreateAccountSteps } from "@pages/auth/pages/criar/criar.types";
 import { Text, Card } from "@components";
 import React from "react";
 import { TagEnum } from "common";
-import { UseCreateAccountMutation } from "../../criar.mutation";
+import { useCreateAccountMutation } from "../../criar.mutations";
 import { StepWrapper } from "../../_compose";
+import { useLoginMutation } from "@pages/auth/pages/entrar/entrar.mutations";
 
 export function ConfirmStep() {
   const {
@@ -12,14 +13,26 @@ export function ConfirmStep() {
     setStep,
   } = useCreateAccount();
   const { name, class: classValue, email, tags, password } = getValues();
-  const { mutateAsync } = UseCreateAccountMutation();
+  const { mutateAsync: mutateCreateAccount } = useCreateAccountMutation();
+  const { mutateAsync: mutateLogin } = useLoginMutation();
+
+  async function handleSubmit() {
+    const createAccountResponse = await mutateCreateAccount({
+      class: classValue,
+      email,
+      name,
+      password,
+      tags,
+    });
+
+    if (!createAccountResponse.ok)
+      throw new Error(await createAccountResponse.json());
+
+    await mutateLogin({ email, password });
+  }
 
   return (
-    <StepWrapper
-      onSubmit={async () =>
-        await mutateAsync({ class: classValue, email, name, password, tags })
-      }
-    >
+    <StepWrapper onSubmit={handleSubmit}>
       <Card>
         <Text
           onClick={() => setStep(CreateAccountSteps.CLASS)}

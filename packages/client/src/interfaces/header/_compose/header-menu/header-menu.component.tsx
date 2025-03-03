@@ -2,12 +2,12 @@ import { ProfileAvatar } from "@components/profile-avatar";
 import { DropdownHeaderMenu } from "@interfaces/header-dropdown-menu";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { useGetRootData } from "@hooks/use-get-root-data";
+import { useSession } from "@contexts/session";
 
 export const HeaderMenu = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const { pathname } = useLocation();
-  const { user } = useGetRootData();
+  const { user } = useSession();
 
   useEffect(() => {
     setShowDropdown(false);
@@ -27,7 +27,6 @@ export const HeaderMenu = () => {
         <DropdownHeaderMenu
           showDropdown={showDropdown}
           setShowDropdown={setShowDropdown}
-          user={user}
         />
       )}
     </div>
