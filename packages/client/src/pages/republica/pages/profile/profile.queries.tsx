@@ -12,9 +12,8 @@ export function useRepublicaProfileQuery() {
     queryKey: [id, "republica_profile"],
     queryFn: async () => {
       if (!id) throw new Error("Missing republica id");
-      const REPUBLICA_ENDPOINT = endpoints.republica.getCompleteUserUrl(id);
-      const response =
-        await client.get<CompleteUser<Republica>>(REPUBLICA_ENDPOINT);
+      const ENDPOINT = endpoints.republica.getCompleteUserUrl(id);
+      const response = await client.get<CompleteUser<Republica>>(ENDPOINT);
       return response.json();
     },
     enabled: !!id,
