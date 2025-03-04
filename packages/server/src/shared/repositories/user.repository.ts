@@ -32,7 +32,9 @@ class UserRepository {
   }
 
   async findBy(values: Partial<IUser>) {
-    const user = await knex<IUser>("users").where(values).select("*");
+    const user = await knex<IUser>("users")
+      .where(values)
+      .select("name", "email", "class", "id", "imageUrl");
 
     return user;
   }
