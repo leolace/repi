@@ -70,7 +70,7 @@ class UserRepository {
     return editedUser;
   }
 
-  saveAvatarToS3(userId: string, file: Express.Multer.File) {
+  async saveAvatarToS3(userId: string, file: Express.Multer.File) {
     const fileStream = fs.createReadStream(file.path);
     const filename = `avatars/${userId}`;
     const fileSize = fs.statSync(file.path).size;

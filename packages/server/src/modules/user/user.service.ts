@@ -83,18 +83,15 @@ class UserService {
     const parsedData = updateUserSchema.safeParse(dataToUpdate);
     if (!parsedData.success)
       throw AppError.BadRequestException(parsedData.error.message);
-    const { classData, name } = parsedData.data;
 
     const user = await this.findUserBy({ id: userId });
     if (!user) throw AppError.NotFoundException("User not exists");
 
-    if (classData) await republicaService.edit(userId, classData);
+    if (parsedData.data.classData) await republicaService.edit(userId, parsedData.data.classData);
 
-    const userToUpdate = {
-      name,
-    };
+    delete parsedData.data.classData;
 
-    await userRepository.update(userId, userToUpdate);
+    await userRepository.update(userId, parsedData.data);
   }
 
   async updateAvatar(
@@ -105,8 +102,9 @@ class UserService {
     if (!userId) throw AppError.BadRequestException("User id not found");
 
     const uploadedFile = await userRepository.saveAvatarToS3(userId, file);
-
     fs.unlinkSync(file.path);
+
+    await this.update(userId, { imageUrl: uploadedFile.url });
 
     return uploadedFile.url;
   }

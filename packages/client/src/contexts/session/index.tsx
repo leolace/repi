@@ -1,16 +1,18 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import { Spinner } from "@components/spinner";
 import { ISessionContext } from "./types";
-import { defaultSessionContext } from "./utils";
 import { useSelfUserQuery } from "./queries";
 import { useSessionToken } from "@hooks/session-token";
 
-const SessionContext = createContext<ISessionContext>(defaultSessionContext);
+const SessionContext = createContext<ISessionContext>({} as ISessionContext);
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const { sessionToken, setSessionToken } = useSessionToken();
-  const { data: user, isFetching: isFetchingUser } =
-    useSelfUserQuery(sessionToken);
+  const {
+    data: user,
+    isFetching: isFetchingUser,
+    refetch: refetchUser,
+  } = useSelfUserQuery(sessionToken);
 
   function logout() {
     setSessionToken("");
@@ -20,6 +22,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const value = {
     user,
     logout,
+    refetchUser,
   };
 
   return (

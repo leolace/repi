@@ -37,7 +37,7 @@ export function assembleDropdownItems(
       [
         {
           label: "Sair",
-          link: "/auth/sair",
+          link: MenuOptionsRoutes.SAIR,
           Icon: LogOut,
         },
       ],
@@ -64,7 +64,7 @@ export function assembleDropdownItems(
       [
         {
           label: "Sair",
-          link: "/auth/sair",
+          link: MenuOptionsRoutes.SAIR,
           Icon: LogOut,
         },
       ],

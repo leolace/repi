@@ -8,6 +8,7 @@ export const updateUserSchema = z.object({
     .min(6, "A senha deve ter pelo menos 6 caracteres")
     .optional(),
   classData: editRepublicaSchema.optional(),
+  imageUrl: z.string().optional(),
 });
 
 export type EditUserDto = z.infer<typeof updateUserSchema>;

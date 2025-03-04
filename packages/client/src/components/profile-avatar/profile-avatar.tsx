@@ -34,18 +34,18 @@ export const ProfileAvatar = ({
       )}
       {...props}
     >
-      <img
-        src={`https://repi-web-s3.s3.us-east-2.amazonaws.com/avatars/${user?.id}`}
-        alt={user ? `Avatar de ${user.name}` : "Imagem de avatar"}
-        title={user?.name}
-        className="w-full h-full object-cover"
-      />
-      {/* {imageUrl ? (
+      {imageUrl ? (
+        <img
+          src={`https://repi-web-s3.s3.us-east-2.amazonaws.com/avatars/${user?.id}`}
+          alt={user ? `Avatar de ${user.name}` : "Imagem de avatar"}
+          title={user?.name}
+          className="w-full h-full object-cover"
+        />
       ) : (
         <span className="text-gray-500 text-sm font-medium w-1/2 h-1/2 flex items-center justify-center">
           <FallbackIcon width="100%" height="100%" />
         </span>
-      )} */}
+      )}
     </span>
   );
 };

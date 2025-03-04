@@ -10,7 +10,7 @@ const {
 export function useUpdateAvatarProfilePic(
   options?: UseMutationOptions<void, Error, File, unknown>,
 ) {
-  const { user } = useSession();
+  const { user, refetchUser } = useSession();
 
   return useMutation({
     mutationFn: async (file: File) => {
@@ -24,6 +24,7 @@ export function useUpdateAvatarProfilePic(
         })
         .json<void>();
 
+      await refetchUser();
       return response;
     },
     ...options,

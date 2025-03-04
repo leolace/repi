@@ -9,7 +9,7 @@ function getCookie(name: string) {
   return null;
 }
 
-const Authorization = getCookie("user-session");
+const Authorization = getCookie("session-token");
 
 export const client = ky.extend({
   headers: {
