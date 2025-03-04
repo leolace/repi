@@ -10,7 +10,7 @@ import {
 import { LayoutGrid, User } from "lucide-react";
 
 interface AvatarProps extends React.HTMLAttributes<HTMLSpanElement> {
-  user: IUser | CompleteUser<Bixo | Republica> | CompleteSelfUser | undefined;
+  user?: IUser | CompleteUser<Bixo | Republica> | CompleteSelfUser;
   src?: string;
   alt?: string;
   className?: string;
@@ -34,18 +34,18 @@ export const ProfileAvatar = ({
       )}
       {...props}
     >
-      {imageUrl ? (
-        <img
-          src={imageUrl}
-          alt={user ? `Avatar de ${user.name}` : "Imagem de avatar"}
-          title={user?.name}
-          className="w-full h-full object-cover"
-        />
+      <img
+        src={`https://repi-web-s3.s3.us-east-2.amazonaws.com/avatars/${user?.id}`}
+        alt={user ? `Avatar de ${user.name}` : "Imagem de avatar"}
+        title={user?.name}
+        className="w-full h-full object-cover"
+      />
+      {/* {imageUrl ? (
       ) : (
         <span className="text-gray-500 text-sm font-medium w-1/2 h-1/2 flex items-center justify-center">
           <FallbackIcon width="100%" height="100%" />
         </span>
-      )}
+      )} */}
     </span>
   );
 };

@@ -1,19 +1,20 @@
 import { Button } from "@components/forms/button";
-import { buttonBaseStyles, buttonTypes } from "@components/forms/button/button.utils";
+import {
+  buttonBaseStyles,
+  buttonTypes,
+} from "@components/forms/button/button.utils";
 import { Card, CardTitle } from "@components/card";
 import { ProfileAvatar } from "@components/profile-avatar";
-import { useGetRootData } from "@hooks/use-get-root-data";
-import { useUpdateAvatarProfilePic } from "@pages/republica/pages/editar/editar.queries";
-import React, { ChangeEvent, MouseEvent, useRef, useState } from "react";
-import { Form } from "react-router";
+import { useUpdateAvatarProfilePic } from "@pages/republica/pages/edit/edit.queries";
+import React, { ChangeEvent, FormEvent, MouseEvent, useRef, useState } from "react";
+import { useSession } from "@contexts/session";
 
 interface Props {
-  isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function EditProfileModal({ setIsOpen }: Props) {
-  const { user } = useGetRootData();
+  const { user } = useSession();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string>();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,11 +44,14 @@ export function EditProfileModal({ setIsOpen }: Props) {
     if (e.target === containerRef.current) setIsOpen(false);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    console.log("teste");
     if (!selectedFile) throw new Error("Selected file is undefined.");
     await mutateAsync(selectedFile);
   };
 
+  if (!user) return null;
   return (
     <div
       className="absolute left-0 top-0 bg-black/35 w-full h-full grid justify-center items-center"
@@ -59,7 +63,7 @@ export function EditProfileModal({ setIsOpen }: Props) {
         <span className="max-w-48 max-h-48 justify-self-center">
           <ProfileAvatar user={user} src={avatarPreview} />
         </span>
-        <Form
+        <form
           className="flex w-full h-fit justify-between self-end"
           onSubmit={handleSubmit}
         >
@@ -73,7 +77,7 @@ export function EditProfileModal({ setIsOpen }: Props) {
             >
               Selecionar
             </label>
-            <Button disabled={!avatarPreview} type="submit" loading={isPending}>
+            <Button disabled={!avatarPreview} loading={isPending} type="submit">
               Salvar
             </Button>
           </div>
@@ -85,7 +89,7 @@ export function EditProfileModal({ setIsOpen }: Props) {
             accept="image/*"
             onChange={handleChange}
           />
-        </Form>
+        </form>
       </Card>
     </div>
   );

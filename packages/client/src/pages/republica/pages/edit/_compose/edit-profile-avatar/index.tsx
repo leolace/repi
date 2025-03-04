@@ -1,12 +1,12 @@
 import { ProfileAvatar } from "@components/profile-avatar";
 import { useState } from "react";
-import { EditProfileModal } from "./_compose/modal";
+import { EditProfileModal } from "./modal";
 import { Button } from "@components/forms/button";
-import { useGetRootData } from "@hooks/use-get-root-data";
+import { useSession } from "@contexts/session";
 
 export function EditProfileAvatar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user } = useGetRootData();
+  const { user } = useSession();
 
   if (!user) return;
   return (
@@ -17,9 +17,7 @@ export function EditProfileAvatar() {
           <Button onClick={() => setIsModalOpen(true)}>Alterar foto</Button>
         </div>
       </div>
-      {isModalOpen && (
-        <EditProfileModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
-      )}
+      {isModalOpen && <EditProfileModal setIsOpen={setIsModalOpen} />}
     </>
   );
 }

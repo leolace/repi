@@ -1,6 +1,6 @@
 import { CompleteSelfUser } from "common";
 
 export interface ISessionContext {
-  user: CompleteSelfUser | null;
+  user?: CompleteSelfUser;
   logout: VoidFunction;
 }

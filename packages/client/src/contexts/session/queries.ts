@@ -16,11 +16,8 @@ export function useSelfUserQuery(sessionToken: string) {
       });
       if (!response.ok) throw new Error("Algo deu errado.");
 
-      const data = await response.json();
-      console.log(data);
-      return data;
+      return response.json();
     },
     enabled: !!sessionToken,
-    initialData: null,
   });
 }

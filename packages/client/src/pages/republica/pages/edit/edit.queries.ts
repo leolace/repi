@@ -1,4 +1,4 @@
-import { useGetRootData } from "@hooks/use-get-root-data";
+import { useSession } from "@contexts/session";
 import { client } from "@services/api.client";
 import { endpoints } from "@services/endpoints";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
@@ -10,15 +10,13 @@ const {
 export function useUpdateAvatarProfilePic(
   options?: UseMutationOptions<void, Error, File, unknown>,
 ) {
-  const { user } = useGetRootData();
+  const { user } = useSession();
 
   return useMutation({
     mutationFn: async (file: File) => {
       if (!user) return;
       const formData = new FormData();
       formData.append("avatar", file);
-
-      console.log(getUpdateAvatarUrl(user.id));
 
       const response = await client
         .patch(getUpdateAvatarUrl(user.id), {
