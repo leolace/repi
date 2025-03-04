@@ -6,9 +6,7 @@ import { IToken } from "common";
 import { useNavigate } from "react-router";
 import { useSessionToken } from "@hooks/session-token";
 
-const {
-  auth: { getLoginUrl },
-} = endpoints;
+const LOGIN_ENDPOINT = endpoints.auth.getLoginUrl();
 
 export function useLoginMutation(
   options?: UseMutationOptions<IToken, unknown, ILoginProps>,
@@ -17,17 +15,14 @@ export function useLoginMutation(
   const { setSessionToken } = useSessionToken();
   return useMutation({
     mutationFn: async ({ email, password }: ILoginProps) => {
-      const endpoint = getLoginUrl();
-      const response = await client
-        .post<IToken>(endpoint, {
-          json: {
-            email,
-            password,
-          },
-        })
-        .json();
+      const response = await client.post<IToken>(LOGIN_ENDPOINT, {
+        json: {
+          email,
+          password,
+        },
+      });
 
-      return response;
+      return response.json();
     },
     onError: (error) => {
       console.error(error);

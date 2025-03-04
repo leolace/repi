@@ -1,11 +1,11 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import { Spinner } from "@components/spinner";
 import { ISessionContext } from "./types";
-import { defaltSessionContext } from "./utils";
+import { defaultSessionContext } from "./utils";
 import { useSelfUserQuery } from "./queries";
 import { useSessionToken } from "@hooks/session-token";
 
-const SessionContext = createContext<ISessionContext>(defaltSessionContext);
+const SessionContext = createContext<ISessionContext>(defaultSessionContext);
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const { sessionToken, setSessionToken } = useSessionToken();

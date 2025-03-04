@@ -3,7 +3,7 @@ import { buttonBaseStyles, buttonTypes } from "@components/forms/button/button.u
 import { Card, CardTitle } from "@components/card";
 import { ProfileAvatar } from "@components/profile-avatar";
 import { useGetRootData } from "@hooks/use-get-root-data";
-import { useUpdateAvatarProfilePic } from "$republica/queries/useUpdateAvatarProfile";
+import { useUpdateAvatarProfilePic } from "@pages/republica/pages/editar/editar.queries";
 import React, { ChangeEvent, MouseEvent, useRef, useState } from "react";
 import { Form } from "react-router";
 

@@ -1,6 +1,6 @@
 import { ISessionContext } from "./types";
 
-export const defaltSessionContext: ISessionContext = {
+export const defaultSessionContext: ISessionContext = {
   user: null,
   logout: () => {},
 };

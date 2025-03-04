@@ -1,10 +1,12 @@
 import { Card, CardSubtitle, CardTitle } from "@components";
-import { getInfos } from "./info-cards.utils";
-import { useGetRepublicaRouteData } from "@pages/republica/hooks/hooks";
+import { getInfos } from "./utils";
+import { useRepublicaProfileQuery } from "../../profile.queries";
 
 export function InfoCards() {
-  const { user } = useGetRepublicaRouteData();
-  const infos = getInfos(user.classData);
+  const { data: republica } = useRepublicaProfileQuery();
+  if (!republica) return null;
+
+  const infos = getInfos(republica.classData);
 
   return (
     <div className="flex justify-between gap-6">

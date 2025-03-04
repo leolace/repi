@@ -1,4 +1,4 @@
-import { formatRentalValue } from "@pages/republica/republica.utils";
+import { formatRentalValue } from "@utils/currency";
 import { Republica } from "common";
 
 export function getInfos(republicaData: Republica) {

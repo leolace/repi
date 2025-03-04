@@ -1,6 +1,6 @@
 import { Button } from "@components";
 import { Link, useSearchParams } from "react-router";
-import { getActiveContentTab, tabs } from "./content.utils";
+import { getActiveContentTab, tabs } from "./utils";
 
 export function Content() {
   const [searchParams] = useSearchParams();

@@ -4,10 +4,11 @@ import { InputSecure } from "@components/forms/input-secure";
 import { useLoginMutation } from "$auth/pages/entrar/entrar.mutations";
 import { ILoginForm } from "$auth/pages/entrar/entrar.types";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router";
 
 const Login = () => {
   const { register, handleSubmit } = useForm<ILoginForm>();
-  const { mutateAsync } = useLoginMutation();
+  const { mutateAsync, isError } = useLoginMutation();
 
   const onSubmit = async (data: ILoginForm) => {
     await mutateAsync(data);
@@ -36,9 +37,14 @@ const Login = () => {
           required
           {...register("password")}
         />
+        {isError && (
+          <div className="text-red-500 text-sm">E-mail ou senha inválidos</div>
+        )}
       </div>
       <div className="flex justify-between">
-        <Button style="secondary">Criar conta</Button>
+        <Link to="/auth/criar">
+          <Button style="secondary">Criar conta</Button>
+        </Link>
         <Button type="submit">Entrar</Button>
       </div>
     </form>

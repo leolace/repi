@@ -1,4 +1,4 @@
-import { ContentTabs, ITab } from "./content.types";
+import { ContentTabs, ITab } from "./types";
 
 export const tabs: Record<ContentTabs, ITab> = {
   [ContentTabs.ABOUT]: {
