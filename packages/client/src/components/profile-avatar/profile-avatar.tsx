@@ -36,7 +36,7 @@ export const ProfileAvatar = ({
     >
       {imageUrl ? (
         <img
-          src={`https://repi-web-s3.s3.us-east-2.amazonaws.com/avatars/${user?.id}`}
+          src={imageUrl}
           alt={user ? `Avatar de ${user.name}` : "Imagem de avatar"}
           title={user?.name}
           className="w-full h-full object-cover"

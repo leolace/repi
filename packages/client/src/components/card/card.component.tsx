@@ -39,5 +39,5 @@ export const CardTitle = ({
 };
 
 export const CardSubtitle = ({ className, ...props }: CardSubtitleProps) => {
-  return <Text className={`${className}`} {...props}></Text>;
+  return <Text className={twMerge("text-zinc-600", className)} {...props}></Text>;
 };
