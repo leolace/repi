@@ -8,6 +8,8 @@ export const endpoints = {
       `${env.API_ENDPOINT}/republica/${userId}`,
     getCompleteUserUrl: (userId: string) =>
       `${env.API_ENDPOINT}/user/${userId}`,
+    getUpdateRepublicaUrl: (userId: string) =>
+      `${env.API_ENDPOINT}/republica/${userId}`,
   },
   auth: {
     getLoginUrl: () => `${env.API_ENDPOINT}/auth/login`,

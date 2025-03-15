@@ -8,3 +8,9 @@ export type RepublicaEditData = {
     rentalValue?: CompleteUser<Republica>["classData"]["rentalValue"];
   };
 };
+
+export interface RepublicaEditForm {
+  name: string;
+  occupantsCount: number;
+  rentalValue: number;
+}

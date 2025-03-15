@@ -7,6 +7,7 @@ import { useUpdateAvatarProfilePic } from "@pages/republica/pages/edit/edit.quer
 import { ChangeEvent, useState } from "react";
 import { useSession } from "@contexts/session";
 import { Modal } from "@components/modal";
+import { EDIT_PROFILE_AVATAR_MODAL_ID } from "../../../edit.utils";
 
 export function EditProfileModal() {
   const { user } = useSession();
@@ -42,7 +43,7 @@ export function EditProfileModal() {
   if (!user) return null;
   return (
     <Modal
-      id="edit-profile"
+      id={EDIT_PROFILE_AVATAR_MODAL_ID}
       title="Alterar foto de perfil"
       subtitle="Escolha uma imagem"
       onConfirm={handleSubmit}

@@ -1,0 +1,1 @@
+export const EDIT_PROFILE_AVATAR_MODAL_ID = "edit-profile-avatar";
