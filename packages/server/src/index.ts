@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import { authRoutes, tagRoutes, userRoutes } from "./routes/index";
 import { corsMiddleware } from "./middlewares/cors.middleware";
-import { env } from "common/src/environment.server";
+import { env } from "@utils/environment";
 import { errorMiddleware } from "@middlewares/error.middleware";
 import { republicaRoutes } from "@routes/republica.routes";
 

@@ -8,6 +8,8 @@
     "build:common": "pnpm --filter common run build",
     "build:server": "pnpm build:common && pnpm --filter server run build",
     "build:client": "pnpm build:common && pnpm --filter client run build",
+    "tsc:client": "pnpm build:common && pnpm --filter client run tsc",
+    "tsc:server": "pnpm build:common && pnpm --filter server run tsc",
     "start:server": "pnpm --filter server run start",
     "start:client": "pnpm --filter client run start"
   },
@@ -16,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.13.10",
     "@typescript-eslint/eslint-plugin": "^8.13.0",
     "@typescript-eslint/parser": "^8.13.0",
     "eslint": "^9.17.0",

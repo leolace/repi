@@ -1,6 +1,6 @@
 import * as jose from "jose";
 import { IUserJWTPayload, MAX_SESSION_TIME_SEC } from "common";
-import { env } from "common/src/environment.server";
+import { env } from "@utils/environment";
 
 const encodedSecret = new TextEncoder().encode(env.JWT_SECRET);
 export async function genSessionToken(payload: jose.JWTPayload) {

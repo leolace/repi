@@ -1,4 +1,4 @@
-if (!process.env.PUBLIC_API_ENDPOINT) throw new Error("SERVER_URL env not set.");
+if (!import.meta.env.PUBLIC_API_ENDPOINT) throw new Error("SERVER_URL env not set.");
 
 export type ClientType<T> = Response & { data: T };
 
@@ -7,7 +7,7 @@ export const client = async <T>(
   { headers, ...options }: RequestInit = {}
 ): Promise<ClientType<T | ErrorResponseData>> => {
     
-  const request = await fetch(process.env.PUBLIC_API_ENDPOINT! + path, {
+  const request = await fetch(import.meta.env.PUBLIC_API_ENDPOINT! + path, {
     method: "GET",
     headers: {
       ...headers,
@@ -32,7 +32,7 @@ export const authClient = async <T>(
   const defaultHeaders: Record<string, string> = Object.assign({ ...options.headers }, { "Content-Type": "application/json" });
 
   defaultHeaders.authorization = sessionToken;
-  const request = await fetch(process.env.PUBLIC_API_ENDPOINT! + path, {
+  const request = await fetch(import.meta.env.PUBLIC_API_ENDPOINT! + path, {
     method: "GET",
     headers: defaultHeaders,
     ...options

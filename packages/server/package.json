@@ -8,8 +8,7 @@
     "serve": "tsx src/index.ts",
     "knex": "tsx ./node_modules/knex/bin/cli.js",
     "start": "pnpm dev",
-    "build:tsc": "tsc -b",
-    "build": "tsc"
+    "tsc": "tsc -b"
   },
   "keywords": [],
   "author": "",

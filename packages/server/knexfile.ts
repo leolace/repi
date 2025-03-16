@@ -1,6 +1,6 @@
 import "dotenv/config";
 import type { Knex } from "knex";
-import { env } from "common/src/environment.server";
+import { env } from "@utils/environment";
 
 const ssl = env.ENV === "prod" && {
   ssl: {

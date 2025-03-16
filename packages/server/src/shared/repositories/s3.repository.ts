@@ -1,7 +1,7 @@
 import { S3Client, PutObjectCommand, PutObjectCommandInput } from "@aws-sdk/client-s3";
 import { randomUUID } from "node:crypto";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { env } from "common/src/environment.server";
+import { env } from "@utils/environment";
 import fs from "fs";
 
 const s3Client = new S3Client({

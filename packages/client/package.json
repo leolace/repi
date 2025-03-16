@@ -5,11 +5,11 @@
   "private": true,
   "main": "./src/main.tsx",
   "scripts": {
-    "build": "react-router build",
+    "build": "vite build",
     "dev": "vite",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "react-router-serve build/server/index.js",
-    "tsc": "react-router typegen && tsc"
+    "start": "vite preview",
+    "tsc": "tsc -b"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.0",
@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "@react-router/dev": "^7.0.0",
-    "@types/node": "^20",
     "@types/react": "19.0.0",
     "@types/react-dom": "19.0.0",
     "autoprefixer": "^10.4.20",
